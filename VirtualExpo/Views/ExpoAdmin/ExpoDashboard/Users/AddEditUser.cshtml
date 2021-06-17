@@ -1,0 +1,143 @@
+﻿
+@section Scripts
+{
+    <script src="~/js/ExpoAdmin/User/AddEditUser.js?v=@DateTime.Now.Ticks.ToString()"></script>
+}
+@{
+//var data = (User)ViewBag.data;
+//var Title = ViewBag.title;
+
+//var gen = Enum.GetValues(typeof(GenderType)).Cast<GenderType>().ToList();
+//var use = Enum.GetValues(typeof(UserRoleType)).Cast<UserRoleType>().ToList();
+//string usergender = EnumHelper.GetEnumByValue<GenderType>(data.GenderType.ToString()).ToString();
+//string typeofuser = EnumHelper.GetEnumByValue<UserRoleType>(data.UserType.ToString()).ToString();
+
+//var genders = new List<string>();
+//foreach (var g in gen)
+//{
+//    genders.Add(String.Join(Environment.NewLine, g));
+//}
+
+//BllUser bllUser = new BllUser();
+//var usertypes = new List<string>();
+//foreach (var g in use)
+//{
+//    usertypes.Add(String.Join(Environment.NewLine, g));
+//}
+//var LoginUserId = Convert.ToInt32( User.Identity.Name);
+//var Loguser = (User)bllUser.GetByPK(LoginUserId);
+
+}
+<input type="hidden" id="hfUserId" value="" />
+<div class="row">
+
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+        <div id="BasicInfo" class="card">
+            <div class="card-header">
+                <strong></strong>
+            </div>
+
+            <div class="card-body card-block">
+                <div id="div_message" class="note failure">
+                    <p>
+                        <span id="span_message"></span>
+                    </p>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">First Name</label></div>
+                    <div class="col-12 col-md-9">
+                        <input class="form-control" id="txtFirstName" type="text" value="" required maxlength="20">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Last Name</label></div>
+                    <div class="col-12 col-md-9">
+                        <input class="form-control" id="txtLastName" type="text"  required maxlength="20">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">User Name</label></div>
+                    <div class="col-12 col-md-9">
+                        <input class="form-control" id="txtUserName" type="text"  required maxlength="20">
+                    </div>
+                </div>
+
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Email</label></div>
+                    <div class="col-12 col-md-9">
+                        <input class="form-control" id="txtEmail" type="text"   required maxlength="500">
+                    </div>
+                </div>
+
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Password</label></div>
+                    <div class="col-12 col-md-9">
+                        <input class="form-control" id="txtPassword" type="password"  required maxlength="50" />
+                        <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');" style="margin-top:15px;" />
+                        <label for="chkShowHidePassword" style="margin-bottom:0px;"> Show Password</label>
+                    </div>
+                </div>
+
+
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">CNIC</label></div>
+                    <div class="col-12 col-md-9">
+                        <input class="form-control" id="txtCNIC" type="text"   required maxlength="20">
+                    </div>
+                </div>
+                
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">User Type</label></div>
+                    <div class="col-12 col-md-9">
+                        <select class="form-control" id="txtUserType" name="txtUserType" required>
+                               
+                            <option id="usertype" selected></option>
+                                    
+                            <option id="usertype"></option>
+                                   
+                        </select>
+                    </div>
+                </div>
+                
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Gender</label></div>
+                    <div class="col-12 col-md-9">
+                        <select class="form-control" id="txtGender" name="txtGender" required>
+                           
+                            <option id="genders" selected></option>
+                                
+                            <option id="genders"></option>
+                               
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Telephone</label></div>
+                    <div class="col-12 col-md-9">
+                        <input class="form-control" id="txtTelephone" type="text" required value=""  maxlength="20">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary btn-sm" onclick="SaveUser();">
+                <i class="material-icons " id="iconcss" style="">save</i>Save
+            </button>
+            <button type="reset" class="btn btn-danger btn-sm" onclick="Cancel();">
+                <i class="material-icons" id="iconcss">cancel</i>Cancel
+            </button>
+        </div>
+    </div>
+</div>
+<div class="col-lg-3"></div>
+

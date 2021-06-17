@@ -19,7 +19,7 @@ namespace VirtualExpo.Model.Data
         public DateTime Start { get; set; }
 
         public DateTime End { get; set; }
-
+        public int SessionStatus { get; set; }//active or not
         public string Description { get; set; }
         public int Status { get; set; }
         public virtual ExhibitorDescription Exhibitor { get; set; }

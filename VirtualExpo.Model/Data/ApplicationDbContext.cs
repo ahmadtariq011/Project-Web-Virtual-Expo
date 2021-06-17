@@ -21,10 +21,12 @@ namespace VirtualExpo.Model.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Education> Educations { get; set; }
         public virtual DbSet<Exhibition> Exhibitions { get; set; }
-        public virtual DbSet<ExhibitorDescription> Exhibitors { get; set; }
+        public virtual DbSet<ExhibitorDescription> ExhibitorDescription { get; set; }
         public virtual DbSet<MediaLinks> MediaLinks { get; set; }
         public virtual DbSet<RequestAdmin> RequestAdmin { get; set; }
         public virtual DbSet<RequestOrganizer> RequestOrganizer { get; set; }
+        public virtual DbSet<Session> Session { get; set; }
+        public virtual DbSet<WorkExperience> WorkExperience { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -65,6 +67,14 @@ namespace VirtualExpo.Model.Data
                .ValueGeneratedOnAdd();
 
             builder.Entity<RequestAdmin>()
+               .Property(p => p.Id)
+               .ValueGeneratedOnAdd();
+
+            builder.Entity<Session>()
+               .Property(p => p.Id)
+               .ValueGeneratedOnAdd();
+
+            builder.Entity<WorkExperience>()
                .Property(p => p.Id)
                .ValueGeneratedOnAdd();
         }

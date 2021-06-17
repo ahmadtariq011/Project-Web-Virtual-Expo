@@ -1,1 +1,93 @@
-﻿
+﻿<!-- Left Panel -->
+<aside id="left-panel" class="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="material-icons">
+                    menu
+                </span>
+            </button>
+            <a class="navbar-brand" href="./"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7tgdZz-1QQabmaO4FcN30sUjcOHLrKA49Ig&usqp=CAU" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="./"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7tgdZz-1QQabmaO4FcN30sUjcOHLrKA49Ig&usqp=CAU" alt="Logo"></a>
+        </div>
+        <div id="main-menu" class="main-menu collapse navbar-collapse">
+            <ul class="nav navbar-nav" id="navbarlist">
+                <li>
+                    <a id="aDashboard" asp-action="Dashboard" asp-controller="Admin">
+                        <span class="material-icons mr-1">dashboard</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a id="aUsers" asp-action="UserIndex" asp-controller="Admin">
+                        <span class="material-icons mr-1">supervised_user_circle</span>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="aBlogCategories" href="~/Admin/Blog/Category">
+                        <span class="material-icons mr-1">category</span>
+                        <span>Blog Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="aBlogArticles" href="~/Admin/Blog/Article">
+                        <span class="material-icons mr-1">article</span>
+                        <span>Blog Articles</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a id="aCategories" href="~/Admin/Category">
+                        <span class="material-icons mr-1">category</span>
+                        <span>Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="aProducts" href="~/Admin/Products">
+                        <span class="material-icons mr-1">forward_to_inbox</span>
+                        <span>Products</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="aNewsletterSubscriptions" href="~/Admin/SubscribedEmails">
+                        <span class="material-icons mr-1">contact_mail</span>
+                        <span>Newsletter Subscriptions</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="aStaticPages" href="~/Admin/StaticPages">
+                        <span class="material-icons mr-1">pages</span>
+                        <span>Static Pages</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="aOrders" href="~/Admin/Order/Index">
+                        <span class="material-icons mr-1">attach_money</span>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="aEmailTemplate" href="~/Admin/EmailTemplate">
+                        <span class="material-icons mr-1">email</span>
+                        <span>Email Template</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="aContactUs" href="~/Admin/ContactUs">
+                        <span class="material-icons mr-1">contact_page</span>
+                        <span>Contact Us</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="aSetting" href="~/Admin/Setting">
+                        <span class="material-icons mr-1">settings</span>
+                        <span>Setting</span>
+                    </a>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+</aside>
+<!-- Left Panel -->

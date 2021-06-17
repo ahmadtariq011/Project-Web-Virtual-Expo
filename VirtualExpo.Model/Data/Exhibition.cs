@@ -25,7 +25,7 @@ namespace VirtualExpo.Model.Data
         public DateTime CreatedDate { get; set; }
 
         public DateTime StartDate { get; set; }
-
+        public int ExhibitionStatus { get; set; }//active or not
         public DateTime EndDate { get; set; }
         public int Status { get; set; }
         public virtual User User { get; set; }
