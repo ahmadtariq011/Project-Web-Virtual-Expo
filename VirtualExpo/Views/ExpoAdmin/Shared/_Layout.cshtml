@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Virtual Expo</title>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    @*<link rel="stylesheet" href="~/css/editor.css?v=@DateTime.Now.Ticks.ToString()" />*@
+    <link rel="stylesheet" href="~/css/normalize.css?v=@DateTime.Now.Ticks.ToString()">
+    <link rel="stylesheet" href="~/css/site.css?v=@DateTime.Now.Ticks.ToString()" />
+    <link rel="stylesheet" href="~/css/style.css?v=@DateTime.Now.Ticks.ToString()">
+    <link rel="stylesheet" href="~/css/base.css?v=@DateTime.Now.Ticks.ToString()" />
+
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    @RenderSection("Styles", false)
+
+</head>
+<body>
+    @await Html.PartialAsync("/Views/CRM/Shared/_SideNav.cshtml")
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        @await Html.PartialAsync("/Views/CRM/Shared/_Header.cshtml")
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div id="loader" class="loader">
+                    <p class="position">
+                        <img id="imgLoader" src="~/images/loaderNew.gif">
+                    </p>
+                </div>
+                @RenderBody()
+
+                <div id="popupBackground" class="divOverlay"></div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
+    </div><!-- /#right-panel -->
+    <!-- Right Panel -->
+
+    <script src="~/js/vendor/jquery-2.1.4.min.js"></script>
+    <script src="~/js/vendor/jquery-ui.min.js"></script>
+    <script src="~/js/vendor/jquery-ui-widget.js"></script>
+
+
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/main.js"></script>
+
+
+    <script src="~/js/shared/base.js"></script>
+    <script src="~/js/shared/Validation.js"></script>
+    <script src="~/js/shared/jsrender.js"></script>
+    <script src="~/js/shared/widgets/Pager.js"></script>
+    <script src="~/js/shared/Popup.js"></script>
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
