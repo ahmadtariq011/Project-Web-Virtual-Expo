@@ -96,17 +96,16 @@ namespace VirtualExpo.Dal
         {
             using (var entities = new ApplicationDbContext())
             {
-                //User dbUser = entities.Users.SingleOrDefault(p => p.Id == user.Id);
-                //dbUser.FirstName = user.FirstName;
-                //dbUser.LastName = user.LastName;
-                //dbUser.Email = user.Email;
-                //dbUser.Picture = user.Picture;
-                //dbUser.Password = user.Password;
-                //dbUser.Telephone = user.Telephone;
-                //dbUser.CNIC = user.CNIC;
-                //dbUser.UserType = user.UserType;
-                //dbUser.GenderType = user.GenderType;
-                //entities.SaveChanges();
+                User dbUser = entities.Users.SingleOrDefault(p => p.Id == user.Id);
+                dbUser.FirstName = user.FirstName;
+                dbUser.LastName = user.LastName;
+                dbUser.Email = user.Email;
+                dbUser.Password = user.Password;
+                dbUser.Telephone = user.Telephone;
+                dbUser.CNIC = user.CNIC;
+                dbUser.GenderType = user.GenderType;
+                dbUser.Description = user.Description;
+                entities.SaveChanges();
             }
         }
 
@@ -160,12 +159,44 @@ namespace VirtualExpo.Dal
             using (var entities = new ApplicationDbContext())
             {
                 var query = from user in entities.Users
+                            where user.UserType==2
                             select user;
 
                 var lst = query.ToList();
                 return lst;
             }
         }
+        public List<User> SearchExhibitors(UserSearchFilter filters)
+        {
+            int skip = (filters.PageIndex - 1) * filters.PageSize;
+
+            using (var entities = new ApplicationDbContext())
+            {
+                var query = from user in entities.Users
+                            where user.UserType == 3
+                            select user;
+
+                var lst = query.ToList();
+                return lst;
+            }
+        }
+
+        public List<User> SearchAttendee(UserSearchFilter filters)
+        {
+            int skip = (filters.PageIndex - 1) * filters.PageSize;
+
+            using (var entities = new ApplicationDbContext())
+            {
+                var query = from user in entities.Users
+                            join attendeeuser in entities.AttendeeExhibitionJunctions on user.Id equals attendeeuser.Attendee_Id
+                            where user.UserType == 4 && attendeeuser.Exibition_id == filters.Exhibition_Id
+                            select user;
+
+                var lst = query.ToList();
+                return lst;
+            }
+        }
+
 
         /// <summary>
         /// This function executes count query after applying different filters
@@ -177,6 +208,23 @@ namespace VirtualExpo.Dal
             using (var entities = new ApplicationDbContext())
             {
                 var query = from user in entities.Users
+                            where user.UserType == 2
+                            select user;
+
+                if (!string.IsNullOrEmpty(filters.Keyword))
+                {
+                    query = query.Where(p => p.FirstName.Contains(filters.Keyword) || p.LastName.Contains(filters.Keyword) || p.Email.Contains(filters.Keyword));
+                }
+
+                return query.Count();
+            }
+        }
+        public int GetSearchCountExhibitor(UserSearchFilter filters)
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                var query = from user in entities.Users
+                            where user.UserType == 3
                             select user;
 
                 if (!string.IsNullOrEmpty(filters.Keyword))
@@ -188,6 +236,23 @@ namespace VirtualExpo.Dal
             }
         }
 
+        public int GetSearchCountAttendee(UserSearchFilter filters)
+        {
+            using (var entities = new ApplicationDbContext())
+            {
 
+                var query = from user in entities.Users
+                            join attendeeuser in entities.AttendeeExhibitionJunctions on user.Id equals attendeeuser.Attendee_Id
+                            where user.UserType == 4 && attendeeuser.Exibition_id==filters.Exhibition_Id
+                            select user;
+
+                if (!string.IsNullOrEmpty(filters.Keyword))
+                {
+                    query = query.Where(p => p.FirstName.Contains(filters.Keyword) || p.LastName.Contains(filters.Keyword) || p.Email.Contains(filters.Keyword));
+                }
+
+                return query.Count();
+            }
+        }
     }
 }

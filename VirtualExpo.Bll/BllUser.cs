@@ -4,7 +4,7 @@ using VirtualExpo.Dal;
 using VirtualExpo.Model.Data;
 using VirtualExpo.Models.Filters;
 
-namespace FlightoUs.Bll
+namespace VirtualExpo.Bll
 {
     /// <summary>
     /// This class deals with User table
@@ -92,6 +92,16 @@ namespace FlightoUs.Bll
             return dalUser.Search(filters);
         }
 
+        public List<User> SearchExhibitors(UserSearchFilter filters)
+        {
+            return dalUser.SearchExhibitors(filters);
+        }
+
+        public List<User> SearchAttendee(UserSearchFilter filters)
+        {
+            return dalUser.SearchAttendee(filters);
+        }
+
         /// <summary>
         /// This function executes count query after applying different filters
         /// </summary>
@@ -100,6 +110,14 @@ namespace FlightoUs.Bll
         public int GetSearchCount(UserSearchFilter filters)
         {
             return dalUser.GetSearchCount(filters);
+        }
+        public int GetSearchCountExhibitor(UserSearchFilter filters)
+        {
+            return dalUser.GetSearchCountExhibitor(filters);
+        }
+        public int GetSearchCountAttendee(UserSearchFilter filters)
+        {
+            return dalUser.GetSearchCountAttendee(filters);
         }
     }
 }

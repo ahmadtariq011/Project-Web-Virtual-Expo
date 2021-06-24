@@ -25,7 +25,7 @@
     <script src="~/js/ExpoAdmin/User/Index.js?v=@DateTime.Now.Ticks.ToString()"></script>
 }
 <div class="right mT10">
-    <a class="btn btn-success btn-sm" asp-action="AddEditUser" asp-controller="" asp-route-id="0" asp-route-Code="" asp-route-Type="">
+    <a class="btn btn-success btn-sm" asp-action="AddEditUser" asp-controller="Admin" asp-route-id="0" asp-route-Code="" asp-route-Type="">
         <span style="position: relative; top: -5px;"> Create User</span>
         <span class="material-icons mr-1" style="position: relative; top: 3px; width: 20px;">
             add_circle
@@ -37,7 +37,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">Users</strong>&nbsp; <span id="spanTotalRecords"></span>
+                <strong class="card-title">Organizers</strong>&nbsp; <span id="spanTotalRecords"></span>
             </div>
             <div class="card-body">
 
@@ -68,7 +68,6 @@
 
                             <th class="gridSortingMenu" scope="col" sortable datafield="telephone" caption="Telephone"></th>
 
-                            <th class="gridSortingMenu" scope="col" sortable datafield="userStatusStr" caption="User Status"></th>
 
                             <th scope="col" style="width:180px;">Actions</th>
                         </tr>
@@ -101,12 +100,11 @@
         <td>{{:userName}}</td>
         <td>{{:email}}</td>
         <td>{{:telephone}}</td>
-        <td>{{:userStatusStr}}</td>
 
         <td>
-            <a onclick="ChangeStatus('Active',{{:id}});" class="text-danger " style="cursor:pointer;">
+            <a href="/Admin/AddEditUser/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
                 <span class="material-icons">
-                    toggle_on
+                    edit
                 </span>
             </a>
         </td>

@@ -1,0 +1,113 @@
+﻿@using VirtualExpo.Bll
+@{
+
+
+
+    BllExhibition bllExhibition = new BllExhibition();
+    var Exhibitions = bllExhibition.GetAll();
+    int i = 0;
+
+}
+
+
+
+@section Scripts
+{
+    <script src="~/js/ExpoAdmin/Attendee/Index.js?v=@DateTime.Now.Ticks.ToString()"></script>
+}
+
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Attendees</strong>&nbsp; <span id="spanTotalRecords"></span>
+            </div>
+            <div class="card-body">
+
+                <div id="div_message" class="note failure">
+                    <p>
+                        <span id="span_message"></span>
+                    </p>
+                </div>
+                <div class="c1 filter">
+
+                    <div class="">
+                        Search By Exhibition
+                        <select class="form-control search" id="ExhibitionId" name="ExhibitionId" onchange="SearchUsers();">
+                            <option value="">Please Select</option>
+                            @foreach (var Exhibition in Exhibitions)
+                            {
+                                if (i++ == 0)
+                                {
+                                    <option value="@Exhibition.Id" selected>@Html.Raw(Exhibition.Name + " by " + Exhibition.OraganizerName)</option>
+                                    
+                                }
+                                else
+                                {
+                                    <option value="@Exhibition.Id">@Html.Raw(Exhibition.Name + " by " + Exhibition.OraganizerName)</option>
+                                }
+                            }
+                        </select>
+                        <a title="Search" style="cursor:pointer; margin-left:5px; " onclick="SearchUsers();"><i class="material-icons " style="position:relative; top:5px;">search</i></a>
+                        <a title="Reset" style="cursor:pointer;" onclick="ResetUsers();"><i class="material-icons" style="position:relative; top:5px;">clear</i></a>
+                    </div>
+                </div>
+
+                <table id="tbl" class="table">
+                    <thead>
+                        <tr>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="firstName" caption="First Name"></th>
+
+                            <th class="gridSortingMenu" scope="col" sortable datafield="lastName" caption="Last Name"></th>
+
+                            <th class="gridSortingMenu" scope="col" sortable datafield="userName" caption="User Name"></th>
+
+                            <th class="gridSortingMenu" scope="col" sortable datafield="email" caption="Email"></th>
+
+                            <th class="gridSortingMenu" scope="col" sortable datafield="telephone" caption="Telephone"></th>
+
+
+                            <th scope="col" style="width:180px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                @*Show Pager*@
+
+                <div id="div_no_found" class="alert alert-info hide" role="alert">
+                    No Attendee Found.
+                    @*This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.*@
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script id="ListTemplateCustomers" type="text/x-jsrender">
+    <tr>
+        <td>{{:firstName}}</td>
+        <td>{{:lastName}}</td>
+        <td>{{:userName}}</td>
+        <td>{{:email}}</td>
+        <td>{{:telephone}}</td>
+
+        <td>
+            <a href="/Admin/AddEditUser/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
+                <span class="material-icons">
+                    edit
+                </span>
+            </a>
+        </td>
+    </tr>
+
+
+</script>

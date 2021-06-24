@@ -1,4 +1,30 @@
 ﻿<!-- Header-->
+@using VirtualExpo.Bll
+@using VirtualExpo.Model.Data
+@using VirtualExpo.Model.Enums;
+
+@{
+    bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
+    bool IsExhibitor = User.IsInRole(UserRoleType.Exhibitor.ToString());
+    bool IsOrganizer = User.IsInRole(UserRoleType.Organizer.ToString());
+    string typeofUserLogin = "";
+    if (IsAdmin)
+    {
+        typeofUserLogin = "Admin";
+    }
+    if (IsExhibitor)
+    {
+        typeofUserLogin = "Exhibitor";
+    }
+    if (IsOrganizer)
+    {
+        typeofUserLogin = "Organizer";
+    }
+
+
+
+    var userlogin = Convert.ToInt32(User.Identity.Name);
+}
 <header id="header" class="header">
     <div class="header-menu">
         <div class="col-sm-7">
@@ -10,19 +36,45 @@
         </div>
         <div class="col-sm-5">
             <div class="user-area dropdown float-right">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons" style="margin-top:8px;">account_circle</i>
-                </a>
-                <div class="user-menu dropdown-menu">
-                    <a class="nav-link" href="~/Admin/MyProfile">
-                        <span class="material-icons mr-1">account_circle</span>
-                        <span>My Profile</span>
+                @if (IsAdmin)
+                {
+                    <a onclick="Logout('Admin');" style="cursor:pointer;" >
+                        <span class="material-icons">
+                            logout
+                        </span>
                     </a>
-                    <a class="nav-link" href="~/Admin/Logout">
-                        <span class="material-icons mr-1">login</span>
-                        <span>Logout</span>
+                    <a asp-action="AddEditUser" asp-controller="@typeofUserLogin" asp-route-id="@userlogin" asp-route-Code="" asp-route-Type="" style="margin-left:13px;">
+                        <span class="material-icons">
+                            account_circle
+                        </span>
                     </a>
-                </div>
+                }
+                @if (IsExhibitor)
+                {
+                    <a onclick="Logout('Exhibitor');" style="cursor:pointer;" >
+                        <span class="material-icons">
+                            logout
+                        </span>
+                    </a>
+                    <a asp-action="AddEditUser" asp-controller="@typeofUserLogin" asp-route-id="@userlogin" asp-route-Code="" asp-route-Type="" style="margin-left:13px;">
+                        <span class="material-icons">
+                            account_circle
+                        </span>
+                    </a>
+                }
+                @if (IsOrganizer)
+                {
+                    <a onclick="Logout('Organizer');" style="cursor:pointer;" >
+                        <span class="material-icons">
+                            logout
+                        </span>
+                    </a>
+                    <a asp-action="AddEditUser" asp-controller="@typeofUserLogin" asp-route-id="@userlogin" asp-route-Code="" asp-route-Type="" style="margin-left:13px;">
+                        <span class="material-icons">
+                            account_circle
+                        </span>
+                    </a>
+                }
             </div>
         </div>
     </div>

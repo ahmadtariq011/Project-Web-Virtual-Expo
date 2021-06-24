@@ -26,10 +26,11 @@ namespace VirtualExpo.Controllers
         {
             return View("Views/ExpoAdmin/Login.cshtml");
         }
-        public IActionResult Dashboard()
+        public IActionResult HomeIndex()
         {
-            return View("Views/ExpoAdmin/ExpoDashboard/Dashboard/Index.cshtml");
+            return View("Views/ExpoHome/Home/Index.cshtml");
         }
+
         public IActionResult Privacy()
         {
             return View();

@@ -76,6 +76,7 @@ function SaveUser() {
         UserName: $.trim($("#txtUserName").val()),
         Email: $.trim($("#txtEmail").val()),
         Password: $.trim($("#txtPassword").val()),
+        Description: $.trim($("#txtSector").val()),
         CNIC: $.trim($("#txtCNIC").val()),
         UserTypeName: $.trim($("#txtUserType").val()),
         GenderTypename: $.trim($("#txtGender").val())

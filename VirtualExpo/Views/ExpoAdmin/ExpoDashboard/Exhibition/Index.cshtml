@@ -1,0 +1,109 @@
+﻿@using VirtualExpo.Model.Enums
+@{
+    bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
+    bool IsOrganizer = User.IsInRole(UserRoleType.Organizer.ToString());
+    bool IsExhibitor = User.IsInRole(UserRoleType.Exhibitor.ToString());
+    string typeofUserLogin = "";
+    if (IsAdmin)
+    {
+        typeofUserLogin = "Admin";
+    }
+    if (IsOrganizer)
+    {
+        typeofUserLogin = "Organizer";
+    }
+    if (IsExhibitor)
+    {
+        typeofUserLogin = "Exhibitor";
+    }
+}
+
+
+
+@section Scripts
+{
+    <script src="~/js/ExpoAdmin/Exhibition/Index.js?v=@DateTime.Now.Ticks.ToString()"></script>
+}
+<div class="right mT10">
+    <a class="btn btn-success btn-sm" asp-action="AddEditExhibition" asp-controller="@typeofUserLogin" asp-route-id="0" asp-route-Code="" asp-route-Type="">
+        <span style="position: relative; top: -5px;"> Create Exhibition</span>
+        <span class="material-icons mr-1" style="position: relative; top: 3px; width: 20px;">
+            add_circle
+        </span>
+    </a>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Exhibitions</strong>&nbsp; <span id="spanTotalRecords"></span>
+            </div>
+            <div class="card-body">
+
+                <div id="div_message" class="note failure">
+                    <p>
+                        <span id="span_message"></span>
+                    </p>
+                </div>
+                <div class="c1 filter">
+
+                    <div class="right">
+                        Search: <input id="txtSearch" style="" type="text" class="form-control search">
+                        <a title="Search" style="cursor:pointer; margin-left:5px; " onclick="SearchUsers();"><i class="material-icons " style="position:relative; top:5px;">search</i></a>
+                        <a title="Reset" style="cursor:pointer;" onclick="ResetUsers();"><i class="material-icons" style="position:relative; top:5px;">clear</i></a>
+                    </div>
+                </div>
+
+                <table id="tbl" class="table">
+                    <thead>
+                        <tr>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="name" caption="Exhibition Name"></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="oraganizerName" caption="Organizer Name"></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="description" caption="Description"></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="startdateSrt" caption="Start Date"></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="endDateStr" caption="End Date"></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="exhibitionStatusStr" caption="Exhibition Status"></th>
+
+                            <th scope="col" style="width:180px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                @*Show Pager*@
+
+                <div id="div_no_found" class="alert alert-info hide" role="alert">
+                    No Exhibition Found. Please click on Add Exhibition button to add a Exhibition.
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script id="ListTemplateCustomers" type="text/x-jsrender">
+    <tr>
+        <td>{{:name}}</td>
+        <td>{{:oraganizerName}}</td>
+        <td>{{:description}}</td>
+        <td>{{:startdateSrt}}</td>
+        <td>{{:endDateStr}}</td>
+        <td>{{:exhibitionStatusStr}}</td>
+        <td>
+            <a href="/@typeofUserLogin/AddEditExhibition/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
+                <span class="material-icons">
+                    edit
+                </span>
+            </a>
+        </td>
+    </tr>
+
+
+</script>

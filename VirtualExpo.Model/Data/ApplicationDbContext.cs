@@ -27,7 +27,10 @@ namespace VirtualExpo.Model.Data
         public virtual DbSet<RequestOrganizer> RequestOrganizer { get; set; }
         public virtual DbSet<Session> Session { get; set; }
         public virtual DbSet<WorkExperience> WorkExperience { get; set; }
+        public virtual DbSet<ContactUs> ContactUs { get; set; }
 
+
+        public virtual DbSet<AttendeeExhibitionJunction> AttendeeExhibitionJunctions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -77,6 +80,14 @@ namespace VirtualExpo.Model.Data
             builder.Entity<WorkExperience>()
                .Property(p => p.Id)
                .ValueGeneratedOnAdd();
+
+            builder.Entity<AttendeeExhibitionJunction>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+
+            builder.Entity<ContactUs>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

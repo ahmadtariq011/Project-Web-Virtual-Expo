@@ -11,6 +11,9 @@ a.navbar-brand {
 a {
   color: #0366d6;
 }
+#grad {
+    background-image: linear-gradient( to bottom right, rgb(88, 76, 82), rgb(216, 200, 209) );
+}
 
 .btn-primary {
   color: #fff;

@@ -85,7 +85,7 @@ function ResetPassword() {
 }
 
 function Logout(type) {
-    $.post("api/AccountApi/Logout", type, logoutcallback);
+    $.post("/api/UserAPI/Logout", type, logoutcallback);
 }
 function logoutcallback(data) {
     window.location.href = data.message;
