@@ -30,7 +30,22 @@ namespace VirtualExpo.Controllers
         {
             return View("Views/ExpoHome/Home/Index.cshtml");
         }
-
+        public IActionResult ContactUs()
+        {
+            return View("Views/ExpoHome/ContactUs/Index.cshtml");
+        }
+        public IActionResult ExhibitionLive()
+        {
+            return View("Views/ExpoHome/Exhibition/ExhibitionHome/ExibitionHome.cshtml");
+        }
+        public IActionResult AboutUs()
+        {
+            return View("Views/ExpoHome/AboutUs/Index.cshtml");
+        }
+        public IActionResult EventHome()
+        {
+            return View("Views/ExpoHome/Events/Home/Index.cshtml");
+        }
         public IActionResult Privacy()
         {
             return View();

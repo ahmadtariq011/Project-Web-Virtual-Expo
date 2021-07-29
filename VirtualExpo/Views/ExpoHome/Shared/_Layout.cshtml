@@ -15,6 +15,7 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/css/ExpoHome/Home/Index.css?v=@DateTime.Now.Ticks.ToString()" />
+    @RenderSection("Styles", false)
 
 </head>
 <body>
@@ -23,5 +24,24 @@
         @RenderBody()
         @await Html.PartialAsync("/Views/ExpoHome/Shared/_Footer.cshtml")
     </section>
+
+    <script src="~/js/vendor/jquery-2.1.4.min.js"></script>
+    <script src="~/js/vendor/jquery-ui.min.js"></script>
+    <script src="~/js/vendor/jquery-ui-widget.js"></script>
+
+
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/main.js"></script>
+
+
+    <script src="~/js/shared/base.js"></script>
+    <script src="~/js/shared/Validation.js"></script>
+    <script src="~/js/shared/jsrender.js"></script>
+    <script src="~/js/shared/widgets/Pager.js"></script>
+    <script src="~/js/shared/Popup.js"></script>
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

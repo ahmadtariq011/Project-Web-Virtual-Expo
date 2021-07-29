@@ -51,6 +51,40 @@ namespace VirtualExpo.Bll.Helpers
 
 
 
+        public static async Task DeliverEmail(string to, string from, string senderName, string subject, string body)
+        {
+            try
+            {
+                from = "yourfriends@lillylifestyle.com";
+
+                //var emailRequest = new SendPulseEmailRequest();
+                //emailRequest.email.from.email = from;
+                //emailRequest.email.from.name = senderName;
+
+                //emailRequest.email.to.Add(new ToSendPulse
+                //{
+                //    email = to
+                //});
+                //emailRequest.email.subject = subject;
+                //var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(body);
+                //emailRequest.email.html = Convert.ToBase64String(plainTextBytes);
+
+                //HttpClient httpClient = new HttpClient();
+                //var sendPulseTokenRequest = new SendPulseTokenRequest();
+                //var response = await httpClient.PostAsJsonAsync("https://api.sendpulse.com/oauth/access_token", sendPulseTokenRequest);
+                //if (response.StatusCode == HttpStatusCode.OK)
+                //{
+                //    var sendPulseTokenResponse = await response.Content.ReadFromJsonAsync<SendPulseTokenResponse>();
+                //    httpClient = new HttpClient();
+                //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sendPulseTokenResponse.access_token);
+                //    var emailResponse = await httpClient.PostAsJsonAsync("https://api.sendpulse.com/smtp/emails", emailRequest);
+                //}
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         public static string GetPublicIPAddress()
         {

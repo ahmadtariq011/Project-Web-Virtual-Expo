@@ -1,0 +1,6 @@
+﻿body {
+}
+.trumbowyg-box, .trumbowyg-editor {
+    min-height: 250px;
+    margin-bottom:-50px !important;
+} 

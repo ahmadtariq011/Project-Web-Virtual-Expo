@@ -1,0 +1,23 @@
+﻿body {
+    background: url(../../images/ExpoPictures/expo-bg.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-size: 100% 100%;
+}
+.feature-item {
+    margin-right: 30px;
+    padding: 18px 25px;
+    text-align: center;
+    background-color: transparent;
+    border: solid 2px #fff;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(145, 140, 145, 0.35);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(145, 140, 145, 0.35);
+    box-shadow: 0px 0px 8px 1px rgba(145, 140, 145, 0.35);
+    transition: .8s ease;
+}
+
+    .feature-item:hover {
+        background-color: #eaeded;
+        cursor: pointer;
+    }

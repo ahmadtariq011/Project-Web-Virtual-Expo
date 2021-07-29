@@ -381,13 +381,21 @@ whois-object-viewer {
     height: 14px;
 }
 .closedRow {
-    background: url(../../Images/icons/openclose.png) no-repeat 0 0;
+    background: url(../../images/icons/openclose.png) no-repeat 0 0;
     cursor: pointer;
 }
 .expandedRow {
-    background: url(../../Images/icons/openclose.png) no-repeat 0 -23px;
+    background: url(../../images/icons/openclose.png) no-repeat 0 -23px;
     cursor: pointer;
 }
+.read {
+    background-color: #CCCCCC;
+}
+
+.unRead {
+    background-color: white;
+}
+
 .chkbox {
     float: left;
     min-width: 250px;

@@ -15,6 +15,7 @@ function Login() {
     if (!Validate('#divLogin')) {
         return;
     }        
+    $("#loader").show();
 
     $("#div_message").hide();
     $("#login-button").attr("disabled", true);
@@ -28,7 +29,8 @@ function Login() {
 }
 function LoginCallBack(data) {
     $("#login-button").attr("disabled", false);
-    
+    $("#loader").hide();
+
     if (data.isSucceeded) {
         window.location.href = data.message;
     } else {

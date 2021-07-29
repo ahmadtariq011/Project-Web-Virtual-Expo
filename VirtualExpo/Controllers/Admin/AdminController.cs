@@ -56,6 +56,11 @@ namespace VirtualExpo.Web.Controllers.Admin
             return View("Views/ExpoAdmin/ExpoDashboard/RequestAdmin/Index.cshtml");
         }
 
+        public IActionResult ContactUs()
+        {
+            return View("Views/ExpoAdmin/ExpoDashboard/ContactUs.cshtml");
+        }
+
         public IActionResult AddEditAttendee(int id)
         {
             BllUser blluser = new BllUser();

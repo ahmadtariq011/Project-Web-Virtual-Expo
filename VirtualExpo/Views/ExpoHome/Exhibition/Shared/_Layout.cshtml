@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Expo Home </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/Exhibition/Home.css?v=@DateTime.Now.Ticks.ToString()" />
+
+    @RenderSection("Styles", false)
+</head>
+
+<body>
+    @await Html.PartialAsync("/Views/ExpoHome/Exhibition/Shared/_Header.cshtml")
+    @RenderBody()
+    @await Html.PartialAsync("/Views/ExpoHome/Exhibition/Shared/_Footer.cshtml")
+
+    <script src="~/js/Exhibition/Home.js?v=@DateTime.Now.Ticks.ToString()"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

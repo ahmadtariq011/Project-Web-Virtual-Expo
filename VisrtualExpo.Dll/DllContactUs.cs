@@ -6,13 +6,15 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using VirtualExpo.Model.Data;
 using VirtualExpo.Model.Filters;
+using VirtualExpo.Models.Services;
+using VirtualExpo.Entities.Filters;
 
 namespace VisrtualExpo.Dll
 {
     public class DllContactUs
     {
         /// <summary>
-        /// This function get User object by Primary Key
+        /// This function get ContactUs object by Primary Key
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -24,42 +26,47 @@ namespace VisrtualExpo.Dll
             }
         }
 
-
-
-
-
         /// <summary>
-        /// This function inserts a new record of User
+        /// This function inserts a new record of ContactUs
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="contactus"></param>
         /// <returns>returns Primary Key of new record</returns>
-        public int Insert(ContactUs Exhibition)
+        public long Insert(ContactUs contactus)
         {
             using (var entities = new ApplicationDbContext())
             {
-                entities.ContactUs.Add(Exhibition);
+                entities.ContactUs.Add(contactus);
                 entities.SaveChanges();
-                return Exhibition.Id;
+                return contactus.Id;
             }
         }
-        //public void Update(ContactUs Exhibition)
-        //{
-        //    using (var entities = new ApplicationDbContext())
-        //    {
-        //        c dbExhibition = entities.RequestAdmin.SingleOrDefault(p => p.Id == Exhibition.Id);
-
-
-        //        entities.SaveChanges();
-        //    }
-        //}
-
-
 
         /// <summary>
-        /// This function returns all records of User
+        /// This function updates ContactUs
         /// </summary>
-        /// <returns>List of User</returns>
-        public List<ContactUs> GetAll()
+        /// <param name="contactus"></param>
+        public void Update(ContactUs contactus)
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                ContactUs dbContactUs = entities.ContactUs.SingleOrDefault(p => p.Id == contactus.Id);
+                dbContactUs.Id = contactus.Id;
+                dbContactUs.Name = contactus.Name;
+                dbContactUs.Email = contactus.Email;
+                dbContactUs.Telephone = contactus.Telephone;
+                dbContactUs.Message = contactus.Message;
+                dbContactUs.CreatedDate = contactus.CreatedDate;
+                dbContactUs.IsRead = contactus.IsRead;
+
+                entities.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// This function returns all records of ContactUs
+        /// </summary>
+        /// <returns>List of ContactUs</returns>
+        public List<ContactUs> GetAllContactUss()
         {
             using (var entities = new ApplicationDbContext())
             {
@@ -76,7 +83,7 @@ namespace VisrtualExpo.Dll
         }
 
         /// <summary>
-        /// This function deletes User by its Primary Key 
+        /// This function deletes ContactUs by its Primary Key 
         /// and returns True in case of Success
         /// </summary>
         /// <param name="Id"></param>
@@ -85,12 +92,12 @@ namespace VisrtualExpo.Dll
         {
             using (var entities = new ApplicationDbContext())
             {
-                ContactUs dbExhibition = entities.ContactUs.SingleOrDefault(p => p.Id == Id);
+                ContactUs dbContactUs = entities.ContactUs.SingleOrDefault(p => p.Id == Id);
 
-                if (dbExhibition == null)
+                if (dbContactUs == null)
                     return false;
 
-                entities.ContactUs.Remove(dbExhibition);
+                entities.ContactUs.Remove(dbContactUs);
 
                 entities.SaveChanges();
             }
@@ -103,15 +110,29 @@ namespace VisrtualExpo.Dll
         /// </summary>
         /// <param name="filters"></param>
         /// <returns>IEnumerable<dynamic></returns>
-        public List<ContactUs> Search(ContactUsFilter filters)
+        public List<ContactUsModel> Search(ContactUsSearchFilter filters)
         {
             int skip = (filters.PageIndex - 1) * filters.PageSize;
 
             using (var entities = new ApplicationDbContext())
             {
-                var query = from RequestOrganizerFilter in entities.ContactUs
-                            select RequestOrganizerFilter;
+                var query = from contactus in entities.ContactUs
+                            select new ContactUsModel
+                            {
+                                Id = contactus.Id,
+                                Name = contactus.Name,
+                                Email = contactus.Email,
+                                Telephone = contactus.Telephone,
+                                Message = contactus.Message,
+                                CreatedDate = contactus.CreatedDate,
+                                IsRead = contactus.IsRead
+                            };
 
+
+                if (!string.IsNullOrEmpty(filters.Keyword))
+                {
+                    query = query.Where(p => p.Name.Contains(filters.Keyword) || p.Email.Contains(filters.Keyword) || p.Telephone.Contains(filters.Keyword) || p.Message.Contains(filters.Keyword));
+                }
 
                 if (string.IsNullOrEmpty(filters.Sort))
                 {
@@ -119,31 +140,35 @@ namespace VisrtualExpo.Dll
                 }
 
                 var lst = query.OrderBy(filters.Sort).Skip(skip).Take(filters.PageSize).ToList();
+                foreach (var contactus in lst)
+                {
+                    contactus.CreatedDateStr = string.Format("{0:MM/dd/yyyy}", contactus.CreatedDate);
+                }
+
                 return lst;
             }
         }
 
-
-
-        ///// <summary>
-        ///// This function executes count query after applying different filters
-        ///// </summary>
-        ///// <param name="filters"></param>
-        ///// <returns>Count of searched recored as integer value</returns>
-        public int GetSearchCount(ContactUsFilter filters)
+        /// <summary>
+        /// This function executes count query after applying different filters
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns>Count of searched recored as integer value</returns>
+        public int GetSearchCount(ContactUsSearchFilter filters)
         {
             using (var entities = new ApplicationDbContext())
             {
-                var query = from Exhibition in entities.ContactUs
-                            select Exhibition;
+                var query = from contactus in entities.ContactUs
+                            select contactus;
 
-
-
+                if (!string.IsNullOrEmpty(filters.Keyword))
+                {
+                    query = query.Where(p => p.Name.Contains(filters.Keyword) || p.Email.Contains(filters.Keyword) || p.Telephone.Contains(filters.Keyword) || p.Message.Contains(filters.Keyword));
+                }
 
 
                 return query.Count();
             }
         }
-
     }
 }
