@@ -1,0 +1,39 @@
+﻿@using VirtualExpo.Bll
+@{
+    int id = ViewBag.ExibitionId;
+    BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
+    var allExhibitors = bllExhibitorDescription.GetAllExhibitorsWithRespectToExhibition(id);
+}
+
+
+<div class="container-fluid">
+
+    <div class="row bg-secondary p-2 justify-content-center">
+
+        <div class="col-lg-4">
+            <input class="form-control" type="text" placeholder="Type To Search In Brands">
+        </div>
+        <span class="material-icons text-white" style="font-size: 40px;">search </span>
+
+    </div>
+
+    <div class="row mt-3 mb-3 text-center text-white">
+        @foreach (var Exhibior in allExhibitors)
+        {
+            <div class="col-xl-3 mt-3 mb-3" >
+                <a asp-action="ExpoBrandInfo" asp-controller="Attendee" asp-route-id="@id" asp-route-brandInfo="@Exhibior.Id">
+                    <div class="card col4 text-center border-warning ColHover" style="height: 250px; width:300px; border-top-left-radius: 40%; border-bottom-right-radius: 40%;">
+                        <img class="card-img mx-auto d-block mt-5" src="~/images/ExhibitorsImage/@Exhibior.Id/@Exhibior.Picture" style="width: 60%; height: 60%;" alt="@Exhibior.Name">
+                    </div>
+                </a>
+                <div class="card-body bg-warning rounded pt-2" style="width:300px;">
+                    <h5>@Exhibior.Name</h5>
+                    <b>@Exhibior.Offer</b>
+                </div>
+            </div>
+        } 
+    </div>
+    <!-- row ends here -->
+
+</div>
+<!-- container -->

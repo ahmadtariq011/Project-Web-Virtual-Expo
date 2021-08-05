@@ -72,3 +72,17 @@
 i:hover {
     color: darkblue;
 }
+.ColHover:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
+
+IForLinks:hover {
+    background-color: white;
+}
+
+.cardForBrands:hover {
+    cursor: pointer;
+    border: none;
+}

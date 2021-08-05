@@ -1,7 +1,4 @@
-﻿<div class="alert alert-dark alert-dismissible text-center">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong> Next Event Will Be Live In Few Days..! </strong>
-</div>
+﻿
 <!-- Top Alert Ends Here-->
 
 <div class="row justify-content-center text-dark sticky-top p-2 bg-white">
@@ -18,7 +15,7 @@
         <a class="nav-link" asp-controller="Home" asp-action="ContactUs"><strong>Contact</strong></a>
     </div>
     <div class="col-lg-2 text-right">
-        <button href="#" class="btn btn-dark">Login/Register</button>
+        <a asp-controller="Home" asp-action="Register" asp-route-id="0" class="btn btn-dark">Login/Register</a>
     </div>
     <div class="col-lg-2 text-left">
         <button asp-action="Login" asp-controller="Home" class="btn btn-dark">Control Panel</button>

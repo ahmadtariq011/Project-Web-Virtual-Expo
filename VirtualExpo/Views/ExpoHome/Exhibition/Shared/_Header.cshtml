@@ -1,17 +1,25 @@
-﻿
+﻿@using VirtualExpo.Bll
+
+@{
+    int id = ViewBag.ExibitionId;
+    BllExhibition bllExhibition = new BllExhibition();
+    var Exhibition = bllExhibition.GetByPK(Convert.ToInt32(id));
+    BllUser bllUser = new BllUser();
+    var orgranizer = bllUser.GetByPK(Exhibition.Organizer_User_Id);
+
+}
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" style="color: red" onclick="closeNav()">&times;</a>
     <p>------------------------------------</p>
-    <a href="#">Pavillon</a>
-    <a href="#">Exhibitors</a>
-    <a href="#">Sessions</a>
-    <a href="#">Info</a>
+    <a asp-action="ExhibitionHome" asp-controller="Attendee" asp-route-id="@id">Pavillon</a>
+    <a asp-action="ExpoBrands" asp-controller="Attendee" asp-route-id="@id">Exhibitors</a>
+    <a asp-action="ExpoInfo" asp-controller="Attendee" asp-route-id="@id">Info</a>
     <p>------------------------------------</p>
-    <a href="#">My Profile</a>
-    <a href="#">Logout</a>
+    <a asp-action="MyProfile" asp-controller="Attendee" asp-route-id="@User.Identity.Name" asp-route-exhibitionid="@id">My Profile</a>
+    <a onclick="Logout('Attendee');">Logout</a>
     <p>------------------------------------</p>
-    <a href="#">Event Organizer</a>
-    <a href="#"><img src="the news.png" alt="Event_Organizer's Name" style="width:90%;"></a>
+    <a href="#">@Html.Raw(orgranizer.FirstName +" " +orgranizer.LastName)</a>
+    <a href="#">@orgranizer.Description</a>
 
 </div>
 

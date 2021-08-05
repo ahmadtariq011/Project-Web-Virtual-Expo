@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using VirtualExpo.Bll;
+using VirtualExpo.Model.Data;
 using VirtualExpo.Models;
 
 namespace VirtualExpo.Controllers
@@ -17,14 +19,48 @@ namespace VirtualExpo.Controllers
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
             return View();
         }
+        public IActionResult Register(int id)
+        {
+            BllUser blluser = new BllUser();
+
+            BllEducation bllEducation = new BllEducation();
+            BllWorkingExperience bllWorkingExperience = new BllWorkingExperience();
+            if (blluser.GetByPK(id) == null)
+            {
+                User dbuser = new User();
+                ViewBag.data = dbuser;
+                ViewBag.title = "Register";
+                ViewBag.IsAdd = false;
+                WorkExperience dbWorkExperience = new WorkExperience();
+                ViewBag.WorkingExperiencedata = dbWorkExperience;
+                Education dbEducation = new Education();
+
+                ViewBag.Educationdata = dbEducation;
+            }
+            else
+            {
+
+                ViewBag.data = blluser.GetByPK(id);
+                ViewBag.title = "My Profile";
+                ViewBag.IsAdd = false;
+                ViewBag.WorkingExperiencedata = bllWorkingExperience.GetByAttendeeId(ViewBag.data.Id);
+
+                ViewBag.Educationdata = bllEducation.GetByAttendeeId(ViewBag.data.Id);
+            }
+            return View("Views/ExpoHome/Account/Register.cshtml");
+        }
+       
         public IActionResult Login()
         {
             return View("Views/ExpoAdmin/Login.cshtml");
+        }
+        public IActionResult LoginAtenee()
+        {
+            return View("Views/ExpoHome/Login.cshtml");
         }
         public IActionResult HomeIndex()
         {
@@ -33,10 +69,6 @@ namespace VirtualExpo.Controllers
         public IActionResult ContactUs()
         {
             return View("Views/ExpoHome/ContactUs/Index.cshtml");
-        }
-        public IActionResult ExhibitionLive()
-        {
-            return View("Views/ExpoHome/Exhibition/ExhibitionHome/ExibitionHome.cshtml");
         }
         public IActionResult AboutUs()
         {

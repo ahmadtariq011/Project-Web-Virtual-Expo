@@ -8,26 +8,19 @@ using System.Threading.Tasks;
 
 namespace VirtualExpo.Model.Data
 {
-    [Table("MediaLinks")]
-    public partial class MediaLinks
+    [Table("SocialNetwork")]
+    public class SocialNetwork
     {
         [Key]
         public int Id { get; set; }
-
-        public string Picture { get; set; }
-
-        public string PictureDescription { get; set; }
-
-        public string Video { get; set; }
-        public string VideoDescription { get; set; }
-        public string DownloadDescription { get; set; }
-        public string Download { get; set; }
-        public string Link { get; set; }
-        public string LinkDescription { get; set; }
-
+        public string Facebook { get; set; }
+        public string Instagram { get; set; }
+        public string Twitter { get; set; }
+        public string SnapChat { get; set; }
+        public string Linkdin { get; set; }
+        public string Website { get; set; }
         [ForeignKey("ExhibitorDescription")]
         public int Exhibitor_Id { get; set; }
         public virtual ExhibitorDescription Exhibitor { get; set; }
-
     }
 }

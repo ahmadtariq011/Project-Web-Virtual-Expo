@@ -83,6 +83,22 @@ namespace VisrtualExpo.Dll
             }
         }
 
+
+        public List<ExhibitorDescription> GetAllExhibitorsWithRespectToExhibition(int id)
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                try
+                {
+                    return entities.ExhibitorDescription.Where(p=> p.Exibition_id == id).ToList();
+                }
+                catch (Exception ex)
+                {
+                    // Log Exception
+                    throw ex;
+                }
+            }
+        }
         /// <summary>
         /// This function deletes User by its Primary Key 
         /// and returns True in case of Success

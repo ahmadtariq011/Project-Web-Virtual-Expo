@@ -50,7 +50,7 @@ namespace VirtualExpo
             })
             .AddCookie("Attendee", options =>
             {
-                options.LoginPath = "/Home/Login/";
+                options.LoginPath = "/Home/LoginAtenee/";
                 options.AccessDeniedPath = "/Account/AccessDenied/";
             });
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("VirtualExpoDB")));

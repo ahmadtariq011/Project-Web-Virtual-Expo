@@ -38,6 +38,12 @@ namespace VirtualExpo.Model.Enums
         Female=2,
         Other=3
     }
+    public enum ExhibitionStatusActiveOrNot
+    {
+        Active=1,
+        Inactive=2,
+        End=3
+    }
 
-    
+
 }

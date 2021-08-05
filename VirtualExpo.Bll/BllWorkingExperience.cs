@@ -5,55 +5,36 @@ using System.Text;
 using System.Threading.Tasks;
 using VirtualExpo.Model.Data;
 using VirtualExpo.Model.Filters;
-using VirtualExpo.Model.Services;
 using VisrtualExpo.Dll;
 
 namespace VirtualExpo.Bll
 {
-    public class BllExhibition
+    public class BllWorkingExperience
     {
-        DalExhibition dalExhibition = new DalExhibition();
+        DllWorkingExperience dalExhibition = new DllWorkingExperience();
 
-        public List<Exhibition> ByOrganizerId(int id)
+        public List<WorkExperience> GetAttendeeAllWorkExperience(int id)
         {
-            return dalExhibition.ByOrganizerId(id);
+            return dalExhibition.GetAttendeeAllWorkExperience(id);
         }
-        public List<Exhibition> GetAll()
-        {
-            return dalExhibition.GetAll();
-        }
-
-        public List<Exhibition> GetAllLive()
-        {
-            return dalExhibition.GetAllLive();
-        }
-        public List<Exhibition> GetAllUpcoming()
-        {
-            return dalExhibition.GetAllUpcoming();
-        }
-        public Exhibition GetByPK(int Id)
+        public WorkExperience GetByPK(int Id)
         {
             return dalExhibition.GetByPK(Id);
         }
 
-        public void ChangeStatus(Exhibition Exhibition)
+        public WorkExperience GetByAttendeeId(int Id)
         {
-            dalExhibition.ChangeStatus(Exhibition);
+            return dalExhibition.GetByAttendeeId(Id);
         }
-        public int Insert(Exhibition Exhibition)
+        public int Insert(WorkExperience Exhibition)
         {
             return dalExhibition.Insert(Exhibition);
         }
-       
-        public void Update(Exhibition Exhibition)
+
+        public void Update(WorkExperience Exhibition)
         {
             dalExhibition.Update(Exhibition);
         }
-        public List<Exhibition> GetAllExhibitions()
-        {
-            return dalExhibition.GetAllExhibitions();
-        }
-
         /// <summary>
         /// This function deletes User by its Primary Key 
         /// and returns True in case of Success
@@ -71,7 +52,7 @@ namespace VirtualExpo.Bll
         /// </summary>
         /// <param name="filters"></param>
         /// <returns>IEnumerable<dynamic></returns>
-        public List<ExhibitionModel> Search(ExhibitionSearchFilter filters)
+        public List<WorkExperience> Search(RequestAdminFilter filters)
         {
             return dalExhibition.Search(filters);
         }
@@ -80,7 +61,7 @@ namespace VirtualExpo.Bll
         /// </summary>
         /// <param name="filters"></param>
         /// <returns>Count of searched recored as integer value</returns>
-        public int GetSearchCount(ExhibitionSearchFilter filters)
+        public int GetSearchCount(RequestAdminFilter filters)
         {
             return dalExhibition.GetSearchCount(filters);
         }

@@ -28,6 +28,7 @@ namespace VirtualExpo.Model.Data
         public virtual DbSet<Session> Session { get; set; }
         public virtual DbSet<WorkExperience> WorkExperience { get; set; }
         public virtual DbSet<ContactUs> ContactUs { get; set; }
+        public virtual DbSet<SocialNetwork> SocialNetwork { get; set; }
 
 
         public virtual DbSet<AttendeeExhibitionJunction> AttendeeExhibitionJunctions { get; set; }
@@ -88,6 +89,7 @@ namespace VirtualExpo.Model.Data
             builder.Entity<ContactUs>()
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
+
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

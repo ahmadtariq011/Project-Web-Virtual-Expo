@@ -29,6 +29,20 @@ namespace VisrtualExpo.Dll
                 return entities.Exhibitions.ToList();
             }
         }
+        public List<Exhibition> GetAllLive()
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                return entities.Exhibitions.Where(p=>p.Status==1).ToList();
+            }
+        }
+        public List<Exhibition> GetAllUpcoming()
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                return entities.Exhibitions.Where(p => p.Status == 2).ToList();
+            }
+        }
 
         /// <summary>
         /// This function get User object by Primary Key

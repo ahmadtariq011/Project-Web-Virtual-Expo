@@ -4,35 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualExpo.Model.Data;
+using VirtualExpo.Model.Filters;
 using VisrtualExpo.Dll;
 
 namespace VirtualExpo.Bll
 {
-    public class BllExhibitorDescription
+    public class BllSocialNetwork
     {
-        DllExhibitorDescription dalExhibition = new DllExhibitorDescription();
+        DllSocialNetwork dalExhibition = new DllSocialNetwork();
 
-        public ExhibitorDescription GetByPK(int Id)
+        public List<SocialNetwork> GetAllSocialNetworks(int id)
+        {
+            return dalExhibition.GetAllSocialNetworks(id);
+        }
+        public SocialNetwork GetByExhiitorId(int Id)
+        {
+            return dalExhibition.GetByExhiitorId(Id);
+        }
+        public SocialNetwork GetByPK(int Id)
         {
             return dalExhibition.GetByPK(Id);
         }
 
-        public int Insert(ExhibitorDescription Exhibition)
+
+        public int Insert(SocialNetwork Exhibition)
         {
             return dalExhibition.Insert(Exhibition);
         }
 
-        public void Update(ExhibitorDescription Exhibition)
+        public void Update(SocialNetwork Exhibition)
         {
             dalExhibition.Update(Exhibition);
-        }
-        public List<ExhibitorDescription> GetAllExhibitions()
-        {
-            return dalExhibition.GetAllExhibitions();
-        }
-        public List<ExhibitorDescription> GetAllExhibitorsWithRespectToExhibition(int id)
-        {
-            return dalExhibition.GetAllExhibitorsWithRespectToExhibition(id);
         }
         /// <summary>
         /// This function deletes User by its Primary Key 
@@ -51,9 +53,19 @@ namespace VirtualExpo.Bll
         /// </summary>
         /// <param name="filters"></param>
         /// <returns>IEnumerable<dynamic></returns>
-        public ExhibitorDescription GetByUserid(int Id)
+        public List<SocialNetwork> Search(RequestAdminFilter filters)
         {
-            return dalExhibition.GetByUserid(Id);
+            return dalExhibition.Search(filters);
         }
+        /// <summary>
+        /// This function executes count query after applying different filters
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns>Count of searched recored as integer value</returns>
+        public int GetSearchCount(RequestAdminFilter filters)
+        {
+            return dalExhibition.GetSearchCount(filters);
+        }
+
     }
 }

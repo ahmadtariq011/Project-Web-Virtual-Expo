@@ -19,4 +19,9 @@
     <ProjectReference Include="..\VirtualExpo.Model\VirtualExpo.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\css\NewPop\" />
+    <Folder Include="wwwroot\js\NewPopUp\" />
+  </ItemGroup>
+
 </Project>
