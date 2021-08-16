@@ -63,10 +63,12 @@
     <div class="col-lg-3 p-2">
         <div class="card border border-secondary">
             <div class="card-body text-center">
-                <b> Testimonials </b><br />
-                <small>What customers say <wbr /> about us!</small>
+                <b> Book Event </b><br />
+                <small>Let's do <wbr />something exciting!</small>
                 <br />
-                <button class="btn text-white bg-dark m-4"><b> View </b></button>
+                <a class="btn text-white bg-dark m-4" asp-action="RequestAdmin" asp-controller="Home">
+                    <b> Book Event </b>
+                </a>
             </div>
         </div>
     </div>
@@ -77,9 +79,9 @@
                 <b> Book Your Stall </b><br />
                 <small>Learn from <wbr />our experts!</small>
                 <br />
-                <button class="btn text-white bg-dark m-4">
-                    <b> Book Now </b>
-                </button>
+                <a class="btn text-white bg-dark m-4" asp-action="RequestOrganizer" asp-controller="Home">
+                    <b> Book Stall </b>
+                </a>
             </div>
         </div>
     </div>

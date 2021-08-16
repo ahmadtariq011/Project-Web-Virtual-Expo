@@ -96,7 +96,52 @@ $(document).ready(function () {
 
     SearchUsers();
 });
+function RequestAdmin() {
+    debugger;
+    if (!Validate("#divPersonal")) {
+        return;
+    }
+    $("#loader").show();
 
+    var formData = new FormData();
+    var fileInput = $('#SponsorLisr')[0].files[0];
+
+    formData.append("Id", $("#hfUserId").val());
+    formData.append("Name", $.trim($("#txtName").val()));
+    formData.append("Location", $.trim($("#txtLocation").val()));
+    formData.append("Link", $.trim($("#txtLink").val()));
+    formData.append("moto", $.trim($("#txtMoto").val()));
+    formData.append("Email", $.trim($("#txtEmail").val()));
+    formData.append("Telephone", $.trim($("#txtTelephone").val()));
+    formData.append("DateFrom", $.trim($("#txtFrom").val()));
+    formData.append("DateTo", $.trim($("#txtTo").val()));
+    formData.append("Expected_Number_Of_Exhibitor", $.trim($("#txtNumberExhibitors").val()));
+    formData.append("NameOfEvent", $.trim($("#txtEventName").val()));
+
+    formData.append("Image", fileInput);
+
+
+    $.ajax({
+        method: "post",
+        url: '/api/RequestAdminApi/RequestAdmin',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            ShowCallbackMessage(true, data.message);
+        }
+    });
+}
+function UploadPicCallback(data) {
+    $("#loader").hide();
+    debugger;
+    if (!data.isSucceeded) {
+        ShowCallbackMessage(false, data.message);
+        return;
+    }
+
+    ShowCallbackMessage(true, data.message);
+}
 function handler_enter_search(e) {
     var charCode;
 

@@ -3,7 +3,7 @@
 
 <div class="row justify-content-center text-dark sticky-top p-2 bg-white">
     <div class="col-lg-3 navbar-brand text-center">
-        <a style="text-decoration: none" href="#"><strong>Web Educational Expo </strong></a>
+        <a style="text-decoration: none" asp-action="HomeIndex" asp-controller="Home"><strong>Web Educational Expo </strong></a>
     </div>
     <div class="col-lg-1">
         <a class="nav-link" asp-action="AboutUs" asp-controller="Home"><strong>About</strong></a>
@@ -18,6 +18,6 @@
         <a asp-controller="Home" asp-action="Register" asp-route-id="0" class="btn btn-dark">Login/Register</a>
     </div>
     <div class="col-lg-2 text-left">
-        <button asp-action="Login" asp-controller="Home" class="btn btn-dark">Control Panel</button>
+        <a asp-action="Login" asp-controller="Home" class="btn btn-dark">Control Panel</a>
     </div>
 </div>

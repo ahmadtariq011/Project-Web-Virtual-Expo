@@ -1,5 +1,110 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using VirtualExpo.Model.Enums
+@using VirtualExpo.Model.Data
+@using VirtualExpo.Bll
+@using VirtualExpo.Bll.Helpers
+@section Scripts
+{
+    <script src="~/js/ExpoAdmin/RequestAdmin/Index.js?v=@DateTime.Now.Ticks.ToString()"></script>
+    }
 @{
+
+    var Title = ViewBag.title;
+    BllExhibition bllExhibition = new BllExhibition();
+    var AllExhibitions = bllExhibition.GetAllApproveAndUpcoming();
+
 }
+<br />
+<br />
+<div class="card-head text-center">
+    <h3 class="text-dark"> <b>@ViewBag.title</b></h3>
+    <p>Already Have account lets Login with Your profile <a asp-action="Login" asp-controller="Home">LogIn</a></p>
+
+    <small class="text-danger">
+        Fill Out All (*) Fields And Click Submit
+    </small>
+</div>
+<div id="grad" class="container-fluid">
+    <!--Child Container-->
+    <div class="container pt-3" style="height: 100%; width: 100%;">
+        <!--Card as a placeholder-->
+        <div class="card pb-3" style="width: 100%;">
+            <div class="card-head ml-3">
+                <h3 class="text-dark"> <b>Organizer Info</b></h3>
+            </div>
+            <div id="div_message" class="note failure">
+                <p>
+                    <span id="span_message"></span>
+                </p>
+            </div>
+            <div class="card-body" id="divPersonal">
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Organizer Name</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtName" type="text" value="" required maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Location</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtLocation" type="text" value="" required>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Website Link </label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtLink" type="text" value="" required maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Event's Moto</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtMoto" type="text" value="" required maxlength="500">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Telephone</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtTelephone" type="text" required value="" maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtEmail" type="text" required value="" maxlength="20">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">From </label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtFrom" type="date" required value="" maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">To </label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtTo" type="date" required value="" maxlength="20">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Expected Number Of Exhibitor </label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtNumberExhibitors" type="text" required value="" maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Event Name </label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtEventName" type="text" required value="" maxlength="20">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Sponsor List </label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="SponsorLisr" name="SponsorLisr" type="file" required value="" maxlength="20">
+                    </div>
+                </div>
+                <!--Log In Button -->
+                <button onclick="RequestAdmin();"
+                        type="submit"
+                        class="btn float-right text-white"
+                        style="background-color: #6d6d6d">
+                    <b>Book Event</b>
+                </button>
+            </div>
+            <!--Card Body Ends Here -->
+        </div>
+        <!--Card Ends Here -->
+    </div>
+    <!--Inner Container Ends Here -->
+</div>
+<!--Parent Container Ends Here -->

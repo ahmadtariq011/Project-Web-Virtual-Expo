@@ -11,6 +11,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="~/css/base.css?v=@DateTime.Now.Ticks.ToString()" />
     <link rel="stylesheet" href="~/css/Exhibition/Home.css?v=@DateTime.Now.Ticks.ToString()" />
     <script src="~/js/AttendeeLogin/login.js?v=@DateTime.Now.Ticks.ToString()"></script>
 
@@ -19,6 +21,11 @@
 
 <body>
     @await Html.PartialAsync("/Views/ExpoHome/Exhibition/Shared/_Header.cshtml")
+    <div id="loader" class="loader">
+        <p class="position">
+            <img id="imgLoader" src="~/images/HomeLoader.gif">
+        </p>
+    </div>
     @RenderBody()
     @await Html.PartialAsync("/Views/ExpoHome/Exhibition/Shared/_Footer.cshtml")
 

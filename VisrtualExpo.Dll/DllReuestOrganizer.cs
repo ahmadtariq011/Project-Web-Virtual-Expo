@@ -48,7 +48,7 @@ namespace VisrtualExpo.Dll
             using (var entities = new ApplicationDbContext())
             {
                 RequestOrganizer dbExhibition = entities.RequestOrganizer.SingleOrDefault(p => p.Id == Exhibition.Id);
-
+                dbExhibition.BrandImage = Exhibition.BrandImage;
 
                 entities.SaveChanges();
             }

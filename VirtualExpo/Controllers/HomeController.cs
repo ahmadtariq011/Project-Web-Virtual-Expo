@@ -56,7 +56,7 @@ namespace VirtualExpo.Controllers
        
         public IActionResult Login()
         {
-            return View("Views/ExpoAdmin/Login.cshtml");
+            return View("Views/Login.cshtml");
         }
         public IActionResult LoginAtenee()
         {
@@ -77,6 +77,16 @@ namespace VirtualExpo.Controllers
         public IActionResult EventHome()
         {
             return View("Views/ExpoHome/Events/Home/Index.cshtml");
+        }
+        public IActionResult RequestOrganizer()
+        {
+            ViewBag.title = "Book your Stall";
+            return View("Views/ExpoHome/Requests/RequestOrganizer.cshtml");
+        }
+        public IActionResult RequestAdmin()
+        {
+            ViewBag.title = "Book Event";
+            return View("Views/ExpoHome/Requests/RequestAdmin.cshtml");
         }
         public IActionResult Privacy()
         {

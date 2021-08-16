@@ -203,7 +203,79 @@ function LoadCustomersCallBack(data) {
     $("#loader").hide();
     $("#tbl tbody").html($("#ListTemplateCustomers").render(data.Message));
 }
+//function RequestOrganizer() {
+//    if (!Validate("#divPersonal")) {
+//        return;
+//    }
+//    debugger;
+//    $("#div_message").hide(); 
+    
+//    var User =
+//    {
+//        Telephone: $.trim($("#txtTelephone").val()),
+//        Id: $("#hfUserId").val(),
+//        Name: $.trim($("#txtFirstName").val()),
+//        Description: $.trim($("#txtLastName").val()),
+//        WebsiteLink: $.trim($("#txtUserName").val()),
+//        Email: $.trim($("#txtEmail").val()),
+//        ExhibitionId: $.trim($("#txtExhibitionId").val())
 
+//    };
+
+//    $.post("/api/RequestAdminApi/RequestOrganizer", User, SaveUserCallback);
+////}
+//function SaveUserCallback(data) {
+//    //if (!data.isSucceeded) {
+//    //    ShowCallbackMessage(false, data.message);
+//    //    return;
+//    //}
+
+//    //ShowCallbackMessage(true, data.message);
+//}
+
+function UploadPic() {
+    debugger;
+    if (!Validate("#divPersonal")) {
+        return;
+    }
+    $("#loader").show();
+
+    var formData = new FormData();
+    var fileInput = $('#OrganizerImage')[0].files[0];
+
+    formData.append("Id", $("#hfUserId").val());
+    formData.append("Telephone", $.trim($("#txtTelephone").val()));
+    formData.append("Name", $.trim($("#txtFirstName").val()));
+    formData.append("Description", $.trim($("#txtLastName").val()));
+    formData.append("WebsiteLink", $.trim($("#txtUserName").val()));
+    formData.append("Email", $.trim($("#txtEmail").val()));
+    formData.append("ExhibitionId", $.trim($("#txtExhibitionId").val()));
+    formData.append("Image", fileInput);
+
+    formData.append("Image", fileInput);
+
+    $.ajax({
+        method: "post",
+        url: '/api/RequestAdminApi/UploadPic',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            ShowCallbackMessage(true, data.message);
+        }
+    });
+}
+function UploadPicCallback(data) {
+    $("#loader").hide();
+
+    debugger;
+    if (!data.isSucceeded) {
+        ShowCallbackMessage(false, data.message);
+        return;
+    }
+
+    ShowCallbackMessage(true, data.message);
+}
 function DeleteUsers(CustomerId) {
     var r = confirm('Are you sure you want to delete?');
     if (!r)

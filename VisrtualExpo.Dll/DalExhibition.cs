@@ -29,6 +29,13 @@ namespace VisrtualExpo.Dll
                 return entities.Exhibitions.ToList();
             }
         }
+        public List<Exhibition> GetAllApproveAndUpcoming()
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                return entities.Exhibitions.Where(p=>p.ExhibitionStatus==2 && p.Status==2).ToList();
+            }
+        }
         public List<Exhibition> GetAllLive()
         {
             using (var entities = new ApplicationDbContext())

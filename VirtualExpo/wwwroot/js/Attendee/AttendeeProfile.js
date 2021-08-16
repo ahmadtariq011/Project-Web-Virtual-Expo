@@ -68,9 +68,6 @@ function SaveAttendee() {
     if (!Validate("#divEducation")) {
         return;
     }
-    if (!Validate("#divWorkExperience")) {
-        return;
-    }
 
     $("#div_message").hide();
 

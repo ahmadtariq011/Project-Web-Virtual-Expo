@@ -64,7 +64,7 @@ function SaveUser() {
     if (!Validate("#BasicInfo")) {
         return;
     }
-
+    $("#loader").show();
     $("#div_message").hide();
 
     var User =

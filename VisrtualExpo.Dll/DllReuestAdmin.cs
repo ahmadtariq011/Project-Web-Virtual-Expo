@@ -48,7 +48,7 @@ namespace VisrtualExpo.Dll
             using (var entities = new ApplicationDbContext())
             {
                 RequestAdmin dbExhibition = entities.RequestAdmin.SingleOrDefault(p => p.Id == Exhibition.Id);
-
+                dbExhibition.sponsorList = Exhibition.sponsorList;
 
                 entities.SaveChanges();
             }

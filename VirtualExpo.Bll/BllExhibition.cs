@@ -22,7 +22,11 @@ namespace VirtualExpo.Bll
         {
             return dalExhibition.GetAll();
         }
-
+        public List<Exhibition> GetAllApproveAndUpcoming()
+        {
+            return dalExhibition.GetAllApproveAndUpcoming();
+        }
+        
         public List<Exhibition> GetAllLive()
         {
             return dalExhibition.GetAllLive();

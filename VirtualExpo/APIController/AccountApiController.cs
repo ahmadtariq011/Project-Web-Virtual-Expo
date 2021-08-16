@@ -101,15 +101,12 @@ namespace VirtualExpo.Web.APIController
                         new Claim(ClaimTypes.Name, id.ToString()),
                         new Claim(ClaimTypes.Role, role),
                     };
-                int user1 = Convert.ToInt32(User.Identity.Name);
 
                 ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
 
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
-                int user2 = Convert.ToInt32(User.Identity.Name);
 
                 await HttpContext.SignInAsync(role, principal);
-                int user3 = Convert.ToInt32(User.Identity.Name);
 
                 result.Message = message;
                 result.IsSucceeded = true;

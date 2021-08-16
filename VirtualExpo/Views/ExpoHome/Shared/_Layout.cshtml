@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Karma" />
+
+    <link rel="stylesheet" href="~/css/base.css?v=@DateTime.Now.Ticks.ToString()" />
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/css/ExpoHome/Home/Index.css?v=@DateTime.Now.Ticks.ToString()" />
@@ -22,6 +24,11 @@
 <body>
     <section>
         @await Html.PartialAsync("/Views/ExpoHome/Shared/_Header.cshtml")
+        <div id="loader" class="loader">
+            <p class="position">
+                <img id="imgLoader" src="~/images/HomeLoader.gif">
+            </p>
+        </div>
         @RenderBody()
         @await Html.PartialAsync("/Views/ExpoHome/Shared/_Footer.cshtml")
     </section>
