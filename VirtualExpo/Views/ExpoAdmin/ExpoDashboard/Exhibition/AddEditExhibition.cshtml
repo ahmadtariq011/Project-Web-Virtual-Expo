@@ -8,6 +8,22 @@
     <script src="~/js/ExpoAdmin/Exhibition/AddEditExhibition.js?v=@DateTime.Now.Ticks.ToString()"></script>
 }
 @{
+    bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
+    bool IsOrganizer = User.IsInRole(UserRoleType.Organizer.ToString());
+    bool IsExhibitor = User.IsInRole(UserRoleType.Exhibitor.ToString());
+    string typeofUserLogin = "";
+    if (IsAdmin)
+    {
+        typeofUserLogin = "Admin";
+    }
+    if (IsOrganizer)
+    {
+        typeofUserLogin = "Organizer";
+    }
+    if (IsExhibitor)
+    {
+        typeofUserLogin = "Exhibitor";
+    }
     var data = (Exhibition)ViewBag.data;
     var Title = ViewBag.title;
 
@@ -15,7 +31,13 @@
     //var use = Enum.GetValues(typeof(UserRoleType)).Cast<UserRoleType>().ToList();
     string ExhibitionStatus = EnumHelper.GetEnumByValue<ExhibitionStatus>(data.ExhibitionStatus.ToString()).ToString();
     //string typeofuser = EnumHelper.GetEnumByValue<UserRoleType>(data.UserType.ToString()).ToString();
+    string ActiveStatus = EnumHelper.GetEnumByValue<ExhibitionStatusActiveOrNot>(data.Status.ToString()).ToString();
 
+    var ExhibitionStatusActiveOrNot = new List<string>();
+    foreach (var g in ActiveStatus)
+    {
+        ExhibitionStatusActiveOrNot.Add(String.Join(Environment.NewLine, g));
+    }
     var ExhibitionStatuses = new List<string>();
     foreach (var g in status)
     {
@@ -44,45 +66,78 @@
 <input type="hidden" id="hfOrganizerid" value="@Convert.ToInt32(User.Identity.Name)"/>
 <div class="row">
 
-    <div class="col-lg-3"></div>
-    <div class="col-lg-6">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
         <div id="BasicInfo" class="card">
             <div class="card-header">
                 <strong>@Title</strong>
-                @if (data.Id != 0)
+                @if (IsAdmin)
                 {
-                    @if (ExhibitionStatus == "Rejected")
+                    @if (data.Id != 0)
                     {
-                        <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Approved');">
-                            <span class="material-icons">
-                                thumb_up_alt
-                            </span>
-                            <span style="position: relative;top: -6px;">Approve</span>
-                        </a>
+                        @if (ExhibitionStatus == "Rejected")
+                        {
+                            <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Approved');">
+                                <span class="material-icons">
+                                    thumb_up_alt
+                                </span>
+                                <span style="position: relative;top: -6px;">Approve</span>
+                            </a>
+                        }
+                        else if (ExhibitionStatus == "Approved")
+                        {
+                            <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Rejected');">
+                                <span class="material-icons">
+                                    trending_down
+                                </span>
+                                <span style="position: relative;top: -6px;">Rejected</span>
+                            </a>
+                        }
+                        @if (ExhibitionStatus == "Pending")
+                        {
+                            <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Approved');">
+                                <span class="material-icons">
+                                    thumb_up_alt
+                                </span>
+                                <span style="position: relative;top: -6px;">Approve</span>
+                            </a>
+                            <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Rejected');">
+                                <span class="material-icons">
+                                    trending_down
+                                </span>
+                                <span style="position: relative;top: -6px;">Rejected</span>
+                            </a>
+                        }
                     }
-                    else if (ExhibitionStatus == "Approved")
+                }
+                @if (IsOrganizer)
+                {
+                    if (ExhibitionStatus == "Approved")
                     {
-                        <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Rejected');">
-                            <span class="material-icons">
-                                trending_down
-                            </span>
-                            <span style="position: relative;top: -6px;">Rejected</span>
-                        </a>
-                    }
-                    @if (ExhibitionStatus == "Pending")
-                    {
-                        <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Approved');">
-                            <span class="material-icons">
-                                thumb_up_alt
-                            </span>
-                            <span style="position: relative;top: -6px;">Approve</span>
-                        </a>
-                        <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Rejected');">
-                            <span class="material-icons">
-                                trending_down
-                            </span>
-                            <span style="position: relative;top: -6px;">Rejected</span>
-                        </a>
+                        @if (ActiveStatus == "Inactive")
+                        {
+                            <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeExhibitionStatus('Active');">
+                                <span class="material-icons">
+                                    thumb_up_alt
+                                </span>
+                                <span style="position: relative;top: -6px;">Live Exhibition (Active)</span>
+                            </a>
+                        }
+                        else if (ActiveStatus == "Active")
+                        {
+                            <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeExhibitionStatus('Inactive');">
+                                <span class="material-icons">
+                                    trending_down
+                                </span>
+                                <span style="position: relative;top: -6px;">Stop Exhibition (InActive)</span>
+                            </a>
+                            <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeExhibitionStatus('End');">
+                                <span class="material-icons">
+                                    trending_down
+                                </span>
+                                <span style="position: relative;top: -6px;">End Exhibition (End)</span>
+                            </a>
+                        }
                     }
                 }
 
@@ -120,7 +175,7 @@
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Start Date</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtStartDate" type="datetime" value="@data.StartDate" required >
+                        <input class="form-control" id="txtStartDate" type="datetime" value="@data.StartDate" required @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                 </div>
 
@@ -128,14 +183,14 @@
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">End Date</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtEndDate" type="datetime" value="@data.EndDate" >
+                        <input class="form-control" id="txtEndDate" type="datetime" value="@data.EndDate" @(ViewBag.IsAdd ? "disabled" : "")>
 
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Status</label></div>
                     <div class="col-12 col-md-9">
-                        <select class="form-control" id="txtStatus" name="txtStatus" required @(trp ? "" : "disabled")>
+                        <select class="form-control" id="txtStatus" name="txtStatus" required @(trp ? "" : "disabled") @(ViewBag.IsAdd ? "disabled" : "")>
                             @foreach (var gender in ExhibitionStatuses)
                             {
                             if (gender == ExhibitionStatus)
@@ -203,5 +258,7 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
 </div>
-<div class="col-lg-3"></div>
+<div class="col-lg-2"></div>

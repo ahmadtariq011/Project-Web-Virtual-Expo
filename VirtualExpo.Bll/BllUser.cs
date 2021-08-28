@@ -59,7 +59,10 @@ namespace VirtualExpo.Bll
         {
             return dalUser.DeletePicture(Id);
         }
-
+        public List<User> GetOrganizers()
+        {
+            return dalUser.GetOrganizers();
+        }
         /// <summary>
         /// This function calls insert function of dal class  
         /// to insert a new record of User

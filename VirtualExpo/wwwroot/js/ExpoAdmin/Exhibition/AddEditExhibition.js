@@ -89,6 +89,35 @@ function ChangeStatusCallback(data) {
     $("#span_message").html(data.message);
     location.reload();
 }
+
+function ChangeExhibitionStatus(NewStatus) {
+    $("#loader").show();
+    debugger;
+    $("#div_messagef").hide();
+    var User =
+    {
+        Id: $("#hfUserId").val(),
+        ExhibitionStatusStr: NewStatus
+    };
+    $.post("/api/ExhibitionApi/ChangeExhibitionStatus", User, ChangeExhibitionStatusCallback);
+}
+function ChangeExhibitionStatusCallback(data) {
+    $("#loader").hide();
+    debugger;
+    if (!data.isSucceeded) {
+        $("#div_message").removeClass("success");
+        $("#div_message").addClass("failure");
+        $("#div_message").show();
+        $("#span_message").html(data.message);
+        return;
+    }
+
+    $("#div_message").removeClass("failure");
+    $("#div_message").addClass("success");
+    $("#div_message").show();
+    $("#span_message").html(data.message);
+    location.reload();
+}
 function SaveExhibition() {
     if (!Validate("#BasicInfo")) {
         return;
