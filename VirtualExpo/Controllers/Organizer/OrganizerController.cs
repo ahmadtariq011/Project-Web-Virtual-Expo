@@ -21,12 +21,31 @@ namespace VirtualExpo.Web.Controllers.Admin
             return View("Views/ExpoAdmin/ExpoDashboard/Dashboard/Index.cshtml");
         }
 
-        public IActionResult RequestByOrganizer()
+        public IActionResult RequestOrganizer()
         {
             return View("Views/ExpoAdmin/ExpoDashboard/RequestOrganizer/Index.cshtml");
         }
 
+        public IActionResult ViewRequestOrganizer(int id = 0)
+        {
+            BllRequestOrganizer bllRequestOrganizer = new BllRequestOrganizer();
+            if (bllRequestOrganizer.GetByPK(id) == null)
+            {
+                //User dbuser = new User();
+                //ViewBag.data = dbuser;
+                //ViewBag.title = "Organizer's Request";
+                //ViewBag.IsAdd = false;
 
+            }
+            else
+            {
+                ViewBag.data = bllRequestOrganizer.GetByPK(id);
+                ViewBag.title = "Exhibitor's Request";
+                ViewBag.IsAdd = true;
+
+            }
+            return View("Views/ExpoAdmin/ExpoDashboard/RequestOrganizer/RequestOrganizer.cshtml");
+        }
         public IActionResult AddEditUser(int id = 0)
         {
             BllUser blluser = new BllUser();
@@ -34,18 +53,18 @@ namespace VirtualExpo.Web.Controllers.Admin
             {
                 User dbuser = new User();
                 ViewBag.data = dbuser;
-                ViewBag.title = "Add Exhibitor";
+                ViewBag.title = "Add Organizer";
                 ViewBag.IsAdd = false;
 
             }
             else
             {
                 ViewBag.data = blluser.GetByPK(id);
-                ViewBag.title = "Edit Exhibitor";
+                ViewBag.title = "Edit Organizer";
                 ViewBag.IsAdd = false;
 
             }
-            return View("Views/ExpoAdmin/ExpoDashboard/Users/AddEditExhibitor.cshtml");
+            return View("Views/ExpoAdmin/ExpoDashboard/Users/AddEditUser.cshtml");
         }
         public IActionResult Exhibitionindex()
         {
@@ -71,6 +90,43 @@ namespace VirtualExpo.Web.Controllers.Admin
 
             }
             return View("Views/ExpoAdmin/ExpoDashboard/Exhibition/AddEditExhibition.cshtml");
+        }
+        public IActionResult ExhibitorIndex()
+        {
+            return View("Views/ExpoAdmin/ExpoDashboard/Users/ExhibitorIndex.cshtml");
+        }
+        public IActionResult AddEditExhibitor(int id = 0)
+        {
+            BllUser blluser = new BllUser();
+
+            BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
+
+            if (blluser.GetByPK(id) == null)
+            {
+                User dbuser = new User();
+                ViewBag.data = dbuser;
+                ViewBag.title = "Add Exhibitor";
+                ViewBag.IsAdd = false;
+                ExhibitorDescription dbWorkExperience = new ExhibitorDescription();
+                ViewBag.ExhibitorDescription = dbWorkExperience;
+            }
+            else
+            {
+                ViewBag.data = blluser.GetByPK(id);
+                ViewBag.title = "Edit Exhibitor";
+                ViewBag.IsAdd = false;
+                var WorkingExperiencedata = bllExhibitorDescription.GetByUserid(ViewBag.data.Id);
+                if (bllExhibitorDescription.GetByUserid(ViewBag.data.Id) != null)
+                {
+                    ViewBag.ExhibitorDescription = bllExhibitorDescription.GetByUserid(ViewBag.data.Id);
+                }
+                else
+                {
+                    ExhibitorDescription dbWorkExperience = new ExhibitorDescription();
+                    ViewBag.ExhibitorDescription = dbWorkExperience;
+                }
+            }
+            return View("Views/ExpoAdmin/ExpoDashboard/Attendee/AddEditExhibitor.cshtml");
         }
     }
 }

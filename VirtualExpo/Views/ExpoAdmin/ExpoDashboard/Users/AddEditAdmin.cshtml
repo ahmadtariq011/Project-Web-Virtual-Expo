@@ -5,22 +5,11 @@
 @using VirtualExpo.Bll.Helpers
 @section Scripts
 {
-    <script src="~/js/ExpoAdmin/Organizer/AddEditExhibitor.js?v=@DateTime.Now.Ticks.ToString()"></script>
+    <script src="~/js/ExpoAdmin/User/AddEditAdmin.js?v=@DateTime.Now.Ticks.ToString()"></script>
 }
 @{
     var data = (User)ViewBag.data;
     var Title = ViewBag.title;
-    //BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
-    var Exhibitordata = (ExhibitorDescription)ViewBag.ExhibitorDescription;
-    bool Ifadded =false;
-    if(Exhibitordata != null)
-    {
-        Ifadded = true;
-    }
-    else
-    {
-        Ifadded = false;
-    }
 
     var gen = Enum.GetValues(typeof(GenderType)).Cast<GenderType>().ToList();
     var use = Enum.GetValues(typeof(UserRoleType)).Cast<UserRoleType>().ToList();
@@ -34,17 +23,12 @@
     }
 
     BllUser bllUser = new BllUser();
-
-    var userdata = bllUser.GetAllUsers();
     var usertypes = new List<string>();
     foreach (var g in use)
     {
         usertypes.Add(String.Join(Environment.NewLine, g));
     }
-    var LoginUserId = Convert.ToInt32(User.Identity.Name);
-    BllExhibition bllExhibition = new BllExhibition();
-    var AllExhibitions = bllExhibition.GetAll();
-    var Exhibition = bllExhibition.ByOrganizerId(LoginUserId);
+    //var LoginUserId = Convert.ToInt32( User.Identity.Name);
 
     //var Loguser = (User)bllUser.GetByPK(LoginUserId);
 
@@ -53,8 +37,6 @@
 
 }
 <input type="hidden" id="hfUserId" value="@data.Id" />
-
-
 <div class="row">
 
     <!--
@@ -76,10 +58,10 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Type</label></div>
                     <div class="col-12 col-md-3">
-                        <select class="form-control" id="txtUserType" disabled name ="txtUserType" >
+                        <select class="form-control" id="txtUserType" disabled name="txtUserType">
                             @foreach (var usertype in usertypes)
                             {
-                                if (usertype == "Exhibitor")
+                                if (usertype == "Admin")
                                 {
                                     <option id="usertype" selected>@usertype</option>
                                 }
@@ -92,17 +74,17 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">First Name</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required ">
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required >
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Last Name</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required ">
+                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required >
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Name </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" required ">
+                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" @(ViewBag.IsAdd ? "disabled" : "") required >
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
                     <div class="col-12  col-md-3">
@@ -140,71 +122,16 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Telephone</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" >
+                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" ">
                     </div>
                 </div>
                 <br />
-
-
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary btn-sm" onclick="SaveUser();">
+                    <i class="material-icons " id="iconcss" style="">save</i>Save
+                </button>
             </div>
         </div>
-    </div>
-</div>
-
-
-<div id="BasicInfo2" class="card" style="padding-bottom: 0px !important; margin-bottom: 0px; margin-top: 50px;">
-
-    <div class="card-header">
-        <strong>Exhibitor Detail</strong>
-    </div>
-
-    <div class="card-body card-block">
-        <br />
-
-        <div class="row form-group">
-            <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Exhibitior Name</label></div>
-            <div class="col-12 col-md-3">
-                <input class="form-control" id="txtSector" type="text" required value="@Exhibitordata.Name" >
-            </div>
-            <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Exhibitior Moto</label></div>
-            <div class="col-12  col-md-3">
-                <input class="form-control" id="txtFlightNo" type="text" value="@Exhibitordata.Moto">
-            </div>
-        </div>
-
-        <div class="row form-group">
-            <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Exhibitior Offer</label></div>
-            <div class="col-12 col-md-3">
-                <input class="form-control" id="txtDepartureDate" type="text" required value="@Exhibitordata.Offer">
-            </div>
-            <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Exhibition</label></div>
-            <div class="col-12  col-md-3">
-                <select class="form-control" id="txtExhibitionId" name="txtAssignTo" @(Ifadded ? "disabled" : "")>
-                    <option value="">Please Select</option>
-                    @foreach (var exhib in AllExhibitions)
-                    {
-                        @if (Exhibitordata.Exibition_id == exhib.Id)
-                        {
-                            <option value="@exhib.Id" selected>@Html.Raw(exhib.Name)</option>
-                        }
-                        else
-                        {
-                            <option value="@exhib.Id">@Html.Raw(exhib.Name)</option>
-                        }
-                    }
-                </select>
-            </div>
-
-        </div>
-
-       
-        <br />
-
-
-    </div>
-    <div class="card-footer">
-        <button type="button" class="btn btn-primary btn-sm float-right" onclick="SaveUser();">
-            <i class="material-icons " id="iconcss" style="">save</i>SaveExhibitor
-        </button>
     </div>
 </div>

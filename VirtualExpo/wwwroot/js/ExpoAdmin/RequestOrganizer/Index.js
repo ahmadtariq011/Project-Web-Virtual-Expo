@@ -8,16 +8,16 @@ var sortOption = ""; var sortOption_license = "";
 //    $(this).parent().addClass('pageloadnavbar').siblings().removeClass('pageloadnavbar');
 
 //});
-function ChangeStatus(NewStatus, id) {
+function ChangeStatus(NewStatus) {
     $("#loader").show();
     debugger;
     $("#div_messagef").hide();
     var User =
     {
-        Id: id,
-        UserStatusStr: NewStatus
+        Id: $("#hfUserId").val(),
+        ExhibitionStatusStr: NewStatus
     };
-    $.post("/api/UserApi/ChangeStatus", User, ChangeStatusCallback);
+    $.post("/api/RequestAdminApi/ChangeStatus", User, ChangeStatusCallback);
 }
 function ChangeStatusCallback(data) {
     $("#loader").hide();
@@ -34,7 +34,7 @@ function ChangeStatusCallback(data) {
     $("#div_message").addClass("success");
     $("#div_message").show();
     $("#span_message").html(data.message);
-    location.reload();;
+    window.location.href = "/Organizer/RequestOrganizer/";
 }
 
 $(document).ready(function () {

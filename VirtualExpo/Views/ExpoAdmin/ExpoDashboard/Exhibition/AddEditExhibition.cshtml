@@ -98,21 +98,21 @@
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Name</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtName" type="text" value="@data.Name" @(ViewBag.IsAdd ? "disabled" : "") required maxlength="20">
+                        <input class="form-control" id="txtName" type="text" value="@data.Name" @(ViewBag.IsAdd ? "disabled" : "") required >
                     </div>
                 </div>
 
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Description</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtDescription" type="text" value="@data.Description" @(ViewBag.IsAdd ? "disabled" : "") required maxlength="20">
+                        <input class="form-control" id="txtDescription" type="text" value="@data.Description" @(ViewBag.IsAdd ? "disabled" : "") required >
                     </div>
                 </div>
 
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Organizer Name</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtOrganizername" type="text" value="@data.OraganizerName" @(ViewBag.IsAdd ? "disabled" : "") required maxlength="20">
+                        <input class="form-control" id="txtOrganizername" type="text" value="@data.OraganizerName" @(ViewBag.IsAdd ? "disabled" : "") required ">
                     </div>
                 </div>
 
@@ -120,7 +120,7 @@
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Start Date</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtStartDate" type="datetime" value="@data.StartDate" required maxlength="500">
+                        <input class="form-control" id="txtStartDate" type="datetime" value="@data.StartDate" required >
                     </div>
                 </div>
 

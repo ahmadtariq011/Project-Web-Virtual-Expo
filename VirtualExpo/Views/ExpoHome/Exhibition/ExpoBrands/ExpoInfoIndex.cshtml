@@ -1,0 +1,104 @@
+﻿@using VirtualExpo.Model.Data
+@using VirtualExpo.Bll
+@{
+    int id = ViewBag.ExibitionId;
+    BllExhibition bllExhibition = new BllExhibition();
+    var Exhibition = bllExhibition.GetByPK(Convert.ToInt32(id));
+    BllUser bllUser = new BllUser();
+    var UserInfo = bllUser.GetByPK(Exhibition.Organizer_User_Id);
+    BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
+    var allExhibitors = bllExhibitorDescription.GetAllExhibitorUserInfo(id);
+
+    var StartData = Exhibition.StartDate.ToString("dddd");
+    var EndDate = Exhibition.EndDate.ToString("dddd");
+    //string str = dow.ToString(); //string
+}
+
+
+<div class="container-fluid bg-light text-center pb-4">
+    <div class="row">
+        <div class="col">
+            <h1 class="pb-3 pt-2">Exhibition Info</h1>
+
+            <div class="card border border-primary p-3">
+                <div class="card-title">
+                    <h4> <u> <strong>@Exhibition.Name</strong> </u></h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        @Exhibition.Description</p>
+                    <strong>This Event is Organized By (@Html.Raw( UserInfo.FirstName + " "+ UserInfo.LastName ))</strong>
+                    <br>
+                    @*<a class="btn bg-primary text-white" href="#">View Organizer's Profile</a>*@
+                    <div class="card border border-warning p-3 mt-3">
+                        <div class="card-title">
+                            <h4> <u> <strong>Exhibition Schedule</strong> </u></h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive-lg">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Day</th>
+                                            <th scope="col">Start Time</th>
+                                            <th scope="col">End Time</th>
+                                            <th scope="col">Exhibition Link</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>@Exhibition.StartDate (@StartData)</td>
+                                            <td>@Exhibition.EndDate (@EndDate)</td>
+                                            <td><a class="btn bg-warning" asp-action="ExhibitionHome" asp-controller="Attendee" asp-route-id="@Exhibition.Id">Link to Exhibition</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border border-warning p-3 mt-3">
+                        <div class="card-title">
+                            <h4> <u> <strong>List Of All Exhibitors</strong> </u></h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive-lg">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Exhibitor's Name</th>
+                                            <th scope="col">Exhibitor's Moto</th>
+                                            <th scope="col">Exhibitor's Email</th>
+                                            <th scope="col">Exhibitor's Telephone</th>
+                                            <th scope="col">Profile Page</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var Exhibior in allExhibitors)
+                                        {
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>@Exhibior.Name</td>
+                                                <td>@Exhibior.Moto</td>
+                                                <td>@Exhibior.Email</td>
+                                                <td>@Exhibior.Telephone</td>
+                                                <td><a class="btn bg-warning"asp-action="ExpoBrandInfo" asp-controller="Attendee" asp-route-id="@id" asp-route-brandInfo="@Exhibior.Id">View Profile</a></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- List Of Exhibitors Card Ends Here -->
+
+
+                </div><!-- Exhibition Activities -->
+
+            </div><!-- Main Card Body -->
+        </div><!-- Main Card -->
+    </div><!-- Col -->
+</div><!-- Row -->
+</div><!-- Container Fluid -->

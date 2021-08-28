@@ -1,21 +1,7 @@
-﻿@*@using FlightoUs.Model.Enums*@
+﻿@using VirtualExpo.Model.Enums
 @{
-    //bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
-    //bool IsManager = User.IsInRole(UserRoleType.Manager.ToString());
-    //bool IsUser = User.IsInRole(UserRoleType.User.ToString());
-    //string typeofUserLogin = "";
-    //if (IsAdmin)
-    //{
-    //    typeofUserLogin = "Admin";
-    //}
-    //if (IsManager)
-    //{
-    //    typeofUserLogin = "Manager";
-    //}
-    //if (IsUser)
-    //{
-    //    typeofUserLogin = "User";
-    //}
+    bool IsOrganizer = User.IsInRole(UserRoleType.Organizer.ToString());
+
 }
 
 
@@ -24,14 +10,18 @@
 {
     <script src="~/js/ExpoAdmin/Organizer/Index.js?v=@DateTime.Now.Ticks.ToString()"></script>
 }
-<div class="right mT10">
-    <a class="btn btn-success btn-sm" asp-action="AddEditUser" asp-controller="Organizer" asp-route-id="0" asp-route-Code="" asp-route-Type="">
-        <span style="position: relative; top: -5px;"> Create Exhibitor</span>
-        <span class="material-icons mr-1" style="position: relative; top: 3px; width: 20px;">
-            add_circle
-        </span>
-    </a>
-</div>
+@if (IsOrganizer)
+{
+    <div class="right mT10">
+        <a class="btn btn-success btn-sm" asp-action="AddEditExhibitor" asp-controller="Organizer" asp-route-id="0" asp-route-Code="" asp-route-Type="">
+            <span style="position: relative; top: -5px;"> Create Exhibitor</span>
+            <span class="material-icons mr-1" style="position: relative; top: 3px; width: 20px;">
+                add_circle
+            </span>
+        </a>
+    </div>
+}
+
 <div class="clearfix"></div>
 <div class="row">
     <div class="col-lg-12">
@@ -68,19 +58,20 @@
 
                             <th class="gridSortingMenu" scope="col" sortable datafield="telephone" caption="Telephone"></th>
 
-                            <th class="gridSortingMenu" scope="col" sortable datafield="userStatusStr" caption="User Status"></th>
-
-                            <th scope="col" style="width:180px;">Actions</th>
+                            @if (IsOrganizer)
+                            {
+                                <th scope="col" style="width:180px;">Actions</th>
+                            }
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
                 @*Show Pager*@
 
-            <div id="div_no_found" class="alert alert-info hide" role="alert">
-                No Exhibitor Found. Please click on Add Exhibitor button to add a Exhibitor.
-                @*This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.*@
-            </div>
+                <div id="div_no_found" class="alert alert-info hide" role="alert">
+                    No Exhibitor Found. Please click on Add Exhibitor button to add a Exhibitor.
+                    @*This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.*@
+                </div>
 
 
 
@@ -101,15 +92,16 @@
         <td>{{:userName}}</td>
         <td>{{:email}}</td>
         <td>{{:telephone}}</td>
-        <td>{{:userStatusStr}}</td>
-
-        <td>
-            <a href="/Organizer/AddEditUser/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
-                <span class="material-icons">
-                    edit
-                </span>
-            </a>
-        </td>
+        @if (IsOrganizer)
+        {
+            <td>
+                <a href="/Organizer/AddEditExhibitor/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
+                    <span class="material-icons">
+                        edit
+                    </span>
+                </a>
+            </td>
+        }
     </tr>
 
 

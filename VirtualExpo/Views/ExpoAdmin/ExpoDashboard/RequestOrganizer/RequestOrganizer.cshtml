@@ -1,0 +1,93 @@
+﻿@using VirtualExpo.Model.Data
+
+@using VirtualExpo.Model.Enums
+@using VirtualExpo.Bll
+@using VirtualExpo.Bll.Helpers
+@{
+    var data = (RequestOrganizer)ViewBag.data;
+    var Title = ViewBag.title;
+    string Status = EnumHelper.GetEnumByValue<ExhibitionStatus>(data.Status.ToString()).ToString();
+
+
+}
+@section Scripts
+{
+    <script src="~/js/ExpoAdmin/RequestOrganizer/Index.js?v=@DateTime.Now.Ticks.ToString()"></script>
+}
+<input type="hidden" id="hfUserId" value="@data.Id" />
+
+
+<div class="row">
+
+    <!--
+    start Lead
+    -->
+    <div class="col-lg-12">
+        <div id="BasicInfo1" class="card" style="padding-bottom: 0px !important; margin-bottom: 0px;">
+            <div class="card-header">
+                <strong>@Title</strong>
+                <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Approved');">
+                    <span class="material-icons">
+                        thumb_up_alt
+                    </span>
+                    <span style="position: relative;top: -6px;">Approve</span>
+                </a>
+            </div>
+
+            <div class="card-body card-block">
+                <div id="div_message" class="note failure">
+                    <p>
+                        <span id="span_message"></span>
+                    </p>
+                </div>
+                <br />
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Exhibitor name</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.Name" disabled>
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Request date</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtTelephone" type="text" disabled value="@data.CreatedDate.Date.ToString()">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.Email" disabled>
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Telephone</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtLastName" type="text" value="@data.Telephone" disabled>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Website link </label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtUserName" type="text" value="@data.WebsiteLink" disabled>
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Detail</label></div>
+                    <div class="col-12  col-md-3">
+                        <textarea class="form-control" id="txtEmail" type="text" value="@data.Description" disabled></textarea>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Status</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.Status" disabled maxlength="20">
+                    </div>
+                </div>
+                <br />
+                <div class="row form-group">
+                    <h2 style="background-color: #E9ECEF; border-radius: 20px; padding: 10px;"><label>Brand's Image</label></h2>
+                    <br />
+                    <a href="~/images/Requests/RequestOrganizer/@data.Id/@data.BrandImage" download="@data.BrandImage">
+                        <img src="~/images/Requests/RequestOrganizer/@data.Id/@data.BrandImage" alt="@data.BrandImage" />
+                    </a>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

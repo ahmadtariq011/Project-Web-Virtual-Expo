@@ -78,33 +78,33 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">First Name</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required maxlength="20">
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required >
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Last Name</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required maxlength="20">
+                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required >
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Name </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" @(ViewBag.IsAdd ? "disabled" : "") required maxlength="20">
+                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" @(ViewBag.IsAdd ? "disabled" : "") required >
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required maxlength="500">
+                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required >
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Password</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required maxlength="50" />
+                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required  />
                         <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');" style="margin-top:15px;" />
                         <label for="chkShowHidePassword" style="margin-bottom:0px;"> Show Password</label>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required maxlength="20">
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required >
                     </div>
                 </div>
                 <div class="row form-group">
@@ -146,7 +146,7 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Description</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtSector" type="text" required value="@data.Description" maxlength="20">
+                        <input class="form-control" id="txtSector" type="text" required value="@data.Description" >
                     </div>
                    
                 </div>

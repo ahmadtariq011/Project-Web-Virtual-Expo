@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualExpo.Model.Data;
+using VirtualExpo.Model.Services;
 using VisrtualExpo.Dll;
 
 namespace VirtualExpo.Bll
@@ -33,6 +34,11 @@ namespace VirtualExpo.Bll
         public List<ExhibitorDescription> GetAllExhibitorsWithRespectToExhibition(int id)
         {
             return dalExhibition.GetAllExhibitorsWithRespectToExhibition(id);
+        }
+        
+        public List<ExhibitorDescriptionModel> GetAllExhibitorUserInfo(int id)
+        {
+            return dalExhibition.GetAllExhibitorUserInfo(id);
         }
         /// <summary>
         /// This function deletes User by its Primary Key 

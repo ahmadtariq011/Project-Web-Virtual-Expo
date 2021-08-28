@@ -1,7 +1,23 @@
 ﻿@using VirtualExpo.Bll
+@using VirtualExpo.Model.Enums
 @{
 
-
+    bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
+    bool IsManager = User.IsInRole(UserRoleType.Organizer.ToString());
+    bool IsUser = User.IsInRole(UserRoleType.Exhibitor.ToString());
+    string typeofUserLogin = "";
+    if (IsAdmin)
+    {
+        typeofUserLogin = "Admin";
+    }
+    if (IsManager)
+    {
+        typeofUserLogin = "Organizer";
+    }
+    if (IsUser)
+    {
+        typeofUserLogin = "Exhibitor";
+    }
 
     BllExhibition bllExhibition = new BllExhibition();
     var Exhibitions = bllExhibition.GetAll();
@@ -41,7 +57,7 @@
                                 if (i++ == 0)
                                 {
                                     <option value="@Exhibition.Id" selected>@Html.Raw(Exhibition.Name + " by " + Exhibition.OraganizerName)</option>
-                                    
+
                                 }
                                 else
                                 {
@@ -101,7 +117,7 @@
         <td>{{:telephone}}</td>
 
         <td>
-            <a href="/Admin/AddEditUser/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
+            <a href="/@typeofUserLogin/AddEditAttednee/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
                 <span class="material-icons">
                     edit
                 </span>

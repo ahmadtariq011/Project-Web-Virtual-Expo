@@ -11,7 +11,7 @@ $(document).ready(function () {
         var clean_uri = uri.substring(0, uri.indexOf("?"));
         window.history.replaceState({}, document.title, clean_uri);
     }
-    $("#aUsers").addClass("navbar_selected");
+    $("#aDashboard").addClass("navbar_selected");
     $("#div_AddEdit input").keyup(handler_enter);
     $("#txtExpirationDate").datepicker({ dateFormat: 'mm/dd/yy' });
 
@@ -46,7 +46,6 @@ $(document).ready(function () {
     //    }
     //});
 });
-
 function handler_enter(e) {
     var charCode;
 
@@ -61,14 +60,11 @@ function handler_enter(e) {
     }
 }
 
-function SaveAttendee() {
-    if (!Validate("#divPersonal")) {
+function SaveUser() {
+    if (!Validate("#BasicInfo")) {
         return;
     }
-    if (!Validate("#divEducation")) {
-        return;
-    }
-
+    $("#loader").show();
     $("#div_message").hide();
 
     var User =
@@ -80,29 +76,16 @@ function SaveAttendee() {
         UserName: $.trim($("#txtUserName").val()),
         Email: $.trim($("#txtEmail").val()),
         Password: $.trim($("#txtPassword").val()),
-        Description: $.trim($("#txtSector").val()),
         CNIC: $.trim($("#txtCNIC").val()),
-        GenderTypename: $.trim($("#txtGender").val()),
-        WorkId: $.trim($("#hfWorkId").val()),
-        EduId: $.trim($("#hfEducationId").val()),
-        DegreeName: $.trim($("#txtDegreeName").val()),
-        Institute: $.trim($("#txtInstitute").val()),
-        PassingYear: $.trim($("#txtPassingYear").val()),
-        Grade: $.trim($("#txtGrade").val()),
-        EmployeerName: $.trim($("#txtEmployeerName").val()),
-        Designation: $.trim($("#txtDesignation").val()),
-        From: $.trim($("#txtFrom").val()),
-        To: $.trim($("#txtTo").val()),
-        IndustryName: $.trim($("#txtIndustryName").val()),
-        WorkingStatusStr: $.trim($("#txtWorkingStatus").val()),
-        Location: $.trim($("#txtLocation").val()),
-        ExhibitionId: $.trim($("#txtExhibitionId").val()),
+        UserTypeName: $.trim($("#txtUserType").val()),
+        GenderTypename: $.trim($("#txtGender").val())
     };
 
-    $.post("/api/AttendeeApi/SaveAttendee", User, SaveUserCallback);
+    $.post("/api/UserAPI/SaveAdmin", User, SaveUserCallback);
 }
 
 function SaveUserCallback(data) {
+    $("#loader").hide();
     if (!data.isSucceeded) {
         ShowCallbackMessage(false, data.message);
         return;

@@ -96,8 +96,14 @@
         <h3 class="text-white">Login Page</h3>
         <!--Child Container-->
         <div class="container pt-3" style="height: 600px; width: 500px;">
+ 
             <!--Card as a placeholder-->
             <div class="card pb-3">
+                <div id="div_message" class="note failure">
+                    <p>
+                        <span id="span_message"></span>
+                    </p>
+                </div>
                 <img class="card-img rounded-circle mx-auto d-block"
                      src="~/images/avatar3.jpg"
                      style="width:25%"
@@ -125,6 +131,9 @@
                         <b>Login</b>
                     </button>
                     <!--Form Ends Here -->
+                    <br />
+                    <p>Dont't have Account Let's  <a asp-action="Register" asp-controller="Home" asp-route-id="0"><b>Register</b></a></p>
+
                 </div>
                 <!--Card Body Ends Here -->
 

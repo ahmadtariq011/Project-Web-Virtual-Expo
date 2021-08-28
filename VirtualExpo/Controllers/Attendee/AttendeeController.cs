@@ -31,16 +31,17 @@ namespace VirtualExpo.Web.Controllers.Admin
             ViewBag.ExibitionId = id;
             return View("Views/ExpoHome/Exhibition/ExpoBrands/Index.cshtml");
         }
+        public IActionResult ExpoInfo(int id)
+        {
+            var idof = User.Identity.Name;
+            ViewBag.ExibitionId = id;
+            return View("Views/ExpoHome/Exhibition/ExpoBrands/ExpoInfoIndex.cshtml");
+        }
         public IActionResult ExpoBrandInfo(int id, int brandInfo)
         {
             ViewBag.ExibitionId = id;
             ViewBag.BrandId = brandInfo;
             return View("Views/ExpoHome/Exhibition/ExpoBrands/ExpoBrandsInfo.cshtml");
-        }
-        public IActionResult ExpoInfo(int id)
-        {
-            ViewBag.ExibitionId = id;
-            return View("Views/ExpoHome/Exhibition/ExpoBrands/Index.cshtml");
         }
         public IActionResult AddEditUser(int id = 0)
         {

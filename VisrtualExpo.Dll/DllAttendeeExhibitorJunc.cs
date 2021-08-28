@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
-
 using VirtualExpo.Model.Data;
-using VirtualExpo.Model.Filters;
 
 namespace VisrtualExpo.Dll
 {
-    public class DllReuestOrganizer
+    public class DllAttendeeExhibitorJunc
     {
-        /// <summary>
-        /// This function get User object by Primary Key
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        public RequestOrganizer GetByPK(int Id)
+        public AttendeeExhibitionJunction GetByPK(int Id)
         {
             using (var entities = new ApplicationDbContext())
             {
-                return entities.RequestOrganizer.FirstOrDefault(p => p.Id == Id);
+                return entities.AttendeeExhibitionJunctions.FirstOrDefault(p => p.Id == Id);
             }
         }
 
-     
+
+        public AttendeeExhibitionJunction GetByAttendeeId(int Id)
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                return entities.AttendeeExhibitionJunctions.FirstOrDefault(p => p.Attendee_Id == Id);
+            }
+        }
 
 
 
@@ -34,21 +33,21 @@ namespace VisrtualExpo.Dll
         /// </summary>
         /// <param name="user"></param>
         /// <returns>returns Primary Key of new record</returns>
-        public int Insert(RequestOrganizer Exhibition)
+        public int Insert(AttendeeExhibitionJunction Exhibition)
         {
             using (var entities = new ApplicationDbContext())
             {
-                entities.RequestOrganizer.Add(Exhibition);
+                entities.AttendeeExhibitionJunctions.Add(Exhibition);
                 entities.SaveChanges();
                 return Exhibition.Id;
             }
         }
-        public void Update(RequestOrganizer Exhibition)
+        public void Update(AttendeeExhibitionJunction Exhibition)
         {
             using (var entities = new ApplicationDbContext())
             {
-                RequestOrganizer dbExhibition = entities.RequestOrganizer.SingleOrDefault(p => p.Id == Exhibition.Id);
-                dbExhibition.Status = Exhibition.Status;
+                AttendeeExhibitionJunction dbExhibition = entities.AttendeeExhibitionJunctions.SingleOrDefault(p => p.Id == Exhibition.Id);
+                dbExhibition.Exibition_id = Exhibition.Exibition_id;
 
                 entities.SaveChanges();
             }
@@ -60,13 +59,13 @@ namespace VisrtualExpo.Dll
         /// This function returns all records of User
         /// </summary>
         /// <returns>List of User</returns>
-        public List<RequestOrganizer> GetAllExhibitions()
+        public List<AttendeeExhibitionJunction> GetAllMediaLinks(int id)
         {
             using (var entities = new ApplicationDbContext())
             {
                 try
                 {
-                    return entities.RequestOrganizer.ToList();
+                    return entities.AttendeeExhibitionJunctions.ToList();
                 }
                 catch (Exception ex)
                 {
@@ -86,12 +85,12 @@ namespace VisrtualExpo.Dll
         {
             using (var entities = new ApplicationDbContext())
             {
-                RequestOrganizer dbExhibition = entities.RequestOrganizer.SingleOrDefault(p => p.Id == Id);
+                AttendeeExhibitionJunction dbExhibition = entities.AttendeeExhibitionJunctions.SingleOrDefault(p => p.Id == Id);
 
                 if (dbExhibition == null)
                     return false;
 
-                entities.RequestOrganizer.Remove(dbExhibition);
+                entities.AttendeeExhibitionJunctions.Remove(dbExhibition);
 
                 entities.SaveChanges();
             }
@@ -104,47 +103,14 @@ namespace VisrtualExpo.Dll
         /// </summary>
         /// <param name="filters"></param>
         /// <returns>IEnumerable<dynamic></returns>
-        public List<RequestOrganizer> Search(RequestOrganizerFilter filters)
-        {
-            int skip = (filters.PageIndex - 1) * filters.PageSize;
-
-            using (var entities = new ApplicationDbContext())
-            {
-                var query = from RequestOrganizerFilter in entities.RequestOrganizer
-                            select RequestOrganizerFilter;
-
-
-                if (string.IsNullOrEmpty(filters.Sort))
-                {
-                    filters.Sort = "Id Desc";
-                }
-
-                var lst = query.OrderBy(filters.Sort).Skip(skip).Take(filters.PageSize).ToList();
-                return lst;
-            }
-        }
+       
 
 
 
         ///// <summary>
         ///// This function executes count query after applying different filters
         ///// </summary>
-        ///// <param name="filters"></param>
-        ///// <returns>Count of searched recored as integer value</returns>
-        public int GetSearchCount(RequestOrganizerFilter filters)
-        {
-            using (var entities = new ApplicationDbContext())
-            {
-                var query = from Exhibition in entities.RequestOrganizer
-                            select Exhibition;
-
-
-
-
-
-                return query.Count();
-            }
-        }
+       
 
     }
 }

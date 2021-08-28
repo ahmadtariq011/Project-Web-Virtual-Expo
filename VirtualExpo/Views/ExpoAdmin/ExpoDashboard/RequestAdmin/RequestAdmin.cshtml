@@ -1,0 +1,105 @@
+﻿@using VirtualExpo.Model.Data
+
+@using VirtualExpo.Model.Enums
+@using VirtualExpo.Bll
+@using VirtualExpo.Bll.Helpers
+
+@section Scripts
+{
+    <script src="~/js/ExpoAdmin/RequestAdmin/Index.js?v=@DateTime.Now.Ticks.ToString()"></script>
+}
+@{
+    var data = (RequestAdmin)ViewBag.data;
+    var Title = ViewBag.title;
+}
+<input type="hidden" id="hfUserId" value="@data.Id" />
+
+
+<div class="row">
+
+    <!--
+    start Lead
+    -->
+    <div class="col-lg-12">
+        <div id="BasicInfo1" class="card" style="padding-bottom: 0px !important; margin-bottom: 0px;">
+            <div class="card-header">
+                <strong>@Title</strong>
+                <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" onclick="ChangeStatus('Approved');">
+                    <span class="material-icons">
+                        thumb_up_alt
+                    </span>
+                    <span style="position: relative;top: -6px;">Approve</span>
+                </a>
+            </div>
+
+            <div class="card-body card-block">
+                <div id="div_message" class="note failure">
+                    <p>
+                        <span id="span_message"></span>
+                    </p>
+                </div>
+                <br />
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Event name</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.NameOfEvent" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Request date</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtTelephone" type="text" disabled value="@data.CreatedDate.Date.ToString()" maxlength="20">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Organizer(Firm) name</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.Name" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Event's moto</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtLastName" type="text" value="@data.moto" disabled maxlength="20">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Expected number of exhibitor </label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtUserName" type="text" value="@data.Expected_Number_Of_Exhibitor" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Website link</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtEmail" type="text" value="@data.Link" disabled maxlength="500">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Target location</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.Location" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.Email" disabled maxlength="20">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">From</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.DateFrom.Date.ToString()" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">To</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtTelephone" type="text" disabled value="@data.DateTo.Date.ToString()" maxlength="20">
+                    </div>
+                </div>
+                <br />
+                <div class="row form-group">
+                    <h2 style="background-color: #E9ECEF; border-radius: 20px; padding: 10px;"><label>Sponsor's List</label></h2>
+                    <br />
+                    <a href="~/images/Requests/RequestRequestAdmin/@data.Id/@data.sponsorList" download="@data.sponsorList">
+                        <img src="~/images/Requests/RequestRequestAdmin/@data.Id/@data.sponsorList" alt="@data.sponsorList" />
+                    </a>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

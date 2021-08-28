@@ -27,6 +27,7 @@ namespace VirtualExpo.Model.Services
         public string IndustryName { get; set; }
         public string WorkingStatusStr { get; set; }
         public string Location { get; set; }
+        public int ExhibitionId { get; set; }
         public string GenderTypename { get; set; }
     }
 }

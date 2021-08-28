@@ -8,16 +8,16 @@ var sortOption = ""; var sortOption_license = "";
 //    $(this).parent().addClass('pageloadnavbar').siblings().removeClass('pageloadnavbar');
 
 //});
-function ChangeStatus(NewStatus, id) {
+function ChangeStatus(NewStatus) {
     $("#loader").show();
     debugger;
     $("#div_messagef").hide();
     var User =
     {
-        Id: id,
-        UserStatusStr: NewStatus
+        Id: $("#hfUserId").val(),
+        ExhibitionStatusStr: NewStatus
     };
-    $.post("/api/UserApi/ChangeStatus", User, ChangeStatusCallback);
+    $.post("/api/RequestAdminApi/ChangeStatusAdmin", User, ChangeStatusCallback);
 }
 function ChangeStatusCallback(data) {
     $("#loader").hide();
@@ -34,8 +34,9 @@ function ChangeStatusCallback(data) {
     $("#div_message").addClass("success");
     $("#div_message").show();
     $("#span_message").html(data.message);
-    location.reload();;
+    window.location.href = "/Admin/RequestAdmin/"
 }
+
 
 $(document).ready(function () {
     //$(window).load(function () {
@@ -101,7 +102,7 @@ function RequestAdmin() {
     if (!Validate("#divPersonal")) {
         return;
     }
-    $("#loader").show();
+    //$("#loader").show();
 
     var formData = new FormData();
     var fileInput = $('#SponsorLisr')[0].files[0];
@@ -132,8 +133,9 @@ function RequestAdmin() {
         }
     });
 }
+
 function UploadPicCallback(data) {
-    $("#loader").hide();
+    //$("#loader").hide();
     debugger;
     if (!data.isSucceeded) {
         ShowCallbackMessage(false, data.message);
@@ -141,6 +143,19 @@ function UploadPicCallback(data) {
     }
 
     ShowCallbackMessage(true, data.message);
+}
+function ShowCallbackMessage(isSucceeded, message) {
+    $("#loader").hide();
+    if (isSucceeded) {
+        $("#div_message").removeClass("failure");
+        $("#div_message").addClass("success");
+    }
+    else {
+        $("#div_message").removeClass("success");
+        $("#div_message").addClass("failure");
+    }
+    $("#div_message").show();
+    $("#span_message").html(message);
 }
 function handler_enter_search(e) {
     var charCode;

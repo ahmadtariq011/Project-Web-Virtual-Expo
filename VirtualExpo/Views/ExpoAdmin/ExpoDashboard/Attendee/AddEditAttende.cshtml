@@ -1,5 +1,265 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using VirtualExpo.Model.Enums
+@using VirtualExpo.Model.Data
+@using VirtualExpo.Bll
+@using VirtualExpo.Bll.Helpers
+@section Scripts
+{
+    <script src="~/js/Attendee/AttendeeProfile.js?v=@DateTime.Now.Ticks.ToString()"></script>
 }
+@{
+
+    var data = (User)ViewBag.data;
+    var Title = ViewBag.title;
+    WorkExperience workExperienceData = (WorkExperience)ViewBag.WorkingExperiencedata;
+    Education educationData = (Education)ViewBag.Educationdata;
+    var gen = Enum.GetValues(typeof(GenderType)).Cast<GenderType>().ToList();
+    string usergender = EnumHelper.GetEnumByValue<GenderType>(data.GenderType.ToString()).ToString();
+    string WorkingStatus = EnumHelper.GetEnumByValue<WorkingStatus>(workExperienceData.WorkingStatus.ToString()).ToString();
+
+    BllAttendeeExhibitionJunc bllAttendeeExhibitionJunc = new BllAttendeeExhibitionJunc();
+    var attendeeExhibition = bllAttendeeExhibitionJunc.GetByAttendeeId(data.Id);
+    var genders = new List<string>();
+    foreach (var g in gen)
+    {
+        genders.Add(String.Join(Environment.NewLine, g));
+    }
+    var Work = Enum.GetValues(typeof(WorkingStatus)).Cast<WorkingStatus>().ToList();
+
+    var workingstatuses = new List<string>();
+    foreach (var g in Work)
+    {
+        workingstatuses.Add(String.Join(Environment.NewLine, g));
+    }
+    BllExhibition bllExhibition = new BllExhibition();
+    var AllExhibitions = bllExhibition.GetAll();
+}
+<input type="hidden" id="hfUserId" value="@data.Id" />
+<input type="hidden" id="hfWorkId" value="@workExperienceData.Id" />
+<input type="hidden" id="hfEducationId" value="@educationData.Id" />
+
+<div class="card-head text-center">
+    <h3 class="text-dark"> <b>@ViewBag.title</b></h3>
+    <small class="text-danger">
+    </small>
+</div>
+<div id="grad" class="container-fluid" style="
+    border-radius: 10px;
+">
+    <!--Child Container-->
+    <div class="container pt-3" style="height: 100%; width: 100%;">
+        <!--Card as a placeholder-->
+        <div class="card pb-3" style="width: 100%;">
+            <div class="card-head ml-3">
+                <h3 class="text-dark"> <b>Personal Info</b></h3>
+            </div>
+            <div id="div_message" class="note failure">
+                <p>
+                    <span id="span_message"></span>
+                </p>
+            </div>
+            <div class="card-body" id="divPersonal">
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">First Name</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" disabled >
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Last Name</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" disabled >
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Name </label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" disabled ">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" disabled >
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Password</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" disabled maxlength="50" />
+                        <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');" style="margin-top:15px;" />
+                        <label for="chkShowHidePassword" style="margin-bottom:0px;"> Show Password</label>
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" disabled >
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Gender</label></div>
+                    <div class="col-12 col-md-3">
+                        <select class="form-control" id="txtGender" name="txtGender" disabled>
+                            @foreach (var gender in genders)
+                            {
+                                if (gender == usergender)
+                                {
+                                    <option id="genders" selected>@gender</option>
+                                }
+                                else
+                                {
+                                    <option id="genders">@gender</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Telephone</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtTelephone" type="text" disabled value="@data.Telephone" >
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Exhibitions</label></div>
+                    <div class="col-12  col-md-3">
+                        <select class="form-control" id="txtExhibitionId" name="txtExhibitionId" disabled>
+                            <option value="">Please Select</option>
+                            @foreach (var exhib in AllExhibitions)
+                            {
+                                if (attendeeExhibition.Exibition_id == exhib.Id)
+                                {
+                                    <option value="@exhib.Id" selected>@Html.Raw(exhib.Name)</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <!--Log In Button -->
+
+            </div>
+            <!--Card Body Ends Here -->
+        </div>
+        <!--Card Ends Here -->
+    </div>
+    <!--Inner Container Ends Here -->
+</div>
+<!--Parent Container Ends Here -->
+
+
+<div id="grad" class="container-fluid" style="
+    border-radius: 10px;
+">
+    <!--Child Container-->
+    <div class="container pt-3" style="height: 100%; width: 100%;">
+        <!--Card as a placeholder-->
+        <div class="card pb-3" style="width: 100%;">
+            <div class="card-head ml-3">
+                <h3 class="text-dark"> <b>Education</b></h3>
+            </div>
+            <div id="div_message" class="note failure">
+                <p>
+                    <span id="span_message"></span>
+                </p>
+            </div>
+            <div class="card-body" id="divEducation">
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Degree Name</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtDegreeName" type="text" value="@educationData.DegreeName" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Institute</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtInstitute" type="text" value="@educationData.Institute" disabled maxlength="20">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Passing Year </label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtPassingYear" type="datetime" value="@educationData.PassingYear" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Grade</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtGrade" type="text" value="@educationData.Grade" disabled maxlength="500">
+                    </div>
+                </div>
+            </div>
+            <!--Card Body Ends Here -->
+        </div>
+        <!--Card Ends Here -->
+    </div>
+    <!--Inner Container Ends Here -->
+</div>
+<!--Parent Container Ends Here -->
+
+
+
+<div id="grad" class="container-fluid" style="
+    border-radius: 10px;
+">
+    <!--Child Container-->
+    <div class="container pt-3" style="height: 100%; width: 100%;">
+        <!--Card as a placeholder-->
+        <div class="card pb-3" style="width: 100%;">
+            <div class="card-head ml-3">
+                <h3 class="text-dark"> <b>Work Experience</b></h3>
+            </div>
+            <div id="div_message" class="note failure">
+                <p>
+                    <span id="span_message"></span>
+                </p>
+            </div>
+            <div class="card-body" id="divWorkExperience">
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Employeer Name</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtEmployeerName" type="text" value="@workExperienceData.EmployeerName" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Designation</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtDesignation" type="text" value="@workExperienceData.Designation" disabled maxlength="20">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">From </label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtFrom" type="datetime" value="@workExperienceData.From" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">To</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtTo" type="datetime" value="@workExperienceData.To" disabled maxlength="500">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Industry </label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtIndustryName" type="text" value="@workExperienceData.IndustryName" disabled maxlength="20">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">WorkingStatus</label></div>
+                    <div class="col-12 col-md-3">
+                        <select class="form-control" id="txtWorkingStatus" name="txtWorkingStatus" disabled>
+                            @foreach (var gender in workingstatuses)
+                            {
+                                if (gender == WorkingStatus)
+                                {
+                                    <option id="genders" selected>@gender</option>
+                                }
+                                else
+                                {
+                                    <option id="genders">@gender</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Location</label></div>
+                    <div class="col-12  col-md-3">
+                        <input class="form-control" id="txtLocation" type="text" disabled value="@workExperienceData.Location" maxlength="20">
+                    </div>
+                </div>
+
+                <!--Log In Button -->
+                
+            </div>
+            <!--Card Body Ends Here -->
+        </div>
+        <!--Card Ends Here -->
+    </div>
+    <!--Inner Container Ends Here -->
+</div>
+<!--Parent Container Ends Here -->
+<br />
+<br />

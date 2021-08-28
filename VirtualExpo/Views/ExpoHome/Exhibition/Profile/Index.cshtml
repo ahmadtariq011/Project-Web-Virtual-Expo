@@ -35,7 +35,7 @@
 <input type="hidden" id="hfEducationId" value="@educationData.Id" />
 
 <div class="card-head text-center">
-    <h3 class="text-dark"> <b>ViewBag.title</b></h3>
+    <h3 class="text-dark"> <b>@ViewBag.title</b></h3>
     <small class="text-danger">
         Fill Out All (*) Fields And Click Submit
     </small>
@@ -57,33 +57,33 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">First Name</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required maxlength="20">
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Last Name</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required maxlength="20">
+                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Name </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" required maxlength="20">
+                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required maxlength="500">
+                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required >
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Password</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required maxlength="50" />
+                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required />
                         <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');" style="margin-top:15px;" />
                         <label for="chkShowHidePassword" style="margin-bottom:0px;"> Show Password</label>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required maxlength="20">
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -105,7 +105,7 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Telephone</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" maxlength="20">
+                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" >
                     </div>
                 </div>
 
@@ -138,21 +138,21 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Degree Name</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtDegreeName" type="text" value="@educationData.DegreeName" required maxlength="20">
+                        <input class="form-control" id="txtDegreeName" type="text" value="@educationData.DegreeName" required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Institute</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtInstitute" type="text" value="@educationData.Institute" required maxlength="20">
+                        <input class="form-control" id="txtInstitute" type="text" value="@educationData.Institute" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Passing Year </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtPassingYear" type="datetime" value="@educationData.PassingYear" required maxlength="20">
+                        <input class="form-control" id="txtPassingYear" type="datetime" value="@educationData.PassingYear" required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Grade</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtGrade" type="text" value="@educationData.Grade" required maxlength="500">
+                        <input class="form-control" id="txtGrade" type="text" value="@educationData.Grade" required >
                     </div>
                 </div>
             </div>
@@ -183,27 +183,27 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Employeer Name</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtEmployeerName" type="text" value="@workExperienceData.EmployeerName" required maxlength="20">
+                        <input class="form-control" id="txtEmployeerName" type="text" value="@workExperienceData.EmployeerName" required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Designation</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtDesignation" type="text" value="@workExperienceData.Designation" required maxlength="20">
+                        <input class="form-control" id="txtDesignation" type="text" value="@workExperienceData.Designation" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">From </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtFrom" type="datetime" value="@workExperienceData.From" required maxlength="20">
+                        <input class="form-control" id="txtFrom" type="datetime" value="@workExperienceData.From" required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">To</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtTo" type="datetime" value="@workExperienceData.To" required maxlength="500">
+                        <input class="form-control" id="txtTo" type="datetime" value="@workExperienceData.To" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Industry </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtIndustryName" type="text" value="@workExperienceData.IndustryName" required maxlength="20">
+                        <input class="form-control" id="txtIndustryName" type="text" value="@workExperienceData.IndustryName" required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">WorkingStatus</label></div>
                     <div class="col-12 col-md-3">
@@ -225,16 +225,16 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Location</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtLocation" type="text" required value="@workExperienceData.Location" maxlength="20">
+                        <input class="form-control" id="txtLocation" type="text" required value="@workExperienceData.Location">
                     </div>
                 </div>
 
                 <!--Log In Button -->
                 <button onclick="SaveAttendee();"
                         type="submit"
-                        class="btn btn-block text-white"
+                        class="btn float-right text-white"
                         style="background-color: #6d6d6d">
-                    <b>SignIn</b>
+                    <b>Update</b>
                 </button>
             </div>
             <!--Card Body Ends Here -->

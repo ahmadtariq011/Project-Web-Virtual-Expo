@@ -51,6 +51,12 @@ namespace VirtualExpo.Web.APIController
 
                     int UserId = bllUser.Insert(dbUser);
 
+                    BllAttendeeExhibitionJunc bllAttendeeExhibitionJunc = new BllAttendeeExhibitionJunc();
+                    AttendeeExhibitionJunction attendeeExhibitionJunction = new AttendeeExhibitionJunction();
+                    attendeeExhibitionJunction.Attendee_Id = UserId;
+                    attendeeExhibitionJunction.Exibition_id = user.ExhibitionId;
+                    bllAttendeeExhibitionJunc.Insert(attendeeExhibitionJunction);
+
                     Education education = new Education();
                     education.DegreeName = user.DegreeName;
                     education.PassingYear = user.PassingYear;
@@ -73,7 +79,7 @@ namespace VirtualExpo.Web.APIController
 
                     result.IsSucceeded = true;
                     result.TotalCount = UserId;
-                    result.Message = "Attendee is Successfully Registered";
+                    result.Message = "You Are Successfully Registered";
 
                 }
                 else
@@ -95,13 +101,18 @@ namespace VirtualExpo.Web.APIController
 
                     bllUser.Update(dbUser);
 
+
+                    BllAttendeeExhibitionJunc bllAttendeeExhibitionJunc = new BllAttendeeExhibitionJunc();
+                    AttendeeExhibitionJunction attendeeExhibitionJunction = new AttendeeExhibitionJunction();
+                    attendeeExhibitionJunction.Exibition_id = user.ExhibitionId;
+                    attendeeExhibitionJunction.Attendee_Id = user.Id;
+
                     Education education = new Education();
                     education.DegreeName = user.DegreeName;
                     education.PassingYear = user.PassingYear;
                     education.Institute = user.Institute;
                     education.Grade = user.Grade;
-                    education.Attendee_User_Id = dbUser.Id;
-                    bllEducation.Insert(education);
+                    education.Attendee_User_Id = user.Id;
 
                     WorkExperience workExperience = new WorkExperience();
                     workExperience.EmployeerName = user.EmployeerName;
@@ -112,8 +123,7 @@ namespace VirtualExpo.Web.APIController
                     workExperience.Location = user.Location;
                     WorkingStatus working = (WorkingStatus)Enum.Parse(typeof(WorkingStatus), user.WorkingStatusStr);
                     workExperience.WorkingStatus = Convert.ToInt32(working);
-                    workExperience.Attendee_User_Id = dbUser.Id;
-                    bllWorkingExperience.Insert(workExperience);
+                    workExperience.Attendee_User_Id = user.Id;
                     if (bllEducation.GetByAttendeeId(user.Id) != null)
                     {
                         bllEducation.Update(education);
@@ -129,6 +139,14 @@ namespace VirtualExpo.Web.APIController
                     else
                     {
                         bllWorkingExperience.Insert(workExperience);
+                    }
+                    if (bllAttendeeExhibitionJunc.GetByAttendeeId(user.Id) != null)
+                    {
+                        bllAttendeeExhibitionJunc.Update(attendeeExhibitionJunction);
+                    }
+                    else
+                    {
+                        bllAttendeeExhibitionJunc.Insert(attendeeExhibitionJunction);
                     }
                     result.IsSucceeded = true;
                     result.Message = "Attendee is Successfully Updated";

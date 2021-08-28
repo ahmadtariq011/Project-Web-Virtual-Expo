@@ -35,7 +35,7 @@
                     </li>
 
                     <li>
-                        <a id="aUsers" asp-action="AttendeeIndex" asp-controller="Admin">
+                        <a id="aAttendee" asp-action="AttendeeIndex" asp-controller="Admin">
                             <span class="material-icons mr-1">supervised_user_circle</span>
                             <span>Attendees</span>
                         </a>
@@ -48,13 +48,20 @@
                             <span>Exhibition</span>
                         </a>
                     </li>
-
                     <li>
-                        <a id="aBlogCategories" asp-action="RequestByOrganizers" asp-controller="Admin">
+                        <a id="aBlogCategories" asp-action="RequestAdmin" asp-controller="Admin">
                             <span class="material-icons">
                                 request_page
                             </span>
                             <span>Requests For Organizing Event</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="aBlogCategories" asp-action="ExhibitorIndex" asp-controller="Admin">
+                            <span class="material-icons">
+                                request_page
+                            </span>
+                            <span>Exhibitors</span>
                         </a>
                     </li>
                     <li>
@@ -96,7 +103,15 @@
                         </a>
                     </li>
                     <li>
-                        <a id="aBlogCategories" asp-action="RequestByOrganizer" asp-controller="Organizer">
+                        <a id="aBlogCategories" asp-action="ExhibitorIndex" asp-controller="Organizer">
+                            <span class="material-icons">
+                                request_page
+                            </span>
+                            <span>Exhibitors</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="aBlogCategories" asp-action="RequestOrganizer" asp-controller="Organizer">
                             <span class="material-icons">
                                 museum
                             </span>
@@ -109,24 +124,16 @@
                 {
 
                     <li>
-                        <a id="aDashboard" asp-action="Dashboard" asp-controller="Organizer">
+                        <a id="aDashboard" asp-action="Dashboard" asp-controller="Exhibitor">
                             <span class="material-icons mr-1">dashboard</span>
                             <span>Dashboard</span>
                         </a>
                     </li>
 
                     <li>
-                        <a id="aUsers" asp-action="UserIndex" asp-controller="Organizer">
+                        <a id="aUsers" asp-action="AttendeeIndex" asp-controller="Exhibitor">
                             <span class="material-icons mr-1">supervised_user_circle</span>
                             <span>Attendees</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="aBlogCategories" asp-action="Exhibitionindex" asp-controller="Organizer">
-                            <span class="material-icons">
-                                museum
-                            </span>
-                            <span>Exhibition</span>
                         </a>
                     </li>
                 }

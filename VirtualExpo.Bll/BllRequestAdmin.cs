@@ -44,7 +44,7 @@ namespace VirtualExpo.Bll
         /// </summary>
         /// <param name="Id"></param>
         /// <returns>True/False</returns>
-        public Boolean DeleteExhibitions(int Id)
+        public Boolean Delete(int Id)
         {
             return dalExhibition.Delete(Id);
         }

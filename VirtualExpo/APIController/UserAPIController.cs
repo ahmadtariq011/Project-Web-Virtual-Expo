@@ -142,6 +142,71 @@ namespace VirtualExpo.Web.APIController
         }
 
         [HttpPost]
+        public ServiceResponse SaveAdmin(UserModel user)
+        {
+            try
+            {
+
+                if (bllUser.GetByPK(user.Id) == null)
+                {
+                    if (bllUser.GetByUserName(user.UserName) != null)
+                    {
+                        result.IsSucceeded = false;
+                        result.Message = "UserName is already exists.";
+                        return result;
+                    }
+                    User dbUser = new User();
+                    dbUser.FirstName = user.FirstName;
+                    dbUser.LastName = user.LastName;
+                    dbUser.UserName = user.UserName;
+                    dbUser.Email = user.Email;
+                    dbUser.Password = user.Password;
+                    dbUser.Telephone = user.Telephone;
+                    dbUser.CNIC = user.CNIC;
+                    dbUser.CreatedDate = DateTime.Now;
+                    GenderType gender = (GenderType)Enum.Parse(typeof(GenderType), user.GenderTypename);
+                    UserRoleType usertyp = (UserRoleType)Enum.Parse(typeof(UserRoleType), user.UserTypeName);
+                    dbUser.UserType = Convert.ToInt32(usertyp);
+                    dbUser.GenderType = Convert.ToInt32(gender);
+
+
+                    int UserId = bllUser.Insert(dbUser);
+                    result.IsSucceeded = true;
+                    result.TotalCount = UserId;
+                    result.Message = "Admin is Successfully Created";
+
+                }
+                else
+                {
+                    User dbUser = bllUser.GetByPK(user.Id);
+
+                    dbUser.FirstName = user.FirstName;
+                    dbUser.LastName = user.LastName;
+                    dbUser.UserName = user.UserName;
+                    dbUser.Email = user.Email;
+                    dbUser.Password = user.Password;
+                    dbUser.Telephone = user.Telephone;
+                    dbUser.CNIC = user.CNIC;
+                    dbUser.CreatedDate = DateTime.Now;
+                    GenderType gender = (GenderType)Enum.Parse(typeof(GenderType), user.GenderTypename);
+                    dbUser.GenderType = Convert.ToInt32(gender);
+
+
+                    bllUser.Update(dbUser);
+                    result.IsSucceeded = true;
+                    result.Message = "Admin is Successfully Updated";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                result.IsSucceeded = false;
+                result.Message = ex.Message + "<br>" + ex.StackTrace;
+            }
+            return result;
+        }
+
+        [HttpPost]
         public ServiceResponse SaveExhibitor(ExhibitorDescriptionModel user)
         {
             try

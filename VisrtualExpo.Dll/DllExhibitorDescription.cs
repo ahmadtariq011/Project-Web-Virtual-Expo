@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VirtualExpo.Model.Data;
+using VirtualExpo.Model.Services;
 
 namespace VisrtualExpo.Dll
 {
@@ -99,6 +100,31 @@ namespace VisrtualExpo.Dll
                 }
             }
         }
+
+        public List<ExhibitorDescriptionModel> GetAllExhibitorUserInfo(int id)
+        {
+            //int skip = (filters.PageIndex - 1) * filters.PageSize;
+
+            using (var entities = new ApplicationDbContext())
+            {
+                var query = from Exhibitor in entities.ExhibitorDescription
+                            join ExhibitorUser in entities.Users on Exhibitor.UserId equals ExhibitorUser.Id
+                            where Exhibitor.Exibition_id == id
+                            select new ExhibitorDescriptionModel
+                            {
+                                Id = Exhibitor.Id,
+                                Name = Exhibitor.Name,
+                                Email = ExhibitorUser.Email,
+                                Telephone = ExhibitorUser.Telephone,
+                                Moto = Exhibitor.Moto
+                            };
+
+
+                var lst = query.ToList();
+                return lst;
+            }
+        }
+
         /// <summary>
         /// This function deletes User by its Primary Key 
         /// and returns True in case of Success
