@@ -22,6 +22,10 @@ namespace VirtualExpo.Bll
         {
             return dalExhibition.GetAll();
         }
+        public List<Exhibition> GetOrganizersExhibition(int id)
+        {
+            return dalExhibition.GetOrganizersExhibition(id);
+        }
         public List<Exhibition> GetAllApproveAndUpcoming()
         {
             return dalExhibition.GetAllApproveAndUpcoming();
@@ -39,10 +43,13 @@ namespace VirtualExpo.Bll
         {
             return dalExhibition.GetByPK(Id);
         }
-
         public void ChangeStatus(Exhibition Exhibition)
         {
             dalExhibition.ChangeStatus(Exhibition);
+        }
+        public void ChangeExhibitionStatus(Exhibition Exhibition)
+        {
+            dalExhibition.ChangeExhibitionStatus(Exhibition);
         }
         public int Insert(Exhibition Exhibition)
         {

@@ -14,7 +14,10 @@
     //string str = dow.ToString(); //string
 }
 
-
+@section Scripts
+{
+    <script src="~/js/AttendeeLogin/EventCopy.js"></script>
+}
 <div class="container-fluid bg-light text-center pb-4">
     <div class="row">
         <div class="col">
@@ -26,8 +29,9 @@
                 </div>
                 <div class="card-body">
                     <p>
-                        @Exhibition.Description</p>
-                    <strong>This Event is Organized By (@Html.Raw( UserInfo.FirstName + " "+ UserInfo.LastName ))</strong>
+                        @Exhibition.Description
+                    </p>
+                    <strong>This Event is Organized By (@Html.Raw(UserInfo.FirstName + " " + UserInfo.LastName))</strong>
                     <br>
                     @*<a class="btn bg-primary text-white" href="#">View Organizer's Profile</a>*@
                     <div class="card border border-warning p-3 mt-3">
@@ -50,7 +54,7 @@
                                             <th scope="row">1</th>
                                             <td>@Exhibition.StartDate (@StartData)</td>
                                             <td>@Exhibition.EndDate (@EndDate)</td>
-                                            <td><a class="btn bg-warning" asp-action="ExhibitionHome" asp-controller="Attendee" asp-route-id="@Exhibition.Id">Link to Exhibition</a></td>
+                                            <td><a class="btn bg-warning" onclick="CopyLinkToExhibition(@Exhibition.Id)">Link to Exhibition</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -84,7 +88,7 @@
                                                 <td>@Exhibior.Moto</td>
                                                 <td>@Exhibior.Email</td>
                                                 <td>@Exhibior.Telephone</td>
-                                                <td><a class="btn bg-warning"asp-action="ExpoBrandInfo" asp-controller="Attendee" asp-route-id="@id" asp-route-brandInfo="@Exhibior.Id">View Profile</a></td>
+                                                <td><a class="btn bg-warning" asp-action="ExpoBrandInfo" asp-controller="Attendee" asp-route-id="@id" asp-route-brandInfo="@Exhibior.Id">View Profile</a></td>
                                             </tr>
                                         }
                                     </tbody>

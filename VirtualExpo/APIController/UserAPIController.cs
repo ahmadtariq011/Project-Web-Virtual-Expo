@@ -21,6 +21,12 @@ namespace VirtualExpo.Web.APIController
     public class UserAPIController : Controller
     {
         BllUser bllUser = new BllUser();
+        private IWebHostEnvironment _environment;
+
+        public UserAPIController(IWebHostEnvironment environment)
+        {
+            _environment = environment;
+        }
 
         ServiceResponse result = new ServiceResponse();
         [HttpPost]
@@ -142,19 +148,27 @@ namespace VirtualExpo.Web.APIController
         }
 
         [HttpPost]
-        public ServiceResponse SaveAdmin(UserModel user)
+        public async Task<ServiceResponse> SaveAdmin(UserModel user)
         {
             try
             {
 
                 if (bllUser.GetByPK(user.Id) == null)
                 {
+
+                    string fileExtentsion = System.IO.Path.GetExtension(user.Image.FileName).ToLower();
+                    if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                    {
+                        result.IsSucceeded = false;
+                        result.Message = "Please Upload Image type object ";
+                    }
                     if (bllUser.GetByUserName(user.UserName) != null)
                     {
                         result.IsSucceeded = false;
                         result.Message = "UserName is already exists.";
                         return result;
                     }
+
                     User dbUser = new User();
                     dbUser.FirstName = user.FirstName;
                     dbUser.LastName = user.LastName;
@@ -162,15 +176,29 @@ namespace VirtualExpo.Web.APIController
                     dbUser.Email = user.Email;
                     dbUser.Password = user.Password;
                     dbUser.Telephone = user.Telephone;
+                    dbUser.Picture = user.Image.FileName;
                     dbUser.CNIC = user.CNIC;
                     dbUser.CreatedDate = DateTime.Now;
                     GenderType gender = (GenderType)Enum.Parse(typeof(GenderType), user.GenderTypename);
                     UserRoleType usertyp = (UserRoleType)Enum.Parse(typeof(UserRoleType), user.UserTypeName);
                     dbUser.UserType = Convert.ToInt32(usertyp);
                     dbUser.GenderType = Convert.ToInt32(gender);
-
-
                     int UserId = bllUser.Insert(dbUser);
+                    var uploads = Path.Combine(_environment.WebRootPath, "images/User/" + UserId);
+
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+
+                    if (user.Image.Length > 0)
+                    {
+                        using (var fileStream = new FileStream(Path.Combine(uploads, user.Image.FileName), FileMode.Create))
+                        {
+                            await user.Image.CopyToAsync(fileStream);
+                        }
+                    }
+
                     result.IsSucceeded = true;
                     result.TotalCount = UserId;
                     result.Message = "Admin is Successfully Created";
@@ -180,6 +208,17 @@ namespace VirtualExpo.Web.APIController
                 {
                     User dbUser = bllUser.GetByPK(user.Id);
 
+                    
+                    if(user.Image != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.Image.FileName).ToLower();
+                        if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Image type object ";
+                        }
+                        dbUser.Picture = user.Image.FileName;
+                    }
                     dbUser.FirstName = user.FirstName;
                     dbUser.LastName = user.LastName;
                     dbUser.UserName = user.UserName;
@@ -190,9 +229,25 @@ namespace VirtualExpo.Web.APIController
                     dbUser.CreatedDate = DateTime.Now;
                     GenderType gender = (GenderType)Enum.Parse(typeof(GenderType), user.GenderTypename);
                     dbUser.GenderType = Convert.ToInt32(gender);
-
-
                     bllUser.Update(dbUser);
+                    if (user.Image!=null)
+                    {
+                        var uploads = Path.Combine(_environment.WebRootPath, "images/User/" + user.Id);
+
+                        if (!Directory.Exists(uploads))
+                        {
+                            Directory.CreateDirectory(uploads);
+                        }
+
+                        if (user.Image.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploads, user.Image.FileName), FileMode.Create))
+                            {
+                                await user.Image.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
+                    
                     result.IsSucceeded = true;
                     result.Message = "Admin is Successfully Updated";
                 }

@@ -25,6 +25,12 @@ namespace VirtualExpo.Web.Controllers.Admin
             ViewBag.ExibitionId = id;
             return View("Views/ExpoHome/Exhibition/ExhibitionHome/ExibitionHome.cshtml");
         }
+        public IActionResult ExpoOrganizer(int id, int OrganizerId)
+        {
+            ViewBag.OrganizerId = OrganizerId;
+            ViewBag.ExibitionId = id;
+            return View("Views/ExpoHome/Exhibition/Profile/OrganizerProfile.cshtml");
+        }
         public IActionResult ExpoBrands(int id)
         {
             var idof = User.Identity.Name;

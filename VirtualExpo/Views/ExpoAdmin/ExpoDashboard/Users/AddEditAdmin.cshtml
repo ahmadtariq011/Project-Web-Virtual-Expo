@@ -74,33 +74,33 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">First Name</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required >
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Last Name</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required >
+                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Name </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" @(ViewBag.IsAdd ? "disabled" : "") required >
+                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" @(ViewBag.IsAdd ? "disabled" : "") required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required >
+                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Password</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required  />
+                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required />
                         <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');" style="margin-top:15px;" />
                         <label for="chkShowHidePassword" style="margin-bottom:0px;"> Show Password</label>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required >
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -125,10 +125,16 @@
                         <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" ">
                     </div>
                 </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Image</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="AdminImage" name="AdminImage" type="file" required>
+                    </div>
+                </div>
                 <br />
             </div>
             <div class="card-footer">
-                <button type="button" class="btn btn-primary btn-sm" onclick="SaveUser();">
+                <button type="button" class="btn btn-primary btn-sm" onclick="UploadPic();">
                     <i class="material-icons " id="iconcss" style="">save</i>Save
                 </button>
             </div>

@@ -30,7 +30,6 @@
     @await Html.PartialAsync("/Views/ExpoHome/Exhibition/Shared/_Footer.cshtml")
 
     <script src="~/js/Exhibition/Home.js?v=@DateTime.Now.Ticks.ToString()"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 
 
     <script src="~/js/vendor/jquery-2.1.4.min.js"></script>
@@ -47,6 +46,7 @@
     <script src="~/js/shared/jsrender.js"></script>
     <script src="~/js/shared/widgets/Pager.js"></script>
     <script src="~/js/shared/Popup.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 
 </body>
 </html>

@@ -83,6 +83,58 @@ function SaveUser() {
 
     $.post("/api/UserAPI/SaveAdmin", User, SaveUserCallback);
 }
+function UploadPic() {
+    debugger;
+    if (!Validate("#BasicInfo")) {
+        return;
+    }
+    $("#loader").show();
+    $("#div_message").hide();
+
+    var formData = new FormData();
+    var fileInput = $('#AdminImage')[0].files[0];
+
+    formData.append("Id", $("#hfUserId").val());
+    formData.append("Telephone", $.trim($("#txtTelephone").val()));
+    formData.append("FirstName", $.trim($("#txtFirstName").val()));
+    formData.append("LastName", $.trim($("#txtLastName").val()));
+    formData.append("UserName", $.trim($("#txtUserName").val()));
+    formData.append("Email", $.trim($("#txtEmail").val()));
+    formData.append("Password", $.trim($("#txtPassword").val()));
+    formData.append("CNIC", $.trim($("#txtCNIC").val()));
+    formData.append("UserTypeName", $.trim($("#txtUserType").val()));
+    formData.append("GenderTypename", $.trim($("#txtGender").val()));
+    formData.append("Image", fileInput);
+
+    formData.append("Image", fileInput);
+
+    $.ajax({
+        method: "post",
+        url: '/api/UserAPI/SaveAdmin',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            $("#loader").hide();
+            ShowCallbackMessage(true, data.message);
+        },
+        error: function (data) {
+            $("#loader").hide();
+            ShowCallbackMessage(false, data.message);
+        }
+    });
+}
+function UploadPicCallback(data) {
+    $("#loader").hide();
+
+    debugger;
+    if (!data.isSucceeded) {
+        ShowCallbackMessage(false, data.message);
+        return;
+    }
+
+    ShowCallbackMessage(true, data.message);
+}
 
 function SaveUserCallback(data) {
     $("#loader").hide();

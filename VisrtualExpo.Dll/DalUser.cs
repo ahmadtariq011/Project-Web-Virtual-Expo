@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using VirtualExpo.Model.Data;
 using VirtualExpo.Models.Filters;
+using VirtualExpo.Model.Enums;
 
 namespace VirtualExpo.Dal
 {
@@ -46,14 +47,13 @@ namespace VirtualExpo.Dal
             }
         }
 
-        //public int GetTotalUsers()
-        //{
-        //    using (var entities = new ApplicationDbContext())
-        //    {
-        //        int type = Convert.ToInt32(UserRoleType.User);
-        //        return entities.Users.Count(p => p.UserType == type);
-        //    }
-        //}
+        public List<User> GetOrganizers()
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                return entities.Users.Where(p => p.UserType == Convert.ToInt32(UserRoleType.Organizer)).ToList();
+            }
+        }
 
 
 

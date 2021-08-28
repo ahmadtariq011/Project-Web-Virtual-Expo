@@ -69,8 +69,8 @@ namespace VirtualExpo.Web.APIController
                     dbUser.Telephone = dbExhibition.Telephone;
                     dbUser.CNIC = dbExhibition.Telephone;
                     dbUser.CreatedDate = DateTime.Now;
-                    dbUser.UserType = Convert.ToInt32(GenderType.Male);
-                    dbUser.GenderType = Convert.ToInt32(UserRoleType.Organizer);
+                    dbUser.UserType = Convert.ToInt32(UserRoleType.Organizer);
+                    dbUser.GenderType = Convert.ToInt32(GenderType.Male);
                     int UserId = bllUser.Insert(dbUser);
                     result.IsSucceeded = true;
                     result.Message = "Status is updated to " + exhibitionModel.ExhibitionStatusStr + " and user is created successfully";
@@ -112,8 +112,8 @@ namespace VirtualExpo.Web.APIController
                     dbUser.Telephone = dbExhibition.Telephone;
                     dbUser.CNIC = dbExhibition.Telephone;
                     dbUser.CreatedDate = DateTime.Now;
-                    dbUser.UserType = Convert.ToInt32(GenderType.Male);
-                    dbUser.GenderType = Convert.ToInt32(UserRoleType.Exhibitor);
+                    dbUser.UserType = Convert.ToInt32(UserRoleType.Exhibitor);
+                    dbUser.GenderType = Convert.ToInt32(GenderType.Male);
                     int UserId = bllUser.Insert(dbUser);
                     result.IsSucceeded = true;
                     result.Message = "Status is updated to " + exhibitionModel.ExhibitionStatusStr + " and user is created successfully";

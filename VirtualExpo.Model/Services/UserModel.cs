@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,7 @@ namespace VirtualExpo.Model.Services
         public string UserTypeName { get; set; }
         public string GenderTypename { get; set; }
         public string UserStatusStr { get; set; }
+        public IFormFile Image { get; set; }
+
     }
 }

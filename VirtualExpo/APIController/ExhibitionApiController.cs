@@ -134,6 +134,31 @@ namespace VirtualExpo.Web.APIController
         }
 
 
+        [HttpPost]
+
+        public ServiceResponse ChangeExhibitionStatus(ExhibitionModel exhibitionModel)
+        {
+            try
+            {
+                if (exhibitionModel.Id != 0)
+                {
+                    Exhibition dbExhibition = bllExhibition.GetByPK(exhibitionModel.Id);
+
+                    ExhibitionStatusActiveOrNot status = (ExhibitionStatusActiveOrNot)Enum.Parse(typeof(ExhibitionStatusActiveOrNot), exhibitionModel.ExhibitionStatusStr);
+                    dbExhibition.Status = Convert.ToInt32(status);
+
+                    bllExhibition.ChangeExhibitionStatus(dbExhibition);
+                    result.IsSucceeded = true;
+                    result.Message = "Exhibition Status is updated to " + exhibitionModel.ExhibitionStatusStr;
+                }
+            }
+            catch (Exception e)
+            {
+                result.IsSucceeded = false;
+                result.Message = e.Message + "<br>" + e.StackTrace;
+            }
+            return result;
+        }
 
     }
 }

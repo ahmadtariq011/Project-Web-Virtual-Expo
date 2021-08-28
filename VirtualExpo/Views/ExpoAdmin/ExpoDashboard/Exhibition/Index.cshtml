@@ -1,4 +1,5 @@
 ﻿@using VirtualExpo.Model.Enums
+@using VirtualExpo.Bll
 @{
     bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
     bool IsOrganizer = User.IsInRole(UserRoleType.Organizer.ToString());
@@ -16,6 +17,9 @@
     {
         typeofUserLogin = "Exhibitor";
     }
+    BllUser bllExhibition = new BllUser();
+    var Organizers = bllExhibition.GetOrganizers();
+    int i = 0;
 }
 
 
@@ -24,14 +28,18 @@
 {
     <script src="~/js/ExpoAdmin/Exhibition/Index.js?v=@DateTime.Now.Ticks.ToString()"></script>
 }
-<div class="right mT10">
-    <a class="btn btn-success btn-sm" asp-action="AddEditExhibition" asp-controller="@typeofUserLogin" asp-route-id="0" asp-route-Code="" asp-route-Type="">
-        <span style="position: relative; top: -5px;"> Create Exhibition</span>
-        <span class="material-icons mr-1" style="position: relative; top: 3px; width: 20px;">
-            add_circle
-        </span>
-    </a>
-</div>
+@if (IsOrganizer)
+{
+
+    <div class="right mT10">
+        <a class="btn btn-success btn-sm" asp-action="AddEditExhibition" asp-controller="@typeofUserLogin" asp-route-id="0" asp-route-Code="" asp-route-Type="">
+            <span style="position: relative; top: -5px;"> Create Exhibition</span>
+            <span class="material-icons mr-1" style="position: relative; top: 3px; width: 20px;">
+                add_circle
+            </span>
+        </a>
+    </div>
+}
 <div class="clearfix"></div>
 <div class="row">
     <div class="col-lg-12">
@@ -47,12 +55,33 @@
                     </p>
                 </div>
                 <div class="c1 filter">
+                    @if (IsAdmin)
+                    {
+                        <div class="">
+                            Search By Organizer
+                            <select class="form-control search" id="OrganizerId" name="OrganizerId" onchange="SearchExhibition();">
+                                <option value="">Please Select</option>
+                                @foreach (var Exhibition in Organizers)
+                                {
+                                    if (i++ == 0)
+                                    {
+                                        <option value="@Exhibition.Id" selected>@Html.Raw(Exhibition.FirstName + " " + Exhibition.LastName)</option>
 
-                    <div class="right">
-                        Search: <input id="txtSearch" style="" type="text" class="form-control search">
-                        <a title="Search" style="cursor:pointer; margin-left:5px; " onclick="SearchUsers();"><i class="material-icons " style="position:relative; top:5px;">search</i></a>
-                        <a title="Reset" style="cursor:pointer;" onclick="ResetUsers();"><i class="material-icons" style="position:relative; top:5px;">clear</i></a>
-                    </div>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Exhibition.Id">@Html.Raw(Exhibition.FirstName + " " + Exhibition.LastName)</option>
+                                    }
+                                }
+                            </select>
+                            <a title="Search" style="cursor:pointer; margin-left:5px; " onclick="SearchExhibition();"><i class="material-icons " style="position:relative; top:5px;">search</i></a>
+                            <a title="Reset" style="cursor:pointer;" onclick="ResetUsers();"><i class="material-icons" style="position:relative; top:5px;">clear</i></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <input type="hidden" id="OrganizerId" value="@User.Identity.Name"/>
+                    }
                 </div>
 
                 <table id="tbl" class="table">
@@ -99,7 +128,7 @@
         <td>
             <a href="/@typeofUserLogin/AddEditExhibition/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
                 <span class="material-icons">
-                    edit
+                    view_list
                 </span>
             </a>
         </td>

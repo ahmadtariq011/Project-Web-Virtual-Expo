@@ -86,7 +86,7 @@ namespace VirtualExpo.Web.Controllers.Admin
             {
                 ViewBag.data = bllExhibition.GetByPK(id);
                 ViewBag.title = "Edit Exhibition  ";
-                ViewBag.IsAdd = false;
+                ViewBag.IsAdd = true;
 
             }
             return View("Views/ExpoAdmin/ExpoDashboard/Exhibition/AddEditExhibition.cshtml");
@@ -127,6 +127,10 @@ namespace VirtualExpo.Web.Controllers.Admin
                 }
             }
             return View("Views/ExpoAdmin/ExpoDashboard/Attendee/AddEditExhibitor.cshtml");
+        }
+        public IActionResult AttendeeIndex()
+        {
+            return View("Views/ExpoAdmin/ExpoDashboard/Attendee/Index.cshtml");
         }
     }
 }

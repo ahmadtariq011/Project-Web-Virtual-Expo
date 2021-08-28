@@ -123,6 +123,7 @@ function UpdateUsersFilters() {
     filters =
     {
         Keyword: $("#txtSearch").val(),
+        OrganizerId: $("#OrganizerId").val(),
         UserType: 2,
         PageIndex: 1,
         PageSize: 10,

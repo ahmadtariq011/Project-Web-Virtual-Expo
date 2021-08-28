@@ -11,6 +11,7 @@ function handler_enter_login(e) {
     if (charCode == 13)
         Login();
 }
+
 function Login() {
     if (!Validate('#divLogin')) {
         return;

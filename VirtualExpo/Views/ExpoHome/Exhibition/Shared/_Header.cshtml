@@ -18,8 +18,7 @@
     <a asp-action="MyProfile" asp-controller="Attendee" asp-route-id="@User.Identity.Name" asp-route-exhibitionid="@id">My Profile</a>
     <a onclick="Logout('Attendee');">Logout</a>
     <p>------------------------------------</p>
-    <a href="#">@Html.Raw(orgranizer.FirstName +" " +orgranizer.LastName)</a>
-    <a href="#">@orgranizer.Description</a>
+    <a asp-action="ExpoOrganizer" asp-controller="Attendee" asp-route-id="@id" asp-route-OrganizerId="@Exhibition.Organizer_User_Id">Organizer Profile</a>
 
 </div>
 

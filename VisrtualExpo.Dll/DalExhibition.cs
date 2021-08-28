@@ -29,6 +29,13 @@ namespace VisrtualExpo.Dll
                 return entities.Exhibitions.ToList();
             }
         }
+        public List<Exhibition> GetOrganizersExhibition(int id )
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                return entities.Exhibitions.Where(p=>p.Organizer_User_Id==id).ToList();
+            }
+        }
         public List<Exhibition> GetAllApproveAndUpcoming()
         {
             using (var entities = new ApplicationDbContext())
@@ -64,13 +71,22 @@ namespace VisrtualExpo.Dll
             }
         }
 
-
         public void ChangeStatus(Exhibition Exhibition)
         {
             using (var entities = new ApplicationDbContext())
             {
                 Exhibition dbExhibition = entities.Exhibitions.SingleOrDefault(p => p.Id == Exhibition.Id);
                 dbExhibition.ExhibitionStatus = Exhibition.ExhibitionStatus;
+                entities.SaveChanges();
+
+            }
+        }
+        public void ChangeExhibitionStatus(Exhibition Exhibition)
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                Exhibition dbExhibition = entities.Exhibitions.SingleOrDefault(p => p.Id == Exhibition.Id);
+                dbExhibition.Status = Exhibition.Status;
                 entities.SaveChanges();
 
             }
@@ -165,17 +181,18 @@ namespace VisrtualExpo.Dll
 
             using (var entities = new ApplicationDbContext())
             {
-                var query = from Exhibition in entities.Exhibitions
+                var query = from exhibition in entities.Exhibitions
+                            where exhibition.Organizer_User_Id == filters.OrganizerId
                             select new ExhibitionModel { 
-                                Id=Exhibition.Id,
-                                Name=Exhibition.Name,
-                                OraganizerName=Exhibition.OraganizerName,
-                                Organizer_User_Id=Exhibition.Organizer_User_Id,
-                                Description=Exhibition.Description,
-                                StartDate=Exhibition.StartDate,
-                                EndDate=Exhibition.EndDate,
-                                CreatedDate=Exhibition.CreatedDate,
-                                ExhibitionStatus=Exhibition.ExhibitionStatus
+                                Id= exhibition.Id,
+                                Name= exhibition.Name,
+                                OraganizerName= exhibition.OraganizerName,
+                                Organizer_User_Id= exhibition.Organizer_User_Id,
+                                Description= exhibition.Description,
+                                StartDate= exhibition.StartDate,
+                                EndDate= exhibition.EndDate,
+                                CreatedDate= exhibition.CreatedDate,
+                                ExhibitionStatus= exhibition.ExhibitionStatus
                                 
                             };
 
