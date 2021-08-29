@@ -8,6 +8,9 @@
     <script src="~/js/ExpoAdmin/Organizer/AddEditExhibitor.js?v=@DateTime.Now.Ticks.ToString()"></script>
 }
 @{
+    bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
+    bool IsOrganizer = User.IsInRole(UserRoleType.Organizer.ToString());
+    bool IsExhibitor = User.IsInRole(UserRoleType.Exhibitor.ToString());
     var data = (User)ViewBag.data;
     var Title = ViewBag.title;
     //BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
@@ -64,6 +67,20 @@
         <div id="BasicInfo1" class="card" style="padding-bottom: 0px !important; margin-bottom: 0px;">
             <div class="card-header">
                 <strong>@Title</strong>
+                @if (data.Id != 0)
+                {
+                    if (IsExhibitor)
+                    {
+                        <div class="right mT10">
+                            <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" asp-action="AddEditMediaLinks" asp-controller="Exhibitor" asp-route-Exhibitionid="@Exhibitordata.Id">
+                                <span class="material-icons">
+                                    add_circle
+                                </span>
+                                <span style="position: relative;top: -6px;">Add Media Links</span>
+                            </a>
+                        </div>
+                    }
+                }
             </div>
 
             <div class="card-body card-block">

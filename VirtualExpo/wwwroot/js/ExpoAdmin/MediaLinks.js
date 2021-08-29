@@ -1,0 +1,42 @@
+﻿function UploadMediaLink() {
+    debugger;
+    if (!Validate("#BasicInfo")) {
+        return;
+    }
+    $("#loader").show();
+    $("#div_message").hide();
+
+    var formData = new FormData();
+    var ImageInput = $('#txtPicture')[0].files[0];
+    var VideoInput = $('#txtVideo')[0].files[0];
+    var DownloadInput = $('#txtDownload')[0].files[0];
+
+    formData.append("Id", $("#hfUserId").val());
+    formData.append("PictureDescription", $.trim($("#txtPictureName").val()));
+    formData.append("VideoDescription", $.trim($("#txtVideoName").val()));
+    formData.append("DownloadDescription", $.trim($("#txtDownloadName").val()));
+    formData.append("LinkDescription", $.trim($("#txtLinkName").val()));
+    formData.append("Exhibitor_Id", $.trim($("#hfExhibitorId").val()));
+    formData.append("Link", $.trim($("#txtLink").val()));
+    formData.append("PictureFile", ImageInput);
+    formData.append("VideoFile", VideoInput);
+    formData.append("PdfFile", DownloadInput);
+
+    $.ajax({
+        method: "post",
+        url: '/api/UserAPI/SaveMediaLink',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            $("#loader").hide();
+            ShowCallbackMessage(true, data.message);
+            LoadUserImage();
+        },
+        error: function (data) {
+            $("#loader").hide();
+            ShowCallbackMessage(false, data.message);
+            LoadUserImage();
+        }
+    });
+}

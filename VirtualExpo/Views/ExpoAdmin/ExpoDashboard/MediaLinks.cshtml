@@ -1,0 +1,106 @@
+﻿@using VirtualExpo.Model.Data
+@using VirtualExpo.Model.Enums
+@using VirtualExpo.Bll
+@using VirtualExpo.Bll.Helpers
+@using System
+@section Scripts
+{
+    <script src="~/js/ExpoAdmin/MediaLinks.js?v=@DateTime.Now.Ticks.ToString()"></script>
+}
+@{
+    bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
+    bool IsOrganizer = User.IsInRole(UserRoleType.Organizer.ToString());
+    bool IsExhibitor = User.IsInRole(UserRoleType.Exhibitor.ToString());
+    string typeofUserLogin = "";
+    if (IsAdmin)
+    {
+        typeofUserLogin = "Admin";
+    }
+    if (IsOrganizer)
+    {
+        typeofUserLogin = "Organizer";
+    }
+    if (IsExhibitor)
+    {
+        typeofUserLogin = "Exhibitor";
+    }
+    var data = (MediaLinks)ViewBag.data;
+    var Title = ViewBag.title;
+    var ExhibitionId = ViewBag.ExhibitorDescription;
+
+
+}
+<input type="hidden" id="hfUserId" value="@data.Id" />
+<input type="hidden" id="hfOrganizerid" value="@Convert.ToInt32(User.Identity.Name)" />
+<input type="hidden"id="hfExhibitorId" value="@ExhibitionId"/>
+<div class="row">
+
+    <!--
+    start Lead
+    -->
+    <div class="col-lg-12">
+        <div id="BasicInfo1" class="card" style="padding-bottom: 0px !important; margin-bottom: 0px;">
+            <div class="card-header">
+                <strong>@Title</strong>
+            </div>
+
+            <div class="card-body card-block">
+                <div id="div_message" class="note failure">
+                    <p>
+                        <span id="span_message"></span>
+                    </p>
+                </div>
+                <br />
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Picture Name (Reference)</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtPictureName" type="text" value="@data.PictureDescription">
+                        <input class="form-control" id="txtPicture" type="file" value="">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Picture</label></div>
+                    <div class="col-md-3">
+                        <img class="col-md-12" src="/images/MediLinks/@data.Id/Picture/@data.Picture" title="@data.Picture" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Video Name (Reference)</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtVideoName" type="text" value="@data.VideoDescription">
+                        <input class="form-control" id="txtVideo" type="file" value="">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Video</label></div>
+                    <div class="col-md-3">
+                        <video controls class="col-md-12">
+                            <source src="/images/MediLinks/@data.Id/Video/@data.Video" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Download Name (PDF)</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtDownloadName" type="text" value="@data.DownloadDescription">
+                        <input class="form-control" id="txtDownload" type="file" value="">
+                    </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Download File</label></div>
+                    <div class="col-md-3">
+                        <embed src="/images/MediLinks/@data.Id/Download/@data.Download" class="col-md-12" type="application/pdf" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Link Name (Reference)</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="txtLinkName" type="text" value="@data.LinkDescription">
+                        <input class="form-control" id="txtLink" type="text" value="@data.Link">
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary btn-sm" onclick="UploadMediaLink();">
+                    <i class="material-icons " id="iconcss" style="">save</i>Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

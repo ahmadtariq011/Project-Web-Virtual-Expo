@@ -21,7 +21,10 @@ namespace VirtualExpo.Bll
         {
             return dalExhibition.GetByPK(Id);
         }
-
+        public MediaLinks GetByExhibitor(int Id)
+        {
+            return dalExhibition.GetByExhibitor(Id);
+        }
 
         public int Insert(MediaLinks Exhibition)
         {
