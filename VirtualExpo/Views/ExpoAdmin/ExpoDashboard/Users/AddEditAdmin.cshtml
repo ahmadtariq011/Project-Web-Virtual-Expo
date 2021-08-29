@@ -141,3 +141,41 @@
         </div>
     </div>
 </div>
+<br />
+<div class="row" id="hiddenPictureDiv">
+    <div class="col-lg-12">
+        <div id="BasicInfo" class="card">
+            <div class="card-header">
+                <strong>Admin Picture</strong>
+            </div>
+            <div class="card-body card-block">
+                <div id="divLogos" class="left" style="margin:0px;  margin-left: 25.7%; margin-bottom:10px;">
+
+                </div>
+
+                <div id="div_no_found" class="hide alert alert-info " style="width: 40%; margin-left: 25.7%;">
+                    <h3>No Picture found.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="ListTemplateLogos" type="text/x-jsrender">
+
+    <div class="left thumbnailBox">
+
+        <div class="thumbnail">
+            <img src="/images/User/{{:id}}/{{:picture}}" title="T2_{{:picture}}" />
+        </div>
+
+        <div class="links">
+            <a onclick="Delete({{:id}});">Delete</a>
+        </div>
+
+
+    </div>
+
+</script>
+

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VirtualExpo.Models.Services
+namespace VirtualExpo.Models.Services.Contactus
 {
     public class ContactUsModel : ContactUs
     {

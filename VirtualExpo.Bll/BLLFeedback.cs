@@ -5,70 +5,70 @@ using System.Text;
 using System.Threading.Tasks;
 using VirtualExpo.Entities.Filters;
 using VirtualExpo.Model.Data;
-using VirtualExpo.Models.Services.Contactus;
+using VirtualExpo.Model.Services;
 using VisrtualExpo.Dll;
 
 namespace VisrtualExpo.Bll
 {
 	/// <summary>
-    /// This class deals with ContactUs table
+    /// This class deals with Feedback table
     /// </summary>
-   public class BLLContactUs
+    public class BLLFeedback
     {
-		private DllContactUs dalContactUs = new  DllContactUs();
+		private DllFeedback dalFeedback = new DllFeedback();
 
 		/// <summary>
        /// This function calls insert function of dal class  
-	   /// to insert a new record of ContactUs
+	   /// to insert a new record of Feedback
        /// </summary>
        /// <param name="Id"></param>
        /// <returns>returns Primary Key of new record</returns>
-        public ContactUs GetByPK(int Id)
+        public Feedback GetByPK(int Id)
         {
-            return dalContactUs.GetByPK(Id);
+            return dalFeedback.GetByPK(Id);
         }
 
 
 	   /// <summary>
        /// This function calls insert function of dal class  
-	   /// to insert a new record of ContactUs
+	   /// to insert a new record of Feedback
        /// </summary>
        /// <param name="Id"></param>
        /// <returns>returns Primary Key of new record</returns>
-       public long Insert(ContactUs contactus)
+       public long Insert(Feedback Feedback)
        {
-          return dalContactUs.Insert(contactus);
+          return dalFeedback.Insert(Feedback);
        }
 
 	    /// <summary>
        /// This function calls update function of dal class  
        /// </summary>
-       /// <param name="contactus"></param>
-        public void Update(ContactUs contactus)
+       /// <param name="Feedback"></param>
+        public void Update(Feedback Feedback)
         {
-            dalContactUs.Update(contactus);
+            dalFeedback.Update(Feedback);
         }
 
 	   /// <summary>
        /// This function calls insert function of dal class  
-	   /// to insert a new record of ContactUs
+	   /// to insert a new record of Feedback
        /// </summary>
-       /// <param name="contactus"></param>
-	   /// <returns>List of ContactUs</returns>
-       public List<ContactUs> GetAllContactUss()
+       /// <param name="Feedback"></param>
+	   /// <returns>List of Feedback</returns>
+       public List<Feedback> GetAllFeedbacks()
        {
-           return dalContactUs.GetAllContactUss();
+           return dalFeedback.GetAllFeedbacks();
        }
 
 		/// <summary>
-        /// This function deletes ContactUs by its Primary Key 
+        /// This function deletes Feedback by its Primary Key 
 		/// and returns True in case of Success
         /// </summary>
         /// <param name="Id"></param>
         /// <returns>True/False</returns>
-        public Boolean DeleteContactUs(Int32 Id)
+        public Boolean DeleteFeedback(Int32 Id)
         {
-           return dalContactUs.Delete(Id);
+           return dalFeedback.Delete(Id);
         }
 
 		/// <summary>
@@ -77,9 +77,9 @@ namespace VisrtualExpo.Bll
         /// </summary>
         /// <param name="filters"></param>
         /// <returns>IEnumerable<dynamic></returns>
-        public List<ContactUsModel> Search(ContactUsSearchFilter filters)
+        public List<FeedbackModel> Search(FeedbackSearchFilter filters)
         {
-            return dalContactUs.Search(filters);
+            return dalFeedback.Search(filters);
         }
 
         /// <summary>
@@ -87,9 +87,9 @@ namespace VisrtualExpo.Bll
         /// </summary>
         /// <param name="filters"></param>
         /// <returns>Count of searched recored as integer value</returns>
-        public int GetSearchCount(ContactUsSearchFilter filters)
+        public int GetSearchCount(FeedbackSearchFilter filters)
         {
-            return dalContactUs.GetSearchCount(filters);
+            return dalFeedback.GetSearchCount(filters);
         }
 
       

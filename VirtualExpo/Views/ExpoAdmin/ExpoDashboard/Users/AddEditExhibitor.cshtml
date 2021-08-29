@@ -12,8 +12,8 @@
     var Title = ViewBag.title;
     //BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
     var Exhibitordata = (ExhibitorDescription)ViewBag.ExhibitorDescription;
-    bool Ifadded =false;
-    if(Exhibitordata != null)
+    bool Ifadded = false;
+    if (Exhibitordata != null)
     {
         Ifadded = true;
     }
@@ -76,7 +76,7 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Type</label></div>
                     <div class="col-12 col-md-3">
-                        <select class="form-control" id="txtUserType" disabled name ="txtUserType" >
+                        <select class="form-control" id="txtUserType" disabled name="txtUserType">
                             @foreach (var usertype in usertypes)
                             {
                                 if (usertype == "Exhibitor")
@@ -106,19 +106,19 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required >
+                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Password</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required  />
+                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required />
                         <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');" style="margin-top:15px;" />
                         <label for="chkShowHidePassword" style="margin-bottom:0px;"> Show Password</label>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required >
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -140,7 +140,7 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Telephone</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" >
+                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone">
                     </div>
                 </div>
                 <br />
@@ -164,7 +164,7 @@
         <div class="row form-group">
             <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Exhibitior Name</label></div>
             <div class="col-12 col-md-3">
-                <input class="form-control" id="txtSector" type="text" required value="@Exhibitordata.Name" >
+                <input class="form-control" id="txtSector" type="text" required value="@Exhibitordata.Name">
             </div>
             <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Exhibitior Moto</label></div>
             <div class="col-12  col-md-3">
@@ -197,7 +197,7 @@
 
         </div>
 
-       
+
         <br />
 
 
@@ -208,3 +208,39 @@
         </button>
     </div>
 </div>
+<div class="row" id="hiddenPictureDiv">
+    <div class="col-lg-12">
+        <div id="BasicInfo" class="card">
+            <div class="card-header">
+                <strong>Exhibitor Picture</strong>
+            </div>
+            <div class="card-body card-block">
+                <div id="divLogos" class="left" style="margin:0px;  margin-left: 25.7%; margin-bottom:10px;">
+
+                </div>
+
+                <div id="div_no_found" class="hide alert alert-info " style="width: 40%; margin-left: 25.7%;">
+                    <h3>No Picture found.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="ListTemplateLogos" type="text/x-jsrender">
+
+    <div class="left thumbnailBox">
+
+        <div class="thumbnail">
+            <img src="/images/User/{{:id}}/{{:picture}}" title="T2_{{:picture}}" />
+        </div>
+
+        <div class="links">
+            <a onclick="Delete({{:id}});">Delete</a>
+        </div>
+
+
+    </div>
+
+</script>

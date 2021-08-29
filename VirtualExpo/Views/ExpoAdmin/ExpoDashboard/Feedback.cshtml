@@ -1,0 +1,197 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@section Styles
+{
+    <style type="text/css">
+      
+        .col-md-9 {
+            max-width: 100% !important;
+        }
+
+        .trumbowyg-editor, .trumbowyg-textarea {
+            min-height: 170px !important;
+            max-height: 180px !important;
+        }
+    </style>
+}
+@section Scripts
+    {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.21.0/ui/trumbowyg.min.css" integrity="sha512-XjpikIIW1P7jUS8ZWIznGs9KHujZQxhbnEsqMVQ5GBTTRmmJe32+ULipOxFePB8F8j9ahKmCjyJJ22VNEX60yg==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.21.0/trumbowyg.min.js" integrity="sha512-l6MMck8/SpFCgbJnIEfVsWQ8MaNK/n2ppTiELW3I2BFY5pAm/WjkNHSt+2OD7+CZtygs+jr+dAgzNdjNuCU7kw==" crossorigin="anonymous"></script>
+    <script src="~/js/ExpoAdmin/Feedback.js?v=@DateTime.Now.Ticks.ToString()"></script>
+    <link href="~/css/editor.css?v=@DateTime.Now.Ticks.ToString()" rel="stylesheet" />
+}
+
+
+<input id="UserLogid" value="@User.Identity.Name" type="hidden"/>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Feedback List </strong>&nbsp; <span id="spanTotalRecords"></span>
+            </div>
+            <div class="card-body">
+                <div id="div_message" class="note failure">
+                    <p>
+                        <span id="span_message"></span>
+                    </p>
+                </div>
+                <div class="c1 filter">
+
+                </div>
+
+                <table id="tbl" class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="Name" caption="Name"></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="Email" caption="Email"></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="Telephone" caption="Telephone"></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="exhibitionName" caption="Exhibition name"></th>
+                            <th class="gridSortingMenu" scope="col" sortable datafield="CreatedDate" caption="Created Date"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                @*Show Pager*@
+
+
+                <div id="div_no_found" class="alert alert-info hide" role="alert">
+                    No Message Found.
+                    @*This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.*@
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script id="ListTemplateCustomers" type="text/x-jsrender">
+    <tr class="{{:isRead ? 'read' : 'unRead'}}">
+        <td><span class="closedRow expandClose" IsRead="{{:isRead}}" id="{{:id}}" onclick="CheckRead(this);"></span></td>
+        <td>{{:name}}</td>
+        <td>{{:email}}</td>
+        <td>{{:telephone}}</td>
+        <td>{{:exhibitionName}}</td>
+        <td>{{:createdDateStr}}</td>
+    </tr>
+    <tr class="hide">
+        <td colspan="6" style="background-color:#f6f6f7;">
+            {{:message}}
+        </td>
+    </tr>
+
+</script>
+
+
+
+
+<div id="divAddEdit" class="modalPopup hide" style="width:785px;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" onclick="hidePopup('#divAddEdit', '#popupBackground');"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="editMeLabel">Add Recipients</h4>
+        </div>
+        <div class="modal-body scroll-vertical">
+            <input id="hfId" name="hfId" type="hidden" value="0" />
+            <div class="card-body card-block">
+
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Recipients Emails</label></div>
+                    <div class="col-12 col-md-9">
+                        <input class="form-control" id="txtRecipientsName" type="text" value="" required>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-sm" onclick="SaveRecipients();">
+                <i class="material-icons" id="iconcss">save</i>Save
+            </button>
+            <button type="reset" class="btn btn-danger btn-sm" onclick="hidePopup('#divAddEdit', '#popupBackground');">
+                <i class="material-icons" id="iconcss">cancel</i> Close
+            </button>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div id="divReply" class="modalPopup hide" style="width:785px;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" onclick="hidePopup('#divReply', '#popupBackground');"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="editMeLabel">Reply User</h4>
+        </div>
+        <div class="modal-body scroll-vertical" style="height:375px;">
+            <input id="hfId" name="hfId" type="hidden" value="0" />
+            <div class="card-body card-block">
+
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label">To</label></div>
+                    <div class="col-12 col-md-9">
+                        <input class="form-control" id="txtToEmail" type="text" value="" required readonly>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-email" class=" form-control-label" style=" margin-top: 10px; ">Message</label></div>
+                    <div class="col-12 col-md-9">
+                        <div class="col-12 col-md-9" id="editor">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer ">
+            <button type="button" class="btn btn-primary btn-sm" onclick="SendReply();">
+                <i class="material-icons" id="iconcss">save</i>Send Email
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" style="margin-right:87px;" onclick="hidePopup('#divReply', '#popupBackground');">
+                <i class="material-icons" id="iconcss">cancel</i>Cancel
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div id="divConfirmation" class="modalPopup hide" style="width:785px;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" onclick="hidePopup('#divConfirmation', '#popupBackground');"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="confirmationHeading"></h4>
+        </div>
+        <div class="modal-body scroll-vertical">
+            <label id="lblMessage"></label>
+        </div>
+
+        <div class="modal-footer">
+
+            <button type="reset" class="btn btn-danger btn-sm" onclick="hidePopup('#divConfirmation', '#popupBackground');">
+                <i class="fa fa-ban"></i> Close
+            </button>
+
+
+        </div>
+    </div>
+</div>

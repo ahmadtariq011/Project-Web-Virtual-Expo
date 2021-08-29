@@ -29,6 +29,7 @@ namespace VirtualExpo.Model.Data
         public virtual DbSet<WorkExperience> WorkExperience { get; set; }
         public virtual DbSet<ContactUs> ContactUs { get; set; }
         public virtual DbSet<SocialNetwork> SocialNetwork { get; set; }
+        public virtual DbSet<Feedback> Feedback { get; set; }
 
 
         public virtual DbSet<AttendeeExhibitionJunction> AttendeeExhibitionJunctions { get; set; }
@@ -87,6 +88,11 @@ namespace VirtualExpo.Model.Data
                 .ValueGeneratedOnAdd();
 
             builder.Entity<ContactUs>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+
+
+            builder.Entity<Feedback>()
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
 

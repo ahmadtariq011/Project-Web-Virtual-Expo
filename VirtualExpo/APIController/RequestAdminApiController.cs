@@ -64,7 +64,7 @@ namespace VirtualExpo.Web.APIController
                     dbUser.FirstName = dbExhibition.Name;
                     dbUser.LastName = dbExhibition.Name;
                     dbUser.UserName = username;
-                    dbUser.Email = dbExhibition.Name;
+                    dbUser.Email = dbExhibition.Email;
                     dbUser.Password = RandomPassword();
                     dbUser.Telephone = dbExhibition.Telephone;
                     dbUser.CNIC = dbExhibition.Telephone;
@@ -107,7 +107,7 @@ namespace VirtualExpo.Web.APIController
                     dbUser.FirstName = dbExhibition.Name;
                     dbUser.LastName = dbExhibition.Name;
                     dbUser.UserName = username;
-                    dbUser.Email = dbExhibition.WebsiteLink;
+                    dbUser.Email = dbExhibition.Email;
                     dbUser.Password = RandomPassword();
                     dbUser.Telephone = dbExhibition.Telephone;
                     dbUser.CNIC = dbExhibition.Telephone;

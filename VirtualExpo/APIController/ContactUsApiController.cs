@@ -43,6 +43,24 @@ namespace LillyLifestyle.Web.Controllers
             }
             return result;
         }
+        BLLFeedback bLLFeedback = new BLLFeedback();
+        [HttpPost]
+        public ServiceResponse LoadFeedbackWithCount(FeedbackSearchFilter filter)
+        {
+            try
+            {
+                var lst = bLLFeedback.Search(filter);
+                result.Message = lst;
+                result.TotalCount = bLLFeedback.GetSearchCount(filter);
+
+            }
+            catch (Exception ex)
+            {
+                result.IsSucceeded = false;
+                result.Message = ex.Message + "<br>" + ex.StackTrace;
+            }
+            return result;
+        }
 
         [HttpPost]
         public ServiceResponse LoadMessageWithCount(ContactUsSearchFilter filter)

@@ -91,6 +91,11 @@ namespace VirtualExpo.Web.Controllers.Admin
             }
             return View("Views/ExpoAdmin/ExpoDashboard/Exhibition/AddEditExhibition.cshtml");
         }
+
+        public IActionResult Feedback()
+        {
+            return View("Views/ExpoAdmin/ExpoDashboard/Feedback.cshtml");
+        }
         public IActionResult ExhibitorIndex()
         {
             return View("Views/ExpoAdmin/ExpoDashboard/Users/ExhibitorIndex.cshtml");

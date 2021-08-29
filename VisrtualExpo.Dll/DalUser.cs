@@ -103,6 +103,7 @@ namespace VirtualExpo.Dal
                 dbUser.Password = user.Password;
                 dbUser.Telephone = user.Telephone;
                 dbUser.CNIC = user.CNIC;
+                dbUser.Picture = user.Picture;
                 dbUser.GenderType = user.GenderType;
                 dbUser.Description = user.Description;
                 entities.SaveChanges();

@@ -117,10 +117,12 @@ function UploadPic() {
         success: function (data) {
             $("#loader").hide();
             ShowCallbackMessage(true, data.message);
+            LoadUserImage();
         },
         error: function (data) {
             $("#loader").hide();
             ShowCallbackMessage(false, data.message);
+            LoadUserImage();
         }
     });
 }
@@ -132,7 +134,7 @@ function UploadPicCallback(data) {
         ShowCallbackMessage(false, data.message);
         return;
     }
-
+    LoadUserImage();
     ShowCallbackMessage(true, data.message);
 }
 
@@ -149,7 +151,7 @@ function SaveUserCallback(data) {
 
 function LoadUserImage() {
 
-    var productId = $("#hfProductId").val();
+    var productId = $("#hfUserId").val();
     var filters =
     {
         Id: productId
@@ -171,6 +173,34 @@ function LoadUserImageCallBack(data) {
     $("#divLogos").html($("#ListTemplateLogos").render(data.message));
 }
 
+
+function Delete(id) {
+    var r = confirm('Are you sure you want to delete Picture?');
+    if (!r) {
+        return;
+    }
+    $("#loader").show();
+    var filters = {
+        Id: id
+    };
+    $.post("/api/UserAPI/DeletePicture", filters, function (data) {
+        $("#loader").hide();
+        if (!data.IsSucceeded) {
+            $("#div_message1").removeClass("success");
+            $("#div_message1").addClass("failure");
+            $("#div_message1").show();
+            $("#span_message1").html(data.Message);
+        }
+        else {
+            $("#div_message1").removeClass("failure");
+            $("#div_message1").addClass("success");
+            $("#div_message1").show();
+            $("#span_message1").html(data.Message);
+        }
+        //$("#div_message_upload_file").hide();
+        LoadUserImage();
+    });
+}
 
 function Delete(id) {
     var r = confirm('Are you sure you want to delete?');

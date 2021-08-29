@@ -81,13 +81,22 @@ namespace VirtualExpo.Web.APIController
         }
 
         [HttpPost]
-        public ServiceResponse SaveUser(UserModel user)
+        public async Task<ServiceResponse> SaveUser(UserModel user)
         {
             try
             {
                
                 if (bllUser.GetByPK(user.Id) == null)
                 {
+                    if (user.Image != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.Image.FileName).ToLower();
+                        if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Image type object ";
+                        }
+                    }
                     if (bllUser.GetByUserName(user.UserName) != null)
                     {
                         result.IsSucceeded = false;
@@ -111,6 +120,23 @@ namespace VirtualExpo.Web.APIController
 
 
                     int UserId = bllUser.Insert(dbUser);
+
+
+                    var uploads = Path.Combine(_environment.WebRootPath, "images/User/" + UserId);
+
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+
+                    if (user.Image.Length > 0)
+                    {
+                        using (var fileStream = new FileStream(Path.Combine(uploads, user.Image.FileName), FileMode.Create))
+                        {
+                            await user.Image.CopyToAsync(fileStream);
+                        }
+                    }
+
                     result.IsSucceeded = true;
                     result.TotalCount = UserId;
                     result.Message = "User is Successfully Created";
@@ -119,7 +145,16 @@ namespace VirtualExpo.Web.APIController
                 else
                 {
                     User dbUser = bllUser.GetByPK(user.Id);
-
+                    if (user.Image != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.Image.FileName).ToLower();
+                        if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Image type object ";
+                        }
+                        dbUser.Picture = user.Image.FileName;
+                    }
                     dbUser.FirstName = user.FirstName;
                     dbUser.LastName = user.LastName;
                     dbUser.UserName = user.UserName;
@@ -134,6 +169,24 @@ namespace VirtualExpo.Web.APIController
 
 
                     bllUser.Update(dbUser);
+
+                    if (user.Image != null)
+                    {
+                        var uploads = Path.Combine(_environment.WebRootPath, "images/User/" + user.Id);
+
+                        if (!Directory.Exists(uploads))
+                        {
+                            Directory.CreateDirectory(uploads);
+                        }
+
+                        if (user.Image.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploads, user.Image.FileName), FileMode.Create))
+                            {
+                                await user.Image.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
                     result.IsSucceeded = true;
                     result.Message = "User is Successfully Updated";
                 }
@@ -262,13 +315,22 @@ namespace VirtualExpo.Web.APIController
         }
 
         [HttpPost]
-        public ServiceResponse SaveExhibitor(ExhibitorDescriptionModel user)
+        public async Task<ServiceResponse> SaveExhibitor(ExhibitorDescriptionModel user)
         {
             try
             {
 
                 if (bllUser.GetByPK(user.Id) == null)
                 {
+                    if (user.Image != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.Image.FileName).ToLower();
+                        if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Image type object ";
+                        }
+                    }
                     if (bllUser.GetByUserName(user.UserName) != null)
                     {
                         result.IsSucceeded = false;
@@ -293,6 +355,22 @@ namespace VirtualExpo.Web.APIController
 
                     int UserId = bllUser.Insert(dbUser);
 
+                    var uploads = Path.Combine(_environment.WebRootPath, "images/User/" + UserId);
+
+                    if (!Directory.Exists(uploads))
+                    {
+                        Directory.CreateDirectory(uploads);
+                    }
+
+                    if (user.Image.Length > 0)
+                    {
+                        using (var fileStream = new FileStream(Path.Combine(uploads, user.Image.FileName), FileMode.Create))
+                        {
+                            await user.Image.CopyToAsync(fileStream);
+                        }
+                    }
+
+
                     ExhibitorDescription exhibitorDescription = new ExhibitorDescription();
                     exhibitorDescription.Name = user.Name;
                     exhibitorDescription.Moto = user.Moto;
@@ -308,7 +386,19 @@ namespace VirtualExpo.Web.APIController
                 }
                 else
                 {
+
                     User dbUser = bllUser.GetByPK(user.Id);
+
+                    if (user.Image != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.Image.FileName).ToLower();
+                        if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Image type object ";
+                        }
+                        dbUser.Picture = user.Image.FileName;
+                    }
 
                     dbUser.FirstName = user.FirstName;
                     dbUser.LastName = user.LastName;
@@ -321,10 +411,24 @@ namespace VirtualExpo.Web.APIController
                     dbUser.CreatedDate = DateTime.Now;
                     GenderType gender = (GenderType)Enum.Parse(typeof(GenderType), user.GenderTypename);
                     dbUser.GenderType = Convert.ToInt32(gender);
-
-
                     bllUser.Update(dbUser);
+                    if (user.Image != null)
+                    {
+                        var uploads = Path.Combine(_environment.WebRootPath, "images/User/" + user.Id);
 
+                        if (!Directory.Exists(uploads))
+                        {
+                            Directory.CreateDirectory(uploads);
+                        }
+
+                        if (user.Image.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploads, user.Image.FileName), FileMode.Create))
+                            {
+                                await user.Image.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
                     ExhibitorDescription exhibitorDescription = new ExhibitorDescription();
                     exhibitorDescription.Name = user.Name;
                     exhibitorDescription.Moto = user.Moto;
@@ -362,6 +466,61 @@ namespace VirtualExpo.Web.APIController
             return result;
         }
 
+        [HttpPost]
+        public ServiceResponse GetUserImage(User filter)
+        {
+            try
+            {
+                User category = new User();
+                category = bllUser.GetByPK(filter.Id);
+                if (category == null)
+                {
+                    return result;
+                }
+                if (category.Picture != null)
+                {
+                    result.TotalCount = 1;
+                }
+                //result.Message = bllProductImage.GetProductImagesByProductId(Convert.ToInt32(filter.Product_Id));
+                result.Message = category;
+                result.IsSucceeded = true;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucceeded = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public ServiceResponse DeletePicture(User model)
+        {
+            try
+            {
+                User dbsetting = bllUser.GetByPK(model.Id);
+                var directoryPath = Path.Combine(_environment.WebRootPath, "images/User/"+dbsetting.Id+"/"+ dbsetting.Picture);
+
+                if (!bllUser.DeletePicture(model.Id))
+                {
+                    result.IsSucceeded = false;
+                    result.Message = "Admin Image is not found.";
+                    return result;
+                }
+
+                System.IO.File.Delete(directoryPath);
+                dbsetting.Picture = null;
+                bllUser.Update(dbsetting);
+                result.IsSucceeded = true;
+                result.Message = "Admin Picture has been successfully deleted.";
+            }
+            catch (Exception ex)
+            {
+                result.IsSucceeded = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
 
     }
 }

@@ -67,25 +67,45 @@ function SaveUser() {
 
     $("#div_message").hide();
 
-    var User =
-    {
-        Telephone: $.trim($("#txtTelephone").val()),
-        Id: $("#hfUserId").val(),
-        FirstName: $.trim($("#txtFirstName").val()),
-        LastName: $.trim($("#txtLastName").val()),
-        UserName: $.trim($("#txtUserName").val()),
-        Email: $.trim($("#txtEmail").val()),
-        Password: $.trim($("#txtPassword").val()),
-        CNIC: $.trim($("#txtCNIC").val()),
-        UserTypeName: $.trim($("#txtUserType").val()),
-        GenderTypename: $.trim($("#txtGender").val()),
-        Name: $.trim($("#txtSector").val()),
-        Moto: $.trim($("#txtFlightNo").val()),
-        Offer: $.trim($("#txtDepartureDate").val()),
-        ExhibitionId: $.trim($("#txtExhibitionId").val()),
-    };
+    var formData = new FormData();
+    var fileInput = $('#AdminImage')[0].files[0];
 
-    $.post("/api/UserAPI/SaveExhibitor", User, SaveUserCallback);
+    formData.append("Id", $("#hfUserId").val());
+    formData.append("Telephone", $.trim($("#txtTelephone").val()));
+    formData.append("FirstName", $.trim($("#txtFirstName").val()));
+    formData.append("LastName", $.trim($("#txtLastName").val()));
+    formData.append("UserName", $.trim($("#txtUserName").val()));
+    formData.append("Email", $.trim($("#txtEmail").val()));
+    formData.append("Password", $.trim($("#txtPassword").val()));
+    formData.append("CNIC", $.trim($("#txtCNIC").val()));
+    formData.append("UserTypeName", $.trim($("#txtUserType").val()));
+    formData.append("GenderTypename", $.trim($("#txtGender").val()));
+    formData.append("Name", $.trim($("#txtSector").val()));
+    formData.append("Moto", $.trim($("#txtFlightNo").val()));
+    formData.append("Offer", $.trim($("#txtDepartureDate").val()));
+    formData.append("ExhibitionId", $.trim($("#txtExhibitionId").val()));
+
+    formData.append("Image", fileInput);
+
+    formData.append("Image", fileInput);
+
+    $.ajax({
+        method: "post",
+        url: '/api/UserAPI/SaveExhibitor',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            $("#loader").hide();
+            ShowCallbackMessage(true, data.message);
+            LoadUserImage();
+        },
+        error: function (data) {
+            $("#loader").hide();
+            ShowCallbackMessage(false, data.message);
+            LoadUserImage();
+        }
+    });
 }
 
 function SaveUserCallback(data) {
@@ -109,6 +129,17 @@ function LoadUserImage() {
     $.post("/api/UserAPI/GetUserImage", filters, LoadUserImageCallBack);
 }
 
+
+function LoadUserImage() {
+
+    var productId = $("#hfUserId").val();
+    var filters =
+    {
+        Id: productId
+    };
+    $.post("/api/UserAPI/GetUserImage", filters, LoadUserImageCallBack);
+}
+
 function LoadUserImageCallBack(data) {
     $("#div_no_found").hide();
     $("#divLogos").show();
@@ -125,7 +156,7 @@ function LoadUserImageCallBack(data) {
 
 
 function Delete(id) {
-    var r = confirm('Are you sure you want to delete?');
+    var r = confirm('Are you sure you want to delete Picture?');
     if (!r) {
         return;
     }
@@ -135,23 +166,22 @@ function Delete(id) {
     };
     $.post("/api/UserAPI/DeletePicture", filters, function (data) {
         $("#loader").hide();
-        if (!data.isSucceeded) {
+        if (!data.IsSucceeded) {
             $("#div_message1").removeClass("success");
             $("#div_message1").addClass("failure");
             $("#div_message1").show();
-            $("#span_message1").html(data.message);
+            $("#span_message1").html(data.Message);
         }
         else {
             $("#div_message1").removeClass("failure");
             $("#div_message1").addClass("success");
             $("#div_message1").show();
-            $("#span_message1").html(data.message);
+            $("#span_message1").html(data.Message);
         }
-        $("#div_message_upload_file").hide();
+        //$("#div_message_upload_file").hide();
         LoadUserImage();
     });
 }
-
 
 
 

@@ -2,78 +2,77 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using VirtualExpo.Model.Data;
-using VirtualExpo.Model.Filters;
-using VirtualExpo.Models.Services;
+using System.Linq.Dynamic.Core;
+
 using VirtualExpo.Entities.Filters;
-using VirtualExpo.Models.Services.Contactus;
+using VirtualExpo.Model.Data;
+using VirtualExpo.Model.Services;
 
 namespace VisrtualExpo.Dll
 {
-    public class DllContactUs
+    public class DllFeedback
     {
         /// <summary>
-        /// This function get ContactUs object by Primary Key
+        /// This function get Feedback object by Primary Key
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public ContactUs GetByPK(int Id)
+        public Feedback GetByPK(int Id)
         {
             using (var entities = new ApplicationDbContext())
             {
-                return entities.ContactUs.FirstOrDefault(p => p.Id == Id);
+                return entities.Feedback.FirstOrDefault(p => p.Id == Id);
             }
         }
 
         /// <summary>
-        /// This function inserts a new record of ContactUs
+        /// This function inserts a new record of Feedback
         /// </summary>
-        /// <param name="contactus"></param>
+        /// <param name="Feedback"></param>
         /// <returns>returns Primary Key of new record</returns>
-        public long Insert(ContactUs contactus)
+        public long Insert(Feedback Feedback)
         {
             using (var entities = new ApplicationDbContext())
             {
-                entities.ContactUs.Add(contactus);
+                entities.Feedback.Add(Feedback);
                 entities.SaveChanges();
-                return contactus.Id;
+                return Feedback.Id;
             }
         }
 
         /// <summary>
-        /// This function updates ContactUs
+        /// This function updates Feedback
         /// </summary>
-        /// <param name="contactus"></param>
-        public void Update(ContactUs contactus)
+        /// <param name="Feedback"></param>
+        public void Update(Feedback Feedback)
         {
             using (var entities = new ApplicationDbContext())
             {
-                ContactUs dbContactUs = entities.ContactUs.SingleOrDefault(p => p.Id == contactus.Id);
-                dbContactUs.Id = contactus.Id;
-                dbContactUs.Name = contactus.Name;
-                dbContactUs.Email = contactus.Email;
-                dbContactUs.Telephone = contactus.Telephone;
-                dbContactUs.Message = contactus.Message;
-                dbContactUs.CreatedDate = contactus.CreatedDate;
-                dbContactUs.IsRead = contactus.IsRead;
+                Feedback dbFeedback = entities.Feedback.SingleOrDefault(p => p.Id == Feedback.Id);
+                dbFeedback.Id = Feedback.Id;
+                dbFeedback.Name = Feedback.Name;
+                dbFeedback.Email = Feedback.Email;
+                dbFeedback.Telephone = Feedback.Telephone;
+                dbFeedback.Message = Feedback.Message;
+                dbFeedback.CreatedDate = Feedback.CreatedDate;
+                dbFeedback.IsRead = Feedback.IsRead;
 
                 entities.SaveChanges();
             }
         }
 
         /// <summary>
-        /// This function returns all records of ContactUs
+        /// This function returns all records of Feedback
         /// </summary>
-        /// <returns>List of ContactUs</returns>
-        public List<ContactUs> GetAllContactUss()
+        /// <returns>List of Feedback</returns>
+        public List<Feedback> GetAllFeedbacks()
         {
             using (var entities = new ApplicationDbContext())
             {
                 try
                 {
-                    return entities.ContactUs.ToList();
+                    return entities.Feedback.ToList();
                 }
                 catch (Exception ex)
                 {
@@ -84,7 +83,7 @@ namespace VisrtualExpo.Dll
         }
 
         /// <summary>
-        /// This function deletes ContactUs by its Primary Key 
+        /// This function deletes Feedback by its Primary Key 
         /// and returns True in case of Success
         /// </summary>
         /// <param name="Id"></param>
@@ -93,12 +92,12 @@ namespace VisrtualExpo.Dll
         {
             using (var entities = new ApplicationDbContext())
             {
-                ContactUs dbContactUs = entities.ContactUs.SingleOrDefault(p => p.Id == Id);
+                Feedback dbFeedback = entities.Feedback.SingleOrDefault(p => p.Id == Id);
 
-                if (dbContactUs == null)
+                if (dbFeedback == null)
                     return false;
 
-                entities.ContactUs.Remove(dbContactUs);
+                entities.Feedback.Remove(dbFeedback);
 
                 entities.SaveChanges();
             }
@@ -111,22 +110,25 @@ namespace VisrtualExpo.Dll
         /// </summary>
         /// <param name="filters"></param>
         /// <returns>IEnumerable<dynamic></returns>
-        public List<ContactUsModel> Search(ContactUsSearchFilter filters)
+        public List<FeedbackModel> Search(FeedbackSearchFilter filters)
         {
             int skip = (filters.PageIndex - 1) * filters.PageSize;
 
             using (var entities = new ApplicationDbContext())
             {
-                var query = from contactus in entities.ContactUs
-                            select new ContactUsModel
+                var query = from feedback in entities.Feedback
+                            join exhibitions in entities.Exhibitions on feedback.ExhibitionId equals exhibitions.Id
+                            where exhibitions.Organizer_User_Id == filters.Userlog
+                            select new FeedbackModel
                             {
-                                Id = contactus.Id,
-                                Name = contactus.Name,
-                                Email = contactus.Email,
-                                Telephone = contactus.Telephone,
-                                Message = contactus.Message,
-                                CreatedDate = contactus.CreatedDate,
-                                IsRead = contactus.IsRead
+                                Id = feedback.Id,
+                                Name = feedback.Name,
+                                Email = feedback.Email,
+                                Telephone = feedback.Telephone,
+                                Message = feedback.Message,
+                                CreatedDate = feedback.CreatedDate,
+                                IsRead = feedback.IsRead,
+                                ExhibitionName = exhibitions.Name
                             };
 
 
@@ -141,9 +143,9 @@ namespace VisrtualExpo.Dll
                 }
 
                 var lst = query.OrderBy(filters.Sort).Skip(skip).Take(filters.PageSize).ToList();
-                foreach (var contactus in lst)
+                foreach (var Feedback in lst)
                 {
-                    contactus.CreatedDateStr = string.Format("{0:MM/dd/yyyy}", contactus.CreatedDate);
+                    Feedback.CreatedDateStr = string.Format("{0:MM/dd/yyyy}", Feedback.CreatedDate);
                 }
 
                 return lst;
@@ -155,12 +157,14 @@ namespace VisrtualExpo.Dll
         /// </summary>
         /// <param name="filters"></param>
         /// <returns>Count of searched recored as integer value</returns>
-        public int GetSearchCount(ContactUsSearchFilter filters)
+        public int GetSearchCount(FeedbackSearchFilter filters)
         {
             using (var entities = new ApplicationDbContext())
             {
-                var query = from contactus in entities.ContactUs
-                            select contactus;
+                var query = from feedback in entities.Feedback
+                            join exhibitions in entities.Exhibitions on feedback.ExhibitionId equals exhibitions.Id
+                            where exhibitions.Organizer_User_Id == filters.Userlog
+                            select feedback;
 
                 if (!string.IsNullOrEmpty(filters.Keyword))
                 {
