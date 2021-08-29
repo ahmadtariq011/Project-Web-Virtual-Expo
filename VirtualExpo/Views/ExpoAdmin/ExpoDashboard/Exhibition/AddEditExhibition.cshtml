@@ -6,6 +6,9 @@
 @section Scripts
 {
     <script src="~/js/ExpoAdmin/Exhibition/AddEditExhibition.js?v=@DateTime.Now.Ticks.ToString()"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/Chat.js?v=@DateTime.Now.Ticks.ToString()"></script>
+
 }
 @{
     bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
@@ -263,85 +266,60 @@
 </div>
 <div class="col-lg-2"></div>
 
-<!--<div style="display:@(ViewBag.IsAdd ? "inline" : "none")">
-    @if (data.Organizer_User_Id == Convert.ToInt32(User.Identity.Name))
-    {
-        <div class="right mT10">
-            <a class="btn btn-success btn-sm" asp-action="AddEditMediaLinks" asp-controller="@typeofUserLogin" asp-route-Exhibitionid="@data.Id">
-                <span style="position: relative; top: -5px;">Add Media Links</span>
-                <span class="material-icons mr-1" style="position: relative; top: 3px; width: 20px;">
-                    add_circle
-                </span>
-            </a>
-        </div>
-    }
-
-    <div class="clearfix"></div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <strong class="card-title">Media Links</strong>&nbsp; <span id="spanTotalRecords"></span>
-                </div>
-                <div class="card-body">
-                    <div id="div_message" class="note failure">
-                        <p>
-                            <span id="span_message"></span>
-                        </p>
-                    </div>
-                    <div class="c1 filter">
-
-                    </div>
-
-                    <table id="tbl1" class="table">
-                        <thead>
-                            <tr>
-                                <th class="gridSortingMenu" scope="col" sortable datafield="createdDateStr" caption="">Created Date</th>
-                                <th class="gridSortingMenu" scope="col" sortable datafield="contactDateStr" caption="">Follow Up Date</th>
-                                @if (data.Organizer_User_Id == Convert.ToInt32(User.Identity.Name))
-                                {
-                                    <th class="gridSortingMenu" scope="col" sortable datafield="details" caption="">Details</th>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>-->
-                    @*Show Pager*@
-
-                <!--<div id="div_no_found" class="alert alert-info hide" role="alert">
-                    No Media Links Found. Please click on Add  Media Links button to add a  Media Links.-->
-                    @*This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.*@
-                <!--</div>
+<button id="fixedbutton" class="btn bg-success rounded-circle" data-toggle="modal" data-target="#ChatModal"><span class="material-icons pt-2 text-white" style="font-size:50px;">mark_chat_unread</span></button>
 
 
 
+<div class="modal fade" id="ChatModal" role="dialog">
+    <div class="modal-dialog modal-lg">
 
-                </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Exhibition Room</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="row" style="background : #d5dbdb;">
+
+                        <div class="container">
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-2">Sender</div>
+                                <div class="col-4"><input type="text" id="senderInput" /></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">Receiver</div>
+                                <div class="col-4"><input type="text" id="receiverInput" /></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">Message</div>
+                                <div class="col-4"><input type="text" id="messageInput" /></div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="button" id="sendButton" value="Send Message" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <ul id="messagesList"></ul>
+                            </div>
+                        </div>
+                    </div><!-- row ends here -->
+                </div> <!-- container-fluid -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
-
-
     </div>
 </div>
-
-
-<script id="ListTemplateCustomers" type="text/x-jsrender">
-    <tr>
-        <td>{{:createdDateStr}}</td>
-        <td>{{:contactDateStr}}</td>
-        <td>{{:details}}</td>
-        @if (data.Organizer_User_Id== Convert.ToInt32(User.Identity.Name))
-        {
-            <td>
-
-                <a href="/Organizer/AddEditExhibitor/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
-                    <span class="material-icons">
-                        edit
-                    </span>
-                </a>
-            </td>
-        }
-    </tr>
-
-
-</script>-->

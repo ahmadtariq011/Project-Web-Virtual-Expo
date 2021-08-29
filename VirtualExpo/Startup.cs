@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VirtualExpo.Model.Data;
+using VirtualExpo.Web.Hubs;
 
 namespace VirtualExpo
 {
@@ -55,6 +56,8 @@ namespace VirtualExpo
             });
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("VirtualExpoDB")));
             services.AddControllersWithViews();
+            services.AddSignalR();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,6 +91,8 @@ namespace VirtualExpo
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=HomeIndex}/{id?}");
+                endpoints.MapHub<ChatHub>("/chathub");
+
             });
         }
     }

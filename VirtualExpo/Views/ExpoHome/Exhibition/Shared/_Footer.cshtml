@@ -1,1 +1,104 @@
-﻿<button id="fixedbutton" class="btn bg-success rounded-circle"><span class="material-icons pt-2 text-white" style="font-size:50px;">mark_chat_unread</span></button>
+﻿@using VirtualExpo.Web.StaticClass
+@using VirtualExpo.Bll
+@{
+
+    int id = ViewBag.ExibitionId;
+    BllExhibition bllExhibition = new BllExhibition();
+    var Exhibition = bllExhibition.GetByPK(Convert.ToInt32(id));
+
+    ExhibitionHub.ExhibitionName = Exhibition.Name;
+    BllUser bllUser = new BllUser();
+    var user = bllUser.GetByPK(Convert.ToInt32(User.Identity.Name));
+}
+<button id="fixedbutton" class="btn bg-success rounded-circle" data-toggle="modal" data-target="#ChatModal"><span class="material-icons pt-2 text-white" style="font-size:50px;">mark_chat_unread</span></button>
+
+
+
+<div class="modal fade" id="ChatModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Exhibition Room (@Exhibition.Name)</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <input type="hidden" id="senderInput" value="@user.UserName" />
+                    <input type="hidden" id="receiverInput" value="@Exhibition.Name" />
+                    <div id='recievedmessagediv' class="row pt-2 justify-content-start">
+                        @*<div class="col-sm-2 mt-2">
+            <img class="card-img rounded-circle mx-auto d-block" style="width: 40px; height: 40px;" src="gcu.jpg" alt="Card image">
+        </div>*@
+                        <div class="col-sm-10 ml-2 mt-2 p-1 border rounded-right rounded-top" style="height: 350px; overflow-y: scroll;">
+                            <ul id="messagesList" style=" list-style-type: none;">
+                                @*<li>
+                    We have recieved your message! Please wait we will respond soon...
+                    <div class='float-right'>
+                        <small> 2:23 PM </small>
+                    </div>
+                </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Bottom Footer Starts Here -->
+                    <div id='bottompanel' class="row" style="background : #d5dbdb;">
+                        <div class="col-md-9">
+                            <input id="messageInput" class="form-control" type="text" placeholder="Type Your Message Here!">
+                        </div>
+                        <a id="myBtn" class=" col-md-3 btn btn-dark" onclick="">
+                            Send
+                        </a>
+                    </div>
+                    <!--Footer/row ends here -->
+                </div> <!-- container-fluid -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/Chat.js?v=@DateTime.Now.Ticks.ToString()"></script>
+
+
+
+<!--<div class="row" style="background : #d5dbdb;">
+
+    <div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-2">Sender</div>
+            <div class="col-4"><input type="text" id="senderInput" /></div>
+        </div>
+        <div class="row">
+            <div class="col-2">Receiver</div>
+            <div class="col-4"><input type="text" id="receiverInput" /></div>
+        </div>
+        <div class="row">
+            <div class="col-2">Message</div>
+            <div class="col-4"><input type="text" id="messageInput" /></div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-6">
+                <input type="button" id="sendButton" value="Send Message" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">-->
+            @*<ul id="messagesList"></ul>*@
+        <!--</div>
+    </div>
+</div>--><!-- row ends here -->
