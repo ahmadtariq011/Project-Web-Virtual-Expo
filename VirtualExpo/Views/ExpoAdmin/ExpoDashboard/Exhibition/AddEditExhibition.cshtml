@@ -63,7 +63,7 @@
 
 }
 <input type="hidden" id="hfUserId" value="@data.Id" />
-<input type="hidden" id="hfOrganizerid" value="@Convert.ToInt32(User.Identity.Name)"/>
+<input type="hidden" id="hfOrganizerid" value="@Convert.ToInt32(User.Identity.Name)" />
 <div class="row">
 
     <div class="col-lg-2"></div>
@@ -153,14 +153,14 @@
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Name</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtName" type="text" value="@data.Name" @(ViewBag.IsAdd ? "disabled" : "") required >
+                        <input class="form-control" id="txtName" type="text" value="@data.Name" @(ViewBag.IsAdd ? "disabled" : "") required>
                     </div>
                 </div>
 
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Description</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtDescription" type="text" value="@data.Description" @(ViewBag.IsAdd ? "disabled" : "") required >
+                        <input class="form-control" id="txtDescription" type="text" value="@data.Description" @(ViewBag.IsAdd ? "disabled" : "") required>
                     </div>
                 </div>
 
@@ -193,8 +193,8 @@
                         <select class="form-control" id="txtStatus" name="txtStatus" required @(trp ? "" : "disabled") @(ViewBag.IsAdd ? "disabled" : "")>
                             @foreach (var gender in ExhibitionStatuses)
                             {
-                            if (gender == ExhibitionStatus)
-                            {
+                                if (gender == ExhibitionStatus)
+                                {
                                     <option id="genders" selected>@gender</option>
                                 }
                                 else
@@ -209,44 +209,44 @@
 
                 @*
 
-                <div class="row form-group">
-                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">CNIC</label></div>
-                    <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" @(ViewBag.IsAdd ? "disabled" : "") required maxlength="20">
-                    </div>
-                </div>
-                @if (Loguser.UserType == 1)
-                {
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="hf-email" class=" form-control-label">User Type</label></div>
-                        <div class="col-12 col-md-9">
-                            <select class="form-control" id="txtUserType" name="txtUserType" required>
-                                @foreach (var usertype in usertypes)
-                                {
-                                    if (usertype == typeofuser)
-                                    {
-                                        <option id="usertype" selected>@usertype</option>
-                                    }
-                                    else
-                                    {
-                                        <option id="usertype">@usertype</option>
-                                    }
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="hf-email" class=" form-control-label">CNIC</label></div>
+                                <div class="col-12 col-md-9">
+                                    <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" @(ViewBag.IsAdd ? "disabled" : "") required maxlength="20">
+                                </div>
+                            </div>
+                            @if (Loguser.UserType == 1)
+                            {
+                                <div class="row form-group">
+                                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">User Type</label></div>
+                                    <div class="col-12 col-md-9">
+                                        <select class="form-control" id="txtUserType" name="txtUserType" required>
+                                            @foreach (var usertype in usertypes)
+                                            {
+                                                if (usertype == typeofuser)
+                                                {
+                                                    <option id="usertype" selected>@usertype</option>
+                                                }
+                                                else
+                                                {
+                                                    <option id="usertype">@usertype</option>
+                                                }
 
-                                }
-                            </select>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+
+
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Telephone</label></div>
+                                <div class="col-12 col-md-9">
+                                    <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" @(ViewBag.IsAdd ? "disabled" : "") maxlength="20">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                }
-
-
-                <div class="row form-group">
-                    <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Telephone</label></div>
-                    <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" @(ViewBag.IsAdd ? "disabled" : "") maxlength="20">
-                    </div>
-                </div>
-            </div>
-        </div>*@
+                    </div>*@
 
 
                 <div class="card-footer">
@@ -262,3 +262,86 @@
     </div>
 </div>
 <div class="col-lg-2"></div>
+
+<!--<div style="display:@(ViewBag.IsAdd ? "inline" : "none")">
+    @if (data.Organizer_User_Id == Convert.ToInt32(User.Identity.Name))
+    {
+        <div class="right mT10">
+            <a class="btn btn-success btn-sm" asp-action="AddEditMediaLinks" asp-controller="@typeofUserLogin" asp-route-Exhibitionid="@data.Id">
+                <span style="position: relative; top: -5px;">Add Media Links</span>
+                <span class="material-icons mr-1" style="position: relative; top: 3px; width: 20px;">
+                    add_circle
+                </span>
+            </a>
+        </div>
+    }
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Media Links</strong>&nbsp; <span id="spanTotalRecords"></span>
+                </div>
+                <div class="card-body">
+                    <div id="div_message" class="note failure">
+                        <p>
+                            <span id="span_message"></span>
+                        </p>
+                    </div>
+                    <div class="c1 filter">
+
+                    </div>
+
+                    <table id="tbl1" class="table">
+                        <thead>
+                            <tr>
+                                <th class="gridSortingMenu" scope="col" sortable datafield="createdDateStr" caption="">Created Date</th>
+                                <th class="gridSortingMenu" scope="col" sortable datafield="contactDateStr" caption="">Follow Up Date</th>
+                                @if (data.Organizer_User_Id == Convert.ToInt32(User.Identity.Name))
+                                {
+                                    <th class="gridSortingMenu" scope="col" sortable datafield="details" caption="">Details</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>-->
+                    @*Show Pager*@
+
+                <!--<div id="div_no_found" class="alert alert-info hide" role="alert">
+                    No Media Links Found. Please click on Add  Media Links button to add a  Media Links.-->
+                    @*This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.*@
+                <!--</div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script id="ListTemplateCustomers" type="text/x-jsrender">
+    <tr>
+        <td>{{:createdDateStr}}</td>
+        <td>{{:contactDateStr}}</td>
+        <td>{{:details}}</td>
+        @if (data.Organizer_User_Id== Convert.ToInt32(User.Identity.Name))
+        {
+            <td>
+
+                <a href="/Organizer/AddEditExhibitor/{{:id}}" class="text-primary mr-3" style="cursor:pointer;">
+                    <span class="material-icons">
+                        edit
+                    </span>
+                </a>
+            </td>
+        }
+    </tr>
+
+
+</script>-->

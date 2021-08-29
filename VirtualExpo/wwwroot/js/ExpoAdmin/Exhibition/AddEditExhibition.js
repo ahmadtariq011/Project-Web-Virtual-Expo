@@ -205,6 +205,43 @@ function Delete(id) {
 }
 
 
+function LoadMediaLinksWithCount() {
+    debugger;
+    filters =
+    {
+        ExhibitionId: $("#hfUserId").val(),
+    };
+    if (IsHTML5) {
+        sessionStorage["CustomerFilters"] = JSON.stringify(filters);
+    }
+    $("#loader").show();
+    $.post("/api/MediaLinksApi/GetAllMediaLinks", filters, LoadMediaLinksWithCountCallBack);
+}
+function LoadMediaLinksWithCountCallBack(data) {
+    debugger;
+    $("#loader").hide(); $("#divCustomerList").show();
+    $("#tbl1").show(); $("#div_no_found").hide(); $("#divPagerUsers").show();
+    $("#spanTotalRecords").text("(" + data.totalCount + " records)");
+
+    if (data.totalCount < 1) {
+        $("#tbl1").hide();
+        $("#divPagerUsers").hide();
+        $("#div_no_found").show();
+        return;
+    }
+    $("#tbl1 tbody").html($("#ListTemplateCustomers").render(data.message));
+
+    //if (CustomersGridPager == null) {
+    //    CustomersGridPager = $("#divPagerUsers").GridPager({
+    //        TotalRecords: data.totalCount,
+    //        ChangePageSize: ChangePageCustomerResults,
+    //        NavigateToPage: CustomersPageNavigation
+    //    });
+    //}
+
+    //CustomersGridPager.GridPager("SetPageIndexAndSize", filters.PageIndex, filters.PageSize);
+    //CustomersGridPager.GridPager("SetPager", data.TotalCount);
+}
 
 
 

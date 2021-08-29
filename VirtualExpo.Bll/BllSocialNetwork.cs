@@ -25,6 +25,10 @@ namespace VirtualExpo.Bll
         {
             return dalExhibition.GetByPK(Id);
         }
+        public SocialNetwork GetByExhibitor(int Id)
+        {
+            return dalExhibition.GetByExhibitor(Id);
+        }
 
 
         public int Insert(SocialNetwork Exhibition)

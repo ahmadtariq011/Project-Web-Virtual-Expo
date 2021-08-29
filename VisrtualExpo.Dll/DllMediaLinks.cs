@@ -22,6 +22,13 @@ namespace VisrtualExpo.Dll
                 return entities.MediaLinks.FirstOrDefault(p => p.Id == Id);
             }
         }
+        public MediaLinks GetByExhibitor(int Id)
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                return entities.MediaLinks.FirstOrDefault(p => p.Exhibitor_Id == Id);
+            }
+        }
 
 
 

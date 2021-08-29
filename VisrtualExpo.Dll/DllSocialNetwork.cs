@@ -22,6 +22,13 @@ namespace VisrtualExpo.Dll
                 return entities.SocialNetwork.FirstOrDefault(p => p.Id == Id);
             }
         }
+        public SocialNetwork GetByExhibitor(int Id)
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                return entities.SocialNetwork.FirstOrDefault(p => p.Exhibitor_Id == Id);
+            }
+        }
 
 
 

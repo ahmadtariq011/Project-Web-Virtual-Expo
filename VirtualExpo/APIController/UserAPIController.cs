@@ -79,7 +79,54 @@ namespace VirtualExpo.Web.APIController
             }
             return result;
         }
+        BllSocialNetwork bllSocialNetwork = new BllSocialNetwork();
+        [HttpPost]
+        public ServiceResponse SaveSocialExperience(SocialNetwork Exhibition)
+        {
+            try
+            {
+                if (bllSocialNetwork.GetByExhibitor(Exhibition.Exhibitor_Id) == null)
+                {
+                    SocialNetwork dbExhibition = new SocialNetwork();
 
+                    dbExhibition.Facebook = Exhibition.Facebook;
+                    dbExhibition.Instagram = Exhibition.Instagram;
+                    dbExhibition.Exhibitor_Id = Exhibition.Exhibitor_Id;
+                    dbExhibition.Linkdin = Exhibition.Linkdin;
+                    dbExhibition.SnapChat = Exhibition.SnapChat;
+                    dbExhibition.Twitter = Exhibition.Twitter;
+                    dbExhibition.Website = Exhibition.Website;
+                    int UserId = bllSocialNetwork.Insert(dbExhibition);
+                    result.IsSucceeded = true;
+                    result.TotalCount = UserId;
+                    result.Message = "Social Network is Successfully Created";
+
+                }
+                else
+                {
+                    SocialNetwork dbExhibition = bllSocialNetwork.GetByExhibitor(Exhibition.Exhibitor_Id);
+
+                    dbExhibition.Facebook = Exhibition.Facebook;
+                    dbExhibition.Instagram = Exhibition.Instagram;
+                    dbExhibition.Exhibitor_Id = Exhibition.Exhibitor_Id;
+                    dbExhibition.Linkdin = Exhibition.Linkdin;
+                    dbExhibition.SnapChat = Exhibition.SnapChat;
+                    dbExhibition.Twitter = Exhibition.Twitter;
+                    dbExhibition.Website = Exhibition.Website;
+
+                    bllSocialNetwork.Update(dbExhibition);
+                    result.IsSucceeded = true;
+                    result.Message = "Social Network is Successfully Updated";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                result.IsSucceeded = false;
+                result.Message = ex.Message + "<br>" + ex.StackTrace;
+            }
+            return result;
+        }
         [HttpPost]
         public async Task<ServiceResponse> SaveUser(UserModel user)
         {
@@ -456,7 +503,182 @@ namespace VirtualExpo.Web.APIController
             }
             return result;
         }
+        BllMediaLinks bllMediaLinks = new BllMediaLinks();
+        [HttpPost]
+        public async Task<ServiceResponse> SaveMediaLink(MediaLinkModel user)
+        {
+            try
+            {
 
+                if (bllMediaLinks.GetByExhibitor(user.Exhibitor_Id) == null)
+                {
+                    if (user.PictureFile != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.PictureFile.FileName).ToLower();
+                        if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Image type object ";
+                        }
+                        
+                    }
+                    MediaLinks dbUser = new MediaLinks();
+                    dbUser.Download = user.PdfFile.FileName;
+                    dbUser.Picture = user.PictureFile.FileName;
+                    dbUser.Video = user.VideoFile.FileName;
+                    dbUser.DownloadDescription = user.DownloadDescription;
+                    dbUser.PictureDescription = user.PictureDescription;
+                    dbUser.VideoDescription = user.VideoDescription;
+                    dbUser.Link = user.Link;
+                    dbUser.Exhibitor_Id = user.Exhibitor_Id;
+                    dbUser.LinkDescription = user.LinkDescription;
+                    int UserId = bllMediaLinks.Insert(dbUser);
+                    if (user.VideoFile != null)
+                    {
+                        var uploadsV = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Video");
+
+                        if (!Directory.Exists(uploadsV))
+                        {
+                            Directory.CreateDirectory(uploadsV);
+                        }
+
+                        if (user.VideoFile.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploadsV, user.VideoFile.FileName), FileMode.Create))
+                            {
+                                await user.VideoFile.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
+
+                    if (user.PdfFile != null)
+                    {
+                        var uploadsD = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Download");
+
+                        if (!Directory.Exists(uploadsD))
+                        {
+                            Directory.CreateDirectory(uploadsD);
+                        }
+
+                        if (user.PdfFile.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploadsD, user.PdfFile.FileName), FileMode.Create))
+                            {
+                                await user.PdfFile.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
+                    if (user.PictureFile != null)
+                    {
+                        var uploads = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Picture");
+
+                        if (!Directory.Exists(uploads))
+                        {
+                            Directory.CreateDirectory(uploads);
+                        }
+
+                        if (user.PictureFile.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploads, user.PictureFile.FileName), FileMode.Create))
+                            {
+                                await user.PictureFile.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
+
+                    result.IsSucceeded = true;
+                    result.TotalCount = UserId;
+                    result.Message = "Media Link is Successfully Created";
+
+                }
+                else
+                {
+
+                    MediaLinks dbUser = bllMediaLinks.GetByExhibitor(user.Exhibitor_Id);
+
+                    if (user.PictureFile != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.PictureFile.FileName).ToLower();
+                        if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Image type object ";
+                        }
+                        dbUser.Picture = user.PictureFile.FileName;
+                    }
+                    dbUser.Download = user.PdfFile.FileName;
+                    dbUser.Video = user.VideoFile.FileName;
+                    dbUser.DownloadDescription = user.DownloadDescription;
+                    dbUser.PictureDescription = user.PictureDescription;
+                    dbUser.VideoDescription = user.VideoDescription;
+                    dbUser.Link = user.Link;
+                    dbUser.LinkDescription = user.LinkDescription;
+                    bllMediaLinks.Update(dbUser);
+
+                    if (user.VideoFile != null)
+                    {
+                        var uploadsV = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Video");
+
+                        if (!Directory.Exists(uploadsV))
+                        {
+                            Directory.CreateDirectory(uploadsV);
+                        }
+
+                        if (user.VideoFile.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploadsV, user.VideoFile.FileName), FileMode.Create))
+                            {
+                                await user.VideoFile.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
+                
+                    if (user.PdfFile != null)
+                    {
+                        var uploadsD = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Download");
+
+                        if (!Directory.Exists(uploadsD))
+                        {
+                            Directory.CreateDirectory(uploadsD);
+                        }
+
+                        if (user.PdfFile.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploadsD, user.PdfFile.FileName), FileMode.Create))
+                            {
+                                await user.PdfFile.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
+                    if (user.PictureFile != null)
+                    {
+                        var uploads = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id+ "/Picture");
+
+                        if (!Directory.Exists(uploads))
+                        {
+                            Directory.CreateDirectory(uploads);
+                        }
+
+                        if (user.PictureFile.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploads, user.PictureFile.FileName), FileMode.Create))
+                            {
+                                await user.PictureFile.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
+                    result.IsSucceeded = true;
+                    result.Message = "Media Link is Successfully Updated";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                result.IsSucceeded = false;
+                result.Message = ex.Message + "<br>" + ex.StackTrace;
+            }
+            return result;
+        }
 
         [HttpPost]
         public ServiceResponse Logout(UserSearchFilter type)

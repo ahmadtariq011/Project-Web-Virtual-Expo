@@ -16,6 +16,7 @@ namespace VirtualExpo.Web.Controllers.Admin
         {
             return View("Views/ExpoAdmin/ExpoDashboard/Users/Index.cshtml");
         }
+
         public IActionResult Dashboard()
         {
             return View("Views/ExpoAdmin/ExpoDashboard/Dashboard/Index.cshtml");
@@ -23,6 +24,48 @@ namespace VirtualExpo.Web.Controllers.Admin
         public IActionResult AttendeeIndex()
         {
             return View("Views/ExpoAdmin/ExpoDashboard/Attendee/Index.cshtml");
+        }
+        public IActionResult AddEditMediaLinks(int Exhibitionid = 0)
+        {
+            BllMediaLinks blluser = new BllMediaLinks();
+            if (blluser.GetByExhibitor(Exhibitionid) == null)
+            {
+                MediaLinks dbuser = new MediaLinks();
+                ViewBag.data = dbuser;
+                ViewBag.title = "Add Media Link";
+                ViewBag.IsAdd = false;
+                ViewBag.ExhibitorDescription = Exhibitionid;
+            }
+            else
+            {
+                ViewBag.data = blluser.GetByExhibitor(Exhibitionid);
+                ViewBag.title = "Edit Media Link";
+                ViewBag.IsAdd = false;
+                ViewBag.ExhibitorDescription = Exhibitionid;
+
+            }
+            return View("Views/ExpoAdmin/ExpoDashboard/MediaLinks.cshtml");
+        }
+        public IActionResult AddEditSocialNetwork(int Exhibitionid = 0)
+        {
+            BllSocialNetwork blluser = new BllSocialNetwork();
+            if (blluser.GetByExhibitor(Exhibitionid) == null)
+            {
+                SocialNetwork dbuser = new SocialNetwork();
+                ViewBag.data = dbuser;
+                ViewBag.title = "Add Social Network";
+                ViewBag.IsAdd = false;
+                ViewBag.ExhibitorDescription = Exhibitionid;
+            }
+            else
+            {
+                ViewBag.data = blluser.GetByExhibitor(Exhibitionid);
+                ViewBag.title = "Edit Social Network";
+                ViewBag.IsAdd = false;
+                ViewBag.ExhibitorDescription = Exhibitionid;
+
+            }
+            return View("Views/ExpoAdmin/ExpoDashboard/SocialNetwork.cshtml");
         }
         public IActionResult AddEditUser(int id = 0)
         {
