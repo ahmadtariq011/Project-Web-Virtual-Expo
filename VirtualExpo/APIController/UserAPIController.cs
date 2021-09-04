@@ -624,6 +624,44 @@ namespace VirtualExpo.Web.APIController
                             Directory.CreateDirectory(uploadsV);
                         }
 
+                    result.IsSucceeded = true;
+                    result.TotalCount = UserId;
+                    result.Message = "Media Link is Successfully Created";
+
+                }
+                else
+                {
+
+                    MediaLinks dbUser = bllMediaLinks.GetByExhibitor(user.Exhibitor_Id);
+
+                    if (user.PictureFile != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.PictureFile.FileName).ToLower();
+                        if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Image type object ";
+                        }
+                        dbUser.Picture = user.PictureFile.FileName;
+                    }
+                    dbUser.Download = user.PdfFile.FileName;
+                    dbUser.Video = user.VideoFile.FileName;
+                    dbUser.DownloadDescription = user.DownloadDescription;
+                    dbUser.PictureDescription = user.PictureDescription;
+                    dbUser.VideoDescription = user.VideoDescription;
+                    dbUser.Link = user.Link;
+                    dbUser.LinkDescription = user.LinkDescription;
+                    bllMediaLinks.Update(dbUser);
+
+                    if (user.VideoFile != null)
+                    {
+                        var uploadsV = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Video");
+
+                        if (!Directory.Exists(uploadsV))
+                        {
+                            Directory.CreateDirectory(uploadsV);
+                        }
+
                         if (user.VideoFile.Length > 0)
                         {
                             using (var fileStream = new FileStream(Path.Combine(uploadsV, user.VideoFile.FileName), FileMode.Create))
