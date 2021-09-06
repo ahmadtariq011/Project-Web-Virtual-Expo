@@ -6,6 +6,8 @@
 @section Scripts
 {
     <script src="~/js/ExpoAdmin/Organizer/AddEditExhibitor.js?v=@DateTime.Now.Ticks.ToString()"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/Chat.js?v=@DateTime.Now.Ticks.ToString()"></script>
 }
 @{
     bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
@@ -50,8 +52,14 @@
     var Exhibition = bllExhibition.ByOrganizerId(LoginUserId);
 
     //var Loguser = (User)bllUser.GetByPK(LoginUserId);
+    var user = bllUser.GetByPK(Convert.ToInt32(User.Identity.Name));
 
 
+    var ExhibitionRoll = bllExhibition.GetByPK(Convert.ToInt32(Exhibitordata.Exibition_id));
+
+    BllMessage bllMessage = new BllMessage();
+
+    var Messages = bllMessage.GetAllMessageByExhibition(ExhibitionRoll.Id.ToString());
 
 
 }
@@ -73,13 +81,13 @@
                     {
                         <div class="right mT10">
                             <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" asp-action="AddEditMediaLinks" asp-controller="Exhibitor" asp-route-Exhibitionid="@Exhibitordata.Id">
-                             
+
                                 <span style="position: relative;top: -6px;">Add Media Links</span>
                             </a>
                         </div>
                         <div class="right mT10">
                             <a class="btn btn-primary btn-sm float-right" style="margin-right: 20px;" asp-action="AddEditSocialNetwork" asp-controller="Exhibitor" asp-route-Exhibitionid="@Exhibitordata.Id">
-                                
+
                                 <span style="position: relative;top: -6px;">Add Social Network</span>
                             </a>
                         </div>
@@ -265,3 +273,61 @@
     </div>
 
 </script>
+
+@if (Ifadded)
+{
+    <button id="fixedbutton" style=" position: fixed; bottom: 0px; right: 0px;" class="btn bg-success rounded-circle" data-toggle="modal" data-target="#ChatModal"><span class="material-icons pt-2 text-white" style="font-size:50px;">mark_chat_unread</span></button>
+
+
+
+    <div class="modal fade" id="ChatModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Exhibition Room (@ExhibitionRoll.Name)</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <input type="hidden" id="senderInput" value="@user.UserName" />
+                        <input type="hidden" id="receiverInput" value="@ExhibitionRoll.Id" />
+                        <div id='recievedmessagediv' class="row pt-2 justify-content-start">
+                            @*<div class="col-sm-2 mt-2">
+                                    <img class="card-img rounded-circle mx-auto d-block" style="width: 40px; height: 40px;" src="gcu.jpg" alt="Card image">
+                                </div>*@
+                            <div class="col-sm-10 ml-2 mt-2 p-1 border rounded-right rounded-top" style="height: 350px; overflow-y: scroll;">
+                                <ul id="messagesList" style=" list-style-type: none;">
+                                    @foreach (var message in Messages)
+                                    {
+                                        <li style="background: rgb(229, 232, 232); padding: 8px; border-radius: 10px; margin-top: 8px;">
+                                            @Html.Raw(message.SenderName + " says :" + message.MessageText)
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Bottom Footer Starts Here -->
+                        <div id='bottompanel' class="row" style="background : #d5dbdb;">
+                            <div class="col-md-9">
+                                <input id="messageInput" class="form-control" type="text" placeholder="Type Your Message Here!">
+                            </div>
+                            <a id="myBtn" class=" col-md-3 btn btn-dark" onclick="">
+                                Send
+                            </a>
+                        </div>
+                        <!--Footer/row ends here -->
+                    </div> <!-- container-fluid -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+

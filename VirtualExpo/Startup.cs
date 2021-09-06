@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,8 @@ namespace VirtualExpo
                 options.AccessDeniedPath = "/Account/AccessDenied/";
             });
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("VirtualExpoDB")));
+            services.AddSession();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews();
             services.AddSignalR();
 
@@ -78,6 +81,8 @@ namespace VirtualExpo
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
+
 
             app.UseAuthentication();
             app.UseAuthorization();

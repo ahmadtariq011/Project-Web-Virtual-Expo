@@ -4,11 +4,11 @@
     <div class="col-lg-3">
         <h3><strong>Web Educational Expo</strong></h3>
         <p></p>
-        <a class="nav-link bg-light" href="#">About</a>
-        <a class="nav-link bg-light" href="#">Contact</a>
-        <a class="nav-link bg-light" href="#">Live Events</a>
-        <a class="nav-link bg-light" href="#">Upcoming Events</a>
-        <a class="nav-link bg-light" href="#">Why Web Educational Expo?</a>
+        <a class="nav-link bg-light" asp-action="AboutUs" asp-controller="Home">About</a>
+        <a class="nav-link bg-light" asp-controller="Home" asp-action="ContactUs">Contact</a>
+        <a class="nav-link bg-light" asp-action="EventHome" asp-controller="Home">Live Events</a>
+        <a class="nav-link bg-light" asp-action="EventHome" asp-controller="Home">Upcoming Events</a>
+        <a class="nav-link bg-light" asp-action="HomeIndex" asp-controller="Home">Why Web Educational Expo?</a>
     </div>
 
     <div class="col-lg-4">
@@ -24,11 +24,11 @@
     <div class="col-lg-3">
         <h3><strong>Exhibit With Us</strong></h3>
         <p></p>
-        <a class="nav-link bg-light" href="#">Get A Quote</a>
-        <a class="nav-link bg-light" href="#">Request Demo</a>
-        <a class="nav-link bg-light" href="#">Promotions</a>
-        <a class="nav-link bg-light" href="#">Testimonial</a>
-        <a class="nav-link bg-light" href="#">Book You Stall</a>
+        <a class="nav-link bg-light" asp-controller="Home" asp-action="ContactUs">Get A Quote</a>
+        <a class="nav-link bg-light" asp-action="ContactUs" asp-controller="Home">Request Demo</a>
+        <a class="nav-link bg-light" asp-action="ContactUs" asp-controller="Home">Promotions</a>
+        <a class="nav-link bg-light" asp-action="RequestAdmin" asp-controller="Home">Book Event </a>
+        <a class="nav-link bg-light" asp-action="RequestOrganizer" asp-controller="Home">Book You Stall</a>
     </div>
 </div>
 <footer class="container-fluid text-center bg-light">

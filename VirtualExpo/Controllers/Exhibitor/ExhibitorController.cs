@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VirtualExpo.Model.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace VirtualExpo.Web.Controllers.Admin
 {
@@ -111,6 +112,8 @@ namespace VirtualExpo.Web.Controllers.Admin
                 if (bllExhibitorDescription.GetByUserid(ViewBag.data.Id) != null)
                 {
                     ViewBag.ExhibitorDescription = bllExhibitorDescription.GetByUserid(ViewBag.data.Id);
+                    ExhibitorDescription Exhibition = bllExhibitorDescription.GetByUserid(ViewBag.data.Id);
+                    HttpContext.Session.SetString("ExhibitionName", Exhibition.Exibition_id.ToString());
                 }
                 else
                 {

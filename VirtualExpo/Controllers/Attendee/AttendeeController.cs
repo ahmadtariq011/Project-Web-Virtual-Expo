@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using VirtualExpo.Model.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+
 
 namespace VirtualExpo.Web.Controllers.Admin
 {
@@ -22,7 +24,15 @@ namespace VirtualExpo.Web.Controllers.Admin
         }
         public IActionResult ExhibitionHome(int id)
         {
+
             ViewBag.ExibitionId = id;
+            BllExhibition bllExhibition = new BllExhibition();
+            BllMessage bllMessage = new BllMessage();
+            var Exhibition = bllExhibition.GetByPK(Convert.ToInt32(id));
+
+            HttpContext.Session.SetString("ExhibitionName", Exhibition.Id.ToString());
+
+            ViewBag.Messages = bllMessage.GetAllMessageByExhibition(Exhibition.Id.ToString());
             return View("Views/ExpoHome/Exhibition/ExhibitionHome/ExibitionHome.cshtml");
         }
         public IActionResult ExpoOrganizer(int id, int OrganizerId)

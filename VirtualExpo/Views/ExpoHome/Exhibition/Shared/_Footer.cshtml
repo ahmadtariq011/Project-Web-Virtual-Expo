@@ -1,12 +1,16 @@
 ﻿@using VirtualExpo.Web.StaticClass
 @using VirtualExpo.Bll
+@using VirtualExpo.Model.Data
 @{
 
     int id = ViewBag.ExibitionId;
     BllExhibition bllExhibition = new BllExhibition();
     var Exhibition = bllExhibition.GetByPK(Convert.ToInt32(id));
 
-    ExhibitionHub.ExhibitionName = Exhibition.Name;
+    BllMessage bllMessage = new BllMessage();
+
+    var Messages = bllMessage.GetAllMessageByExhibition(id.ToString());
+    //ExhibitionHub.ExhibitionName = Exhibition.Name;
     BllUser bllUser = new BllUser();
     var user = bllUser.GetByPK(Convert.ToInt32(User.Identity.Name));
 }
@@ -26,19 +30,19 @@
                 <div class="container-fluid">
 
                     <input type="hidden" id="senderInput" value="@user.UserName" />
-                    <input type="hidden" id="receiverInput" value="@Exhibition.Name" />
+                    <input type="hidden" id="receiverInput" value="@Exhibition.Id" />
                     <div id='recievedmessagediv' class="row pt-2 justify-content-start">
                         @*<div class="col-sm-2 mt-2">
             <img class="card-img rounded-circle mx-auto d-block" style="width: 40px; height: 40px;" src="gcu.jpg" alt="Card image">
         </div>*@
                         <div class="col-sm-10 ml-2 mt-2 p-1 border rounded-right rounded-top" style="height: 350px; overflow-y: scroll;">
                             <ul id="messagesList" style=" list-style-type: none;">
-                                @*<li>
-                    We have recieved your message! Please wait we will respond soon...
-                    <div class='float-right'>
-                        <small> 2:23 PM </small>
-                    </div>
-                </li>*@
+                                @foreach (var message in Messages)
+                                {
+                                    <li style="background: rgb(229, 232, 232); padding: 8px; border-radius: 10px; margin-top: 8px;">
+                                        @Html.Raw(message.SenderName + " says :" + message.MessageText)
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
