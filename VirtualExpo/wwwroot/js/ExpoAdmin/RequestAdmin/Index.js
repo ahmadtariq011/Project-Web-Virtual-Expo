@@ -102,7 +102,7 @@ function RequestAdmin() {
     if (!Validate("#divPersonal")) {
         return;
     }
-    //$("#loader").show();
+    $("#loader").show();
 
     var formData = new FormData();
     var fileInput = $('#SponsorLisr')[0].files[0];
@@ -129,7 +129,8 @@ function RequestAdmin() {
         processData: false,
         contentType: false,
         success: function (data) {
-            ShowCallbackMessage(true, data.message);
+            $("#loader").hide();
+            ShowCallbackMessage(data.isSucceeded, data.message);
         }
     });
 }

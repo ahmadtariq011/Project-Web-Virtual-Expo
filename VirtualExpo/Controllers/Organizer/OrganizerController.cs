@@ -119,7 +119,7 @@ namespace VirtualExpo.Web.Controllers.Admin
             {
                 ViewBag.data = blluser.GetByPK(id);
                 ViewBag.title = "Edit Exhibitor";
-                ViewBag.IsAdd = false;
+                ViewBag.IsAdd = true;
                 var WorkingExperiencedata = bllExhibitorDescription.GetByUserid(ViewBag.data.Id);
                 if (bllExhibitorDescription.GetByUserid(ViewBag.data.Id) != null)
                 {
@@ -131,11 +131,40 @@ namespace VirtualExpo.Web.Controllers.Admin
                     ViewBag.ExhibitorDescription = dbWorkExperience;
                 }
             }
-            return View("Views/ExpoAdmin/ExpoDashboard/Attendee/AddEditExhibitor.cshtml");
+            return View("Views/ExpoAdmin/ExpoDashboard/Users/AddEditExhibitor.cshtml");
         }
         public IActionResult AttendeeIndex()
         {
             return View("Views/ExpoAdmin/ExpoDashboard/Attendee/Index.cshtml");
+        }
+        public IActionResult AddEditAttednee(int id = 0)
+        {
+            BllUser blluser = new BllUser();
+
+            BllEducation bllEducation = new BllEducation();
+            BllWorkingExperience bllWorkingExperience = new BllWorkingExperience();
+            if (blluser.GetByPK(id) == null)
+            {
+                User dbuser = new User();
+                ViewBag.data = dbuser;
+                ViewBag.title = "Add Attendee";
+                ViewBag.IsAdd = false;
+                WorkExperience dbWorkExperience = new WorkExperience();
+                ViewBag.WorkingExperiencedata = dbWorkExperience;
+                Education dbEducation = new Education();
+
+                ViewBag.Educationdata = dbEducation;
+            }
+            else
+            {
+                ViewBag.data = blluser.GetByPK(id);
+                ViewBag.title = "Edit Attendee";
+                ViewBag.IsAdd = false;
+                ViewBag.WorkingExperiencedata = bllWorkingExperience.GetByAttendeeId(ViewBag.data.Id);
+
+                ViewBag.Educationdata = bllEducation.GetByAttendeeId(ViewBag.data.Id);
+            }
+            return View("Views/ExpoAdmin/ExpoDashboard/Attendee/AddEditAttende.cshtml");
         }
     }
 }

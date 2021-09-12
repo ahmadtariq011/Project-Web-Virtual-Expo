@@ -14,7 +14,12 @@
     Education educationData = (Education)ViewBag.Educationdata;
     var gen = Enum.GetValues(typeof(GenderType)).Cast<GenderType>().ToList();
     string usergender = EnumHelper.GetEnumByValue<GenderType>(data.GenderType.ToString()).ToString();
-    string WorkingStatus = EnumHelper.GetEnumByValue<WorkingStatus>(workExperienceData.WorkingStatus.ToString()).ToString();
+    string WorkingStatus = "";
+    if (workExperienceData !=null)
+    {
+
+        WorkingStatus = EnumHelper.GetEnumByValue<WorkingStatus>(workExperienceData.WorkingStatus.ToString()).ToString();
+    }
 
     BllAttendeeExhibitionJunc bllAttendeeExhibitionJunc = new BllAttendeeExhibitionJunc();
     var attendeeExhibition = bllAttendeeExhibitionJunc.GetByAttendeeId(data.Id);

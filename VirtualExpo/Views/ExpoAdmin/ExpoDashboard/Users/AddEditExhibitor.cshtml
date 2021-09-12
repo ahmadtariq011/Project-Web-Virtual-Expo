@@ -18,7 +18,7 @@
     //BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
     var Exhibitordata = (ExhibitorDescription)ViewBag.ExhibitorDescription;
     bool Ifadded = false;
-    if (Exhibitordata != null)
+    if (Exhibitordata.Id != 0)
     {
         Ifadded = true;
     }
@@ -40,15 +40,15 @@
 
     BllUser bllUser = new BllUser();
 
-    var userdata = bllUser.GetAllUsers();
+    //var userdata = bllUser.GetAllUsers();
     var usertypes = new List<string>();
     foreach (var g in use)
     {
         usertypes.Add(String.Join(Environment.NewLine, g));
     }
-    var LoginUserId = Convert.ToInt32(User.Identity.Name);
+    var LoginUserId = data.Id;
     BllExhibition bllExhibition = new BllExhibition();
-    var AllExhibitions = bllExhibition.GetAll();
+    var AllExhibitions = bllExhibition.GetOrganizersExhibition(Convert.ToInt32(User.Identity.Name));
     var Exhibition = bllExhibition.ByOrganizerId(LoginUserId);
 
     //var Loguser = (User)bllUser.GetByPK(LoginUserId);
@@ -58,8 +58,12 @@
     var ExhibitionRoll = bllExhibition.GetByPK(Convert.ToInt32(Exhibitordata.Exibition_id));
 
     BllMessage bllMessage = new BllMessage();
+    List<Message> Messages = new List<Message>();
+    if (user.UserType == 3)
+    {
+        Messages = bllMessage.GetAllMessageByExhibition(ExhibitionRoll.Id.ToString());
+    }
 
-    var Messages = bllMessage.GetAllMessageByExhibition(ExhibitionRoll.Id.ToString());
 
 
 }
@@ -116,44 +120,48 @@
                             }
                         </select>
                     </div>
+                    <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Image</label></div>
+                    <div class="col-12 col-md-3">
+                        <input class="form-control" id="AdminImage" name="AdminImage" type="file" required>
+                    </div>
                 </div>
 
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">First Name</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required ">
+                        <input class="form-control" id="txtFirstName" type="text" value="@data.FirstName" required @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Last Name</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required ">
+                        <input class="form-control" id="txtLastName" type="text" value="@data.LastName" required @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Name </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" required ">
+                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" required @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required>
+                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Password</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required />
-                        <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');" style="margin-top:15px;" />
+                        <input class="form-control" id="txtPassword" type="password" value="@data.Password" required @(ViewBag.IsAdd ? "disabled" : "") />
+                        <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');" @(ViewBag.IsAdd ? "disabled" : "") style="margin-top:15px;" />
                         <label for="chkShowHidePassword" style="margin-bottom:0px;"> Show Password</label>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required>
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Gender</label></div>
                     <div class="col-12 col-md-3">
-                        <select class="form-control" id="txtGender" name="txtGender" required>
+                        <select class="form-control" id="txtGender" name="txtGender" required @(ViewBag.IsAdd ? "disabled" : "")>
                             @foreach (var gender in genders)
                             {
                                 if (gender == usergender)
@@ -169,7 +177,7 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Telephone</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone">
+                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                 </div>
                 <br />
@@ -193,18 +201,18 @@
         <div class="row form-group">
             <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Exhibitior Name</label></div>
             <div class="col-12 col-md-3">
-                <input class="form-control" id="txtSector" type="text" required value="@Exhibitordata.Name">
+                <input class="form-control" id="txtSector" type="text" required value="@Exhibitordata.Name" @(ViewBag.IsAdd ? "disabled" : "")>
             </div>
             <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Exhibitior Moto</label></div>
             <div class="col-12  col-md-3">
-                <input class="form-control" id="txtFlightNo" type="text" value="@Exhibitordata.Moto">
+                <input class="form-control" id="txtFlightNo" type="text" value="@Exhibitordata.Moto" @(ViewBag.IsAdd ? "disabled" : "")>
             </div>
         </div>
 
         <div class="row form-group">
             <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Exhibitior Offer</label></div>
             <div class="col-12 col-md-3">
-                <input class="form-control" id="txtDepartureDate" type="text" required value="@Exhibitordata.Offer">
+                <input class="form-control" id="txtDepartureDate" type="text" required value="@Exhibitordata.Offer" @(ViewBag.IsAdd ? "disabled" : "")>
             </div>
             <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Exhibition</label></div>
             <div class="col-12  col-md-3">
@@ -232,49 +240,54 @@
 
     </div>
     <div class="card-footer">
-        <button type="button" class="btn btn-primary btn-sm float-right" onclick="SaveUser();">
+        <button type="button" class="btn btn-primary btn-sm float-right" onclick="SaveUser();" @(ViewBag.IsAdd ? "disabled" : "")>
             <i class="material-icons " id="iconcss" style="">save</i>SaveExhibitor
         </button>
     </div>
 </div>
-<div class="row" id="hiddenPictureDiv">
-    <div class="col-lg-12">
-        <div id="BasicInfo" class="card">
-            <div class="card-header">
-                <strong>Exhibitor Picture</strong>
-            </div>
-            <div class="card-body card-block">
-                <div id="divLogos" class="left" style="margin:0px;  margin-left: 25.7%; margin-bottom:10px;">
 
+@if (data.Id != 0)
+{
+    <div class="row" id="hiddenPictureDiv">
+        <div class="col-lg-12">
+            <div id="BasicInfo" class="card">
+                <div class="card-header">
+                    <strong>Exhibitor Picture</strong>
                 </div>
+                <div class="card-body card-block">
+                    <div id="divLogos" class="left" style="margin:0px;  margin-left: 25.7%; margin-bottom:10px;">
 
-                <div id="div_no_found" class="hide alert alert-info " style="width: 40%; margin-left: 25.7%;">
-                    <h3>No Picture found.</h3>
+                    </div>
+
+                    <div id="div_no_found" class="hide alert alert-info " style="width: 40%; margin-left: 25.7%;">
+                        <h3>No Picture found.</h3>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<script id="ListTemplateLogos" type="text/x-jsrender">
+    <script id="ListTemplateLogos" type="text/x-jsrender">
 
-    <div class="left thumbnailBox">
+        <div class="left thumbnailBox">
 
-        <div class="thumbnail">
-            <img src="/images/User/{{:id}}/{{:picture}}" title="T2_{{:picture}}" />
+            <div class="thumbnail">
+                <img src="/images/User/{{:id}}/{{:picture}}" title="T2_{{:picture}}" />
+            </div>
+
+            <div class="links">
+                <a onclick="Delete({{:id}});">Delete</a>
+            </div>
+
+
         </div>
 
-        <div class="links">
-            <a onclick="Delete({{:id}});">Delete</a>
-        </div>
+    </script>
 
+}
 
-    </div>
-
-</script>
-
-@if (Ifadded)
+@if (Ifadded && user.UserType == 3 && ExhibitionRoll != null)
 {
     <button id="fixedbutton" style=" position: fixed; bottom: 0px; right: 0px;" class="btn bg-success rounded-circle" data-toggle="modal" data-target="#ChatModal"><span class="material-icons pt-2 text-white" style="font-size:50px;">mark_chat_unread</span></button>
 

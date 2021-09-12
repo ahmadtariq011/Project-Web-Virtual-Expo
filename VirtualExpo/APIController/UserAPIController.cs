@@ -390,6 +390,7 @@ namespace VirtualExpo.Web.APIController
                     dbUser.UserName = user.UserName;
                     dbUser.Email = user.Email;
                     dbUser.Description = user.Description;
+                    dbUser.Picture = user.Image.FileName;
                     dbUser.Password = user.Password;
                     dbUser.Telephone = user.Telephone;
                     dbUser.CNIC = user.CNIC;

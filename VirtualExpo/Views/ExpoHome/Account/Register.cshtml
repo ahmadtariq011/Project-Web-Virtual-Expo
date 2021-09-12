@@ -73,7 +73,7 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required >
+                        <input class="form-control" id="txtEmail" type="email" value="@data.Email" required >
                     </div>
                 </div>
                 <div class="row form-group">
@@ -85,7 +85,10 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required >
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC"
+                               min="13"
+                               maxlength="15"
+                               required >
                     </div>
                 </div>
                 <div class="row form-group">
@@ -162,7 +165,7 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Passing Year </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtPassingYear" type="datetime" value="@educationData.PassingYear" required >
+                        <input class="form-control" id="txtPassingYear" type="datetime-local" value="@educationData.PassingYear" required >
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Grade</label></div>
                     <div class="col-12  col-md-3">
@@ -207,11 +210,11 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">From </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtFrom" type="datetime" value="@workExperienceData.From" required >
+                        <input class="form-control" id="txtFrom" type="datetime-local" value="@workExperienceData.From" required >
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">To</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtTo" type="datetime" value="@workExperienceData.To" required >
+                        <input class="form-control" id="txtTo" type="datetime-local" value="@workExperienceData.To" required >
                     </div>
                 </div>
                 <div class="row form-group">

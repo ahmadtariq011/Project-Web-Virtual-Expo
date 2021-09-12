@@ -67,7 +67,6 @@ namespace VirtualExpo.Web.APIController
                     dbUser.Email = dbExhibition.Email;
                     dbUser.Password = RandomPassword();
                     dbUser.Telephone = dbExhibition.Email;
-                    dbUser.CNIC = dbExhibition.Email;
                     dbUser.CreatedDate = DateTime.Now;
                     dbUser.UserType = Convert.ToInt32(UserRoleType.Organizer);
                     dbUser.GenderType = Convert.ToInt32(GenderType.Male);
@@ -116,6 +115,16 @@ namespace VirtualExpo.Web.APIController
                     dbUser.UserType = Convert.ToInt32(UserRoleType.Exhibitor);
                     dbUser.GenderType = Convert.ToInt32(GenderType.Male);
                     int UserId = bllUser.Insert(dbUser);
+
+                    ExhibitorDescription exhibitorDescription = new ExhibitorDescription();
+                    exhibitorDescription.Name = dbUser.FirstName;
+                    exhibitorDescription.Moto = dbUser.Email;
+                    exhibitorDescription.Offer = dbUser.Email;
+                    //exhibitorDescription.Exibition_id = user.ExhibitionId;
+                    exhibitorDescription.UserId = UserId;
+                    BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
+                    bllExhibitorDescription.Insert(exhibitorDescription);
+
                     result.IsSucceeded = true;
                     result.Message = "Status is updated to " + exhibitionModel.ExhibitionStatusStr + " and user is created successfully";
                     bllRequestOrganizer.Delete(exhibitionModel.Id);

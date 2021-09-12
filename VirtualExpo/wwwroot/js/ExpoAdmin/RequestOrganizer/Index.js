@@ -261,9 +261,23 @@ function UploadPic() {
         processData: false,
         contentType: false,
         success: function (data) {
-            ShowCallbackMessage(true, data.message);
+            ShowCallbackMessage(data.isSucceeded, data.message);
         }
     });
+}
+
+function ShowCallbackMessage(isSucceeded, message) {
+    $("#loader").hide();
+    if (isSucceeded) {
+        $("#div_message").removeClass("failure");
+        $("#div_message").addClass("success");
+    }
+    else {
+        $("#div_message").removeClass("success");
+        $("#div_message").addClass("failure");
+    }
+    $("#div_message").show();
+    $("#span_message").html(message);
 }
 function UploadPicCallback(data) {
     $("#loader").hide();

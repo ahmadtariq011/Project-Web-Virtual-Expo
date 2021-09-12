@@ -199,7 +199,7 @@ namespace VirtualExpo.Web.Controllers.Admin
             {
                 ViewBag.data = blluser.GetByPK(id);
                 ViewBag.title = "Edit Exhibitor";
-                ViewBag.IsAdd = false;
+                ViewBag.IsAdd = true;
                 var WorkingExperiencedata = bllExhibitorDescription.GetByUserid(ViewBag.data.Id);
                 if (bllExhibitorDescription.GetByUserid(ViewBag.data.Id) != null)
                 {
@@ -211,7 +211,7 @@ namespace VirtualExpo.Web.Controllers.Admin
                     ViewBag.ExhibitorDescription = dbWorkExperience;
                 }
             }
-            return View("Views/ExpoAdmin/ExpoDashboard/Attendee/AddEditAttende.cshtml");
+            return View("Views/ExpoAdmin/ExpoDashboard/Users/AddEditExhibitor.cshtml");
         }
     }
 }

@@ -68,7 +68,7 @@ function SaveAttendee() {
     if (!Validate("#divEducation")) {
         return;
     }
-
+    $("#loader").show();
     $("#div_message").hide();
 
     var User =
@@ -103,6 +103,7 @@ function SaveAttendee() {
 }
 
 function SaveUserCallback(data) {
+    $("#loader").hide();
     if (!data.isSucceeded) {
         ShowCallbackMessage(false, data.message);
         return;

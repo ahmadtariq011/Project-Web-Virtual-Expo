@@ -29,6 +29,8 @@
     }
     var data = (Exhibition)ViewBag.data;
     var Title = ViewBag.title;
+    var Startdate = data.StartDate.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
+    var Enddate = data.EndDate.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T'); ;
 
     var status = Enum.GetValues(typeof(ExhibitionStatus)).Cast<ExhibitionStatus>().ToList();
     //var use = Enum.GetValues(typeof(UserRoleType)).Cast<UserRoleType>().ToList();
@@ -178,7 +180,7 @@
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">Start Date</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtStartDate" type="datetime" value="@data.StartDate" required @(ViewBag.IsAdd ? "disabled" : "")>
+                        <input class="form-control" id="txtStartDate" type="datetime-local" value="@Startdate" required @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                 </div>
 
@@ -186,7 +188,7 @@
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="hf-email" class=" form-control-label">End Date</label></div>
                     <div class="col-12 col-md-9">
-                        <input class="form-control" id="txtEndDate" type="datetime" value="@data.EndDate" @(ViewBag.IsAdd ? "disabled" : "")>
+                        <input class="form-control" id="txtEndDate" type="datetime-local" value="@Enddate" @(ViewBag.IsAdd ? "disabled" : "")>
 
                     </div>
                 </div>

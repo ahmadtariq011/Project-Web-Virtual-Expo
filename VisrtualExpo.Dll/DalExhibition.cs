@@ -54,7 +54,7 @@ namespace VisrtualExpo.Dll
         {
             using (var entities = new ApplicationDbContext())
             {
-                return entities.Exhibitions.Where(p => p.Status == 2).ToList();
+                return entities.Exhibitions.Where(p => p.Status == 2 && p.ExhibitionStatus == 2).ToList();
             }
         }
 
@@ -226,8 +226,9 @@ namespace VisrtualExpo.Dll
         {
             using (var entities = new ApplicationDbContext())
             {
-                var query = from Exhibition in entities.Exhibitions
-                            select Exhibition;
+                var query = from exhibition in entities.Exhibitions
+                            where exhibition.Organizer_User_Id == filters.OrganizerId
+                            select exhibition;
 
 
 

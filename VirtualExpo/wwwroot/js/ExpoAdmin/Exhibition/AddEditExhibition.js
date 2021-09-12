@@ -4,7 +4,7 @@ $(document).ready(function () {
     if ($("#hfProductId").val() > 0) {
         $("#hiddenPictureDiv").removeClass("hide");
     }
-    LoadUserImage();
+    //LoadUserImage();
 
     var uri = window.location.toString();
     if (uri.indexOf("?") > 0) {
