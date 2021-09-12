@@ -66,8 +66,8 @@ namespace VirtualExpo.Web.APIController
                     dbUser.UserName = username;
                     dbUser.Email = dbExhibition.Email;
                     dbUser.Password = RandomPassword();
-                    dbUser.Telephone = dbExhibition.Telephone;
-                    dbUser.CNIC = dbExhibition.Telephone;
+                    dbUser.Telephone = dbExhibition.Email;
+                    dbUser.CNIC = dbExhibition.Email;
                     dbUser.CreatedDate = DateTime.Now;
                     dbUser.UserType = Convert.ToInt32(UserRoleType.Organizer);
                     dbUser.GenderType = Convert.ToInt32(GenderType.Male);
