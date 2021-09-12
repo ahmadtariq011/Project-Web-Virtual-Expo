@@ -71,6 +71,7 @@ namespace VirtualExpo.Web.APIController
                     dbUser.CreatedDate = DateTime.Now;
                     dbUser.UserType = Convert.ToInt32(UserRoleType.Organizer);
                     dbUser.GenderType = Convert.ToInt32(GenderType.Male);
+                    dbUser.CNIC = dbExhibition.Email;
                     int UserId = bllUser.Insert(dbUser);
                     result.IsSucceeded = true;
                     result.Message = "Status is updated to " + exhibitionModel.ExhibitionStatusStr + " and user is created successfully";
@@ -180,6 +181,7 @@ namespace VirtualExpo.Web.APIController
             {
                 result.IsSucceeded = false;
                 result.Message = "Please Upload Image type object ";
+                return result;
             }
 
 
