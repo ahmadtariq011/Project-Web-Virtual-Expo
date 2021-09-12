@@ -16,6 +16,46 @@ function handler_enter_login(e) {
 }
 
 
+function SaveFeedback() {
+
+    if (!Validate("#divContactUs")) {
+        return;
+    }
+    $("#loader").show();
+    $("#span_message").html("");
+
+    var Comment =
+    {
+        Name: $.trim($("#name").val()),
+        Email: $.trim($("#email").val()),
+        Telephone: $.trim($("#telephone").val()),
+        Message: $.trim($("#comment").val()),
+        ExhibitionId: $.trim($("#ExhibitionId").val())
+    };
+
+    $.post("/api/ContactUsApi/SaveFeedback", Comment, SaveFeedbackCallback);
+}
+
+function SaveFeedbackCallback(data) {
+    $("#loader").hide();
+    if (data.IsSucceeded === false) {
+        ShowCallbackMessage(false, data.message);
+        return;
+    }
+    else {
+        ShowCallbackMessage(true, data.message);
+        $("#name").val("");
+        $("#email").val("");
+        $("#telephone").val("");
+        $("#comment").val("");
+        return;
+    }
+
+    $("#divConfirmation").show();
+
+}
+
+
 function SaveComment() {
 
     if (!Validate("#divContactUs")) {
@@ -38,11 +78,11 @@ function SaveComment() {
 function SaveCommentCallback(data) {
     $("#loader").hide();
     if (data.IsSucceeded === false) {
-        ShowCallbackMessage(false, data.Message);
+        ShowCallbackMessage(false, data.message);
         return;
     }
     else {
-        ShowCallbackMessage(true, data.Message);
+        ShowCallbackMessage(true, data.message);
         $("#name").val("");
         $("#email").val("");
         $("#telephone").val("");

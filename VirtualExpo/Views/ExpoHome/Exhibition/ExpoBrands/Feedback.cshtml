@@ -1,0 +1,71 @@
+﻿@section Scripts {
+
+    <script src="~/js/ContactUs.js?v=@DateTime.Now"></script>
+}
+@{
+    int id = ViewBag.ExibitionId;
+
+}
+<div id="grad" class="container-fluid">
+    <input type="hidden" value="@id" id="ExhibitionId"/>
+    <!--Child Container-->
+    <div class="container pt-3" style="height: 620px; width: 500px">
+        <!--Card as a placeholder-->
+        <div class="card pb-3" style="width: 400px">
+            <div class="card-head text-center">
+                <h3 class="text-dark">Feedback</h3>
+                <small class="text-danger">
+                </small>
+            </div>
+            <div id="div_message" class="note failure">
+                <p>
+                    <span id="span_message"></span>
+                </p>
+            </div>
+            <div class="card-body" id="divContactUs">
+                <div class="form-group">
+                    <label class="pl-1">Name <b class="text-danger text-right">*</b></label>
+                    <input type="text"
+                           id="name"
+                           class="form-control"
+                           placeholder="Full Name"
+                           required />
+                </div>
+                <div class="form-group">
+                    <!--Input Fields-->
+                    <label class="pl-1">Email <b class="text-danger text-right">*</b></label>
+                    <input type="email"
+                           id="email"
+                           class="form-control"
+                           placeholder="Email"
+                           required />
+                </div>
+                <div class="form-group">
+                    <label class="pl-1">Phone Number<b class="text-danger text-right">*</b></label>
+                    <input type="text"
+                           onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                           title="Phone Number"
+                           id="telephone"
+                           class="form-control"
+                           placeholder="Phone No"
+                           required />
+                </div>
+                <div class="form-group">
+                    <label class="pl-1">What’s on your mind? <b class="text-danger text-right">*</b></label>
+                    <textarea type="text" rows="5" id="comment" class="form-control" required></textarea>
+                </div>
+                <!--Log In Button -->
+                <button onclick="SaveFeedback();"
+                        type="submit"
+                        class="btn btn-block text-white"
+                        style="background-color: #6d6d6d">
+                    <b>Submit</b>
+                </button>
+            </div>
+            <!--Card Body Ends Here -->
+        </div>
+        <!--Card Ends Here -->
+    </div>
+    <!--Inner Container Ends Here -->
+</div>
+<!--Parent Container Ends Here -->
