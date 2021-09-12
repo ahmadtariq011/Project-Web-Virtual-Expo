@@ -53,6 +53,12 @@ namespace VirtualExpo.Web.Controllers.Admin
             ViewBag.ExibitionId = id;
             return View("Views/ExpoHome/Exhibition/ExpoBrands/ExpoInfoIndex.cshtml");
         }
+        public IActionResult Feedback(int Id)
+        {
+            var idof = User.Identity.Name;
+            ViewBag.ExibitionId = Id;
+            return View("Views/ExpoHome/Exhibition/ExpoBrands/Feedback.cshtml");
+        }
         public IActionResult ExpoBrandInfo(int id, int brandInfo)
         {
             ViewBag.ExibitionId = id;

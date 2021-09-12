@@ -18,6 +18,7 @@ namespace LillyLifestyle.Web.Controllers
     {
         
         private BLLContactUs bLLContactUs = new BLLContactUs();
+        BLLFeedback bLLFeedback = new BLLFeedback();
         private ServiceResponse result = new ServiceResponse { IsSucceeded = true };
 
         public ServiceResponse SaveComment(ContactUs contactUsModel)
@@ -43,7 +44,32 @@ namespace LillyLifestyle.Web.Controllers
             }
             return result;
         }
-        BLLFeedback bLLFeedback = new BLLFeedback();
+
+        public ServiceResponse SaveFeedback(Feedback contactUsModel)
+        {
+            try
+            {
+                Feedback dBcontactUs = new Feedback();
+
+                dBcontactUs.Name = contactUsModel.Name;
+                dBcontactUs.Email = contactUsModel.Email;
+                dBcontactUs.Telephone = contactUsModel.Telephone;
+                dBcontactUs.Message = contactUsModel.Message;
+                dBcontactUs.CreatedDate = DateTime.Now;
+                dBcontactUs.ExhibitionId = contactUsModel.ExhibitionId;
+
+                bLLFeedback.Insert(dBcontactUs);
+                result.Message = "Your Feedback has been received and a member of our support team will reply shortly.";
+                result.TotalCount = dBcontactUs.Id;
+            }
+            catch (Exception ex)
+            {
+                result.IsSucceeded = false;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         [HttpPost]
         public ServiceResponse LoadFeedbackWithCount(FeedbackSearchFilter filter)
         {

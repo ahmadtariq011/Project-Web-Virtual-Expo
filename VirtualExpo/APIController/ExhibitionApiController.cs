@@ -68,6 +68,7 @@ namespace VirtualExpo.Web.APIController
                     dbExhibition.Description = Exhibition.Description;
                     dbExhibition.StartDate = Exhibition.StartDate;
                     dbExhibition.EndDate = Exhibition.EndDate;
+                    dbExhibition.Status = 2;
                     dbExhibition.Organizer_User_Id = Exhibition.Organizer_User_Id;
                     ExhibitionStatus classt = (ExhibitionStatus)Enum.Parse(typeof(ExhibitionStatus), Exhibition.ExhibitionStatusStr);
                     dbExhibition.ExhibitionStatus = Convert.ToInt32(classt);
@@ -119,7 +120,10 @@ namespace VirtualExpo.Web.APIController
 
                     ExhibitionStatus status = (ExhibitionStatus)Enum.Parse(typeof(ExhibitionStatus), exhibitionModel.ExhibitionStatusStr);
                     dbExhibition.ExhibitionStatus = Convert.ToInt32(status);
-
+                    if(exhibitionModel.ExhibitionStatusStr== "Approved")
+                    {
+                        dbExhibition.Status = 2;
+                    }
                     bllExhibition.ChangeStatus(dbExhibition);
                     result.IsSucceeded = true;
                     result.Message = "Status is updated to " + exhibitionModel.ExhibitionStatusStr;
