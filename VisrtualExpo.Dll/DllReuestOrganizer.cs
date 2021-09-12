@@ -111,6 +111,8 @@ namespace VisrtualExpo.Dll
             using (var entities = new ApplicationDbContext())
             {
                 var query = from RequestOrganizerFilter in entities.RequestOrganizer
+                            join exhibition in entities.Exhibitions on RequestOrganizerFilter.ExhibitionId equals exhibition.Id
+                            where RequestOrganizerFilter.ExhibitionId == filters.Exhibition_Id
                             select RequestOrganizerFilter;
 
 
@@ -135,8 +137,11 @@ namespace VisrtualExpo.Dll
         {
             using (var entities = new ApplicationDbContext())
             {
-                var query = from Exhibition in entities.RequestOrganizer
-                            select Exhibition;
+                var query = from RequestOrganizerFilter in entities.RequestOrganizer
+                            join exhibition in entities.Exhibitions on RequestOrganizerFilter.ExhibitionId equals exhibition.Id
+                            where RequestOrganizerFilter.ExhibitionId == filters.Exhibition_Id
+                            select RequestOrganizerFilter;
+
 
 
 

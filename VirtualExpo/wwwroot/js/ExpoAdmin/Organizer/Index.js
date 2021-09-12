@@ -94,7 +94,7 @@ function UpdateUsersFilters() {
     filters =
     {
         Keyword: $("#txtSearch").val(),
-        UserType: 2,
+        Exhibition_Id: $("#ExhibitionId").val(),
         PageIndex: 1,
         PageSize: 10,
         Sort: sortOption

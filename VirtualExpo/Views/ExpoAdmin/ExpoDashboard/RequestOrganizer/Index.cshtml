@@ -1,21 +1,28 @@
-﻿@*@using FlightoUs.Model.Enums*@
+﻿@using VirtualExpo.Bll
+@using VirtualExpo.Model.Enums
 @{
-    //bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
-    //bool IsManager = User.IsInRole(UserRoleType.Manager.ToString());
-    //bool IsUser = User.IsInRole(UserRoleType.User.ToString());
-    //string typeofUserLogin = "";
-    //if (IsAdmin)
-    //{
-    //    typeofUserLogin = "Admin";
-    //}
-    //if (IsManager)
-    //{
-    //    typeofUserLogin = "Manager";
-    //}
-    //if (IsUser)
-    //{
-    //    typeofUserLogin = "User";
-    //}
+
+    bool IsAdmin = User.IsInRole(UserRoleType.Admin.ToString());
+    bool IsOrganizer = User.IsInRole(UserRoleType.Organizer.ToString());
+    bool IsUser = User.IsInRole(UserRoleType.Exhibitor.ToString());
+    string typeofUserLogin = "";
+    if (IsAdmin)
+    {
+        typeofUserLogin = "Admin";
+    }
+    if (IsOrganizer)
+    {
+        typeofUserLogin = "Organizer";
+    }
+    if (IsUser)
+    {
+        typeofUserLogin = "Exhibitor";
+    }
+
+    BllExhibition bllExhibition = new BllExhibition();
+    var Exhibitions = bllExhibition.GetAll();
+    var ExhibitionByOrganizer = bllExhibition.GetOrganizersExhibition(Convert.ToInt32(User.Identity.Name));
+    int i = 0;
 }
 
 
@@ -40,11 +47,47 @@
                 </div>
                 <div class="c1 filter">
 
-                    <div class="right">
-                        Search: <input id="txtSearch" style="" type="text" class="form-control search">
+                    Search By Exhibition
+                    @if (IsAdmin)
+                    {
+                        <select class="form-control search" id="ExhibitionId" name="ExhibitionId" onchange="SearchUsers();">
+                            <option value="">Please Select</option>
+                            @foreach (var Exhibition in Exhibitions)
+                            {
+                                if (i++ == 0)
+                                {
+                                    <option value="@Exhibition.Id" selected>@Html.Raw(Exhibition.Name + " by " + Exhibition.OraganizerName)</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@Exhibition.Id">@Html.Raw(Exhibition.Name + " by " + Exhibition.OraganizerName)</option>
+                                }
+                            }
+                        </select>
                         <a title="Search" style="cursor:pointer; margin-left:5px; " onclick="SearchUsers();"><i class="material-icons " style="position:relative; top:5px;">search</i></a>
                         <a title="Reset" style="cursor:pointer;" onclick="ResetUsers();"><i class="material-icons" style="position:relative; top:5px;">clear</i></a>
-                    </div>
+                    }
+                    @if (IsOrganizer)
+                    {
+                        <select class="form-control search" id="ExhibitionId" name="ExhibitionId" onchange="SearchUsers();">
+                            <option value="">Please Select</option>
+                            @foreach (var Exhibition in ExhibitionByOrganizer)
+                            {
+                                if (i++ == 0)
+                                {
+                                    <option value="@Exhibition.Id" selected>@Html.Raw(Exhibition.Name + " by " + Exhibition.OraganizerName)</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@Exhibition.Id">@Html.Raw(Exhibition.Name + " by " + Exhibition.OraganizerName)</option>
+                                }
+                            }
+                        </select>
+                        <a title="Search" style="cursor:pointer; margin-left:5px; " onclick="SearchUsers();"><i class="material-icons " style="position:relative; top:5px;">search</i></a>
+                        <a title="Reset" style="cursor:pointer;" onclick="ResetUsers();"><i class="material-icons" style="position:relative; top:5px;">clear</i></a>
+                    }
                 </div>
 
                 <table id="tbl" class="table">

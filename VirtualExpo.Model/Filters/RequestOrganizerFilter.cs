@@ -8,5 +8,6 @@ namespace VirtualExpo.Model.Filters
 {
     public class RequestOrganizerFilter:BaseFilter
     {
+        public Nullable<int> Exhibition_Id { get; set; }
     }
 }

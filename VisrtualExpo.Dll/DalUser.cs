@@ -174,7 +174,8 @@ namespace VirtualExpo.Dal
             using (var entities = new ApplicationDbContext())
             {
                 var query = from user in entities.Users
-                            where user.UserType == 3
+                            join exhibitorDescription in entities.ExhibitorDescription on user.Id equals exhibitorDescription.UserId
+                            where user.UserType == 3 && exhibitorDescription.Exibition_id == filters.Exhibition_Id
                             select user;
 
                 var lst = query.ToList();
@@ -225,7 +226,8 @@ namespace VirtualExpo.Dal
             using (var entities = new ApplicationDbContext())
             {
                 var query = from user in entities.Users
-                            where user.UserType == 3
+                            join exhibitorDescription in entities.ExhibitorDescription on user.Id equals exhibitorDescription.UserId
+                            where user.UserType == 3 && exhibitorDescription.Exibition_id == filters.Exhibition_Id
                             select user;
 
                 if (!string.IsNullOrEmpty(filters.Keyword))
