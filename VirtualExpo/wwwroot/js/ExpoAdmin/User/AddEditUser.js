@@ -68,7 +68,7 @@ function SaveUser() {
     $("#div_message").hide();
 
     var formData = new FormData();
-    var fileInput = $('#AdminImage')[0].files[0];
+    var fileInput = $('#OrganizerImage')[0].files[0];
 
     formData.append("Id", $("#hfUserId").val());
     formData.append("Telephone", $.trim($("#txtTelephone").val()));
@@ -118,7 +118,7 @@ function SaveUserCallback(data) {
 
 
 function LoadUserImage() {
-
+    debugger;
     var productId = $("#hfUserId").val();
     var filters =
     {
