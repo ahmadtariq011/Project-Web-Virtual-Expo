@@ -5,6 +5,8 @@
     var upcomingExibitions = bllExhibition.GetAllUpcoming();
 
     var loguser = User.Identity.Name;
+
+
 }
 @section Styles
 {
@@ -27,7 +29,7 @@
             <div class="card border border-secondary">
                 <h1 class="text-left pl-5 pr-5">
                     @exhibition.Name <span style="float:right;">
-                        @Html.Raw(exhibition.StartDate.Date + " to " + exhibition.EndDate.Date)
+                        @Html.Raw(exhibition.StartDate.ToShortDateString() + " to " + exhibition.EndDate.ToShortDateString())
                     </span>
                 </h1><br>
                 <h5>@exhibition.Description</h5>
@@ -54,7 +56,7 @@
                 <div class="card border border-secondary">
                     <h1 class="text-left pl-5 pr-5">
                         @exhibition.Name <span style="float:right;">
-                            @Html.Raw(exhibition.StartDate + " to " + exhibition.EndDate)
+                            @Html.Raw(exhibition.StartDate.ToShortDateString() + " to " + exhibition.EndDate.ToShortDateString())
                         </span>
                     </h1><br>
                     <h5>@exhibition.Description</h5>

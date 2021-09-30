@@ -154,7 +154,7 @@
                 @foreach (var medialink in mediaLinks)
                 {
                     <h2>@medialink.VideoDescription</h2>
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <video controls class="col-md-12">
                             <source src="/images/MediLinks/@medialink.Id/Video/@medialink.Video" type="video/mp4">
                             Your browser does not support the video tag.
@@ -182,7 +182,7 @@
                 @foreach (var medialink in mediaLinks)
                 {
                     <h2>@medialink.DownloadDescription</h2>
-                    <embed src="/images/MediLinks/@medialink.Id/Download/@medialink.Download" class="col-md-12" type="application/pdf" />
+                    <iframe src="/images/MediLinks/@medialink.Id/Download/@medialink.Download" style="width:100%; " frameborder="0"></iframe>
                 }
             </div>
             <div class="modal-footer">
@@ -205,7 +205,8 @@
                 @foreach (var medialink in mediaLinks)
                 {
                     <h2>@medialink.LinkDescription</h2>
-                    <input class="form-control" id="txtLink" type="text" value="@medialink.Link">
+                    <span>@medialink.Link</span>
+                    //<input class="form-control" id="txtLink" type="text" value="@medialink.Link">
                 }
             </div>
             <div class="modal-footer">
