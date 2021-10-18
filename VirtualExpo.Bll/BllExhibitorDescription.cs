@@ -31,7 +31,7 @@ namespace VirtualExpo.Bll
         {
             return dalExhibition.GetAllExhibitions();
         }
-        public List<ExhibitorDescription> GetAllExhibitorsWithRespectToExhibition(int id)
+        public List<ExhibitorDescriptionModel> GetAllExhibitorsWithRespectToExhibition(int id)
         {
             return dalExhibition.GetAllExhibitorsWithRespectToExhibition(id);
         }

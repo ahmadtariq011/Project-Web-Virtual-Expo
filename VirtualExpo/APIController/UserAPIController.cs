@@ -444,6 +444,7 @@ namespace VirtualExpo.Web.APIController
                         {
                             result.IsSucceeded = false;
                             result.Message = "Please Upload Image type object ";
+                            return result;
                         }
                         dbUser.Picture = user.Image.FileName;
                     }
@@ -477,13 +478,21 @@ namespace VirtualExpo.Web.APIController
                             }
                         }
                     }
+
+
+                    BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
+
                     ExhibitorDescription exhibitorDescription = new ExhibitorDescription();
+                    if (bllExhibitorDescription.GetByUserid(user.Id) != null)
+                    {
+                        exhibitorDescription = bllExhibitorDescription.GetByUserid(user.Id);
+                    }
+
                     exhibitorDescription.Name = user.Name;
                     exhibitorDescription.Moto = user.Moto;
                     exhibitorDescription.Offer = user.Offer;
                     exhibitorDescription.Exibition_id = user.ExhibitionId;
-                    exhibitorDescription.UserId = user.Id;
-                    BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
+
                     if(bllExhibitorDescription.GetByUserid(user.Id)!=null)
                     {
                         bllExhibitorDescription.Update(exhibitorDescription);
