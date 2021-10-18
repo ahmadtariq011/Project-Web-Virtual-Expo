@@ -13,5 +13,7 @@ namespace VirtualExpo.Model.Services
         public string Offer { get; set; }
         public string Moto { get; set; }
         public int ExhibitionId { get; set; }
+
+        public int UserId { get; set; }
     }
 }

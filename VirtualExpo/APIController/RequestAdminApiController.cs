@@ -92,10 +92,7 @@ namespace VirtualExpo.Web.APIController
                 {
                     RequestOrganizer dbExhibition = bllRequestOrganizer.GetByPK(exhibitionModel.Id);
 
-                    ExhibitionStatus status = (ExhibitionStatus)Enum.Parse(typeof(ExhibitionStatus), exhibitionModel.ExhibitionStatusStr);
-                    dbExhibition.Status = Convert.ToInt32(status);
 
-                    bllRequestOrganizer.Update(dbExhibition);
                     var username = dbExhibition.Name + RandomString(5) + RandomNumber(1, dbExhibition.Name.Length);
                     if (bllUser.GetByUserName(username) != null)
                     {
@@ -120,11 +117,15 @@ namespace VirtualExpo.Web.APIController
                     exhibitorDescription.Name = dbUser.FirstName;
                     exhibitorDescription.Moto = dbUser.Email;
                     exhibitorDescription.Offer = dbUser.Email;
-                    //exhibitorDescription.Exibition_id = user.ExhibitionId;
+                    exhibitorDescription.Exibition_id = dbExhibition.ExhibitionId;
                     exhibitorDescription.UserId = UserId;
                     BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
                     bllExhibitorDescription.Insert(exhibitorDescription);
 
+                    ExhibitionStatus status = (ExhibitionStatus)Enum.Parse(typeof(ExhibitionStatus), exhibitionModel.ExhibitionStatusStr);
+                    dbExhibition.Status = Convert.ToInt32(status);
+
+                    bllRequestOrganizer.Update(dbExhibition);
                     result.IsSucceeded = true;
                     result.Message = "Status is updated to " + exhibitionModel.ExhibitionStatusStr + " and user is created successfully";
                     bllRequestOrganizer.Delete(exhibitionModel.Id);

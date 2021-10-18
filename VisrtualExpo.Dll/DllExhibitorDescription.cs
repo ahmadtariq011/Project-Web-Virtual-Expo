@@ -85,13 +85,27 @@ namespace VisrtualExpo.Dll
         }
 
 
-        public List<ExhibitorDescription> GetAllExhibitorsWithRespectToExhibition(int id)
+        public List<ExhibitorDescriptionModel> GetAllExhibitorsWithRespectToExhibition(int id)
         {
             using (var entities = new ApplicationDbContext())
             {
                 try
                 {
-                    return entities.ExhibitorDescription.Where(p=> p.Exibition_id == id).ToList();
+                    var query = from Exhibitor in entities.ExhibitorDescription
+                                join ExhibitorUser in entities.Users on Exhibitor.UserId equals ExhibitorUser.Id
+                                where Exhibitor.Exibition_id == id
+                                select new ExhibitorDescriptionModel
+                                {
+                                    Id = Exhibitor.Id,
+                                    UserId = ExhibitorUser.Id,
+                                    Picture = ExhibitorUser.Picture,
+                                    Name = Exhibitor.Name,
+                                    Email = ExhibitorUser.Email,
+                                    Telephone = ExhibitorUser.Telephone,
+                                    Moto = Exhibitor.Moto
+                                };
+                    var lst = query.ToList();
+                    return lst;
                 }
                 catch (Exception ex)
                 {
