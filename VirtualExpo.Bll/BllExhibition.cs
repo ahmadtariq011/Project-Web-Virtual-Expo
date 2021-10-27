@@ -39,6 +39,10 @@ namespace VirtualExpo.Bll
         {
             return dalExhibition.GetAllUpcoming();
         }
+        public Exhibition GetLatestLive()
+        {
+            return dalExhibition.GetLatestLive();
+        }
         public Exhibition GetByPK(int Id)
         {
             return dalExhibition.GetByPK(Id);

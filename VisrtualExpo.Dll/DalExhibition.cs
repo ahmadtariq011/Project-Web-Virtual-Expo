@@ -50,6 +50,14 @@ namespace VisrtualExpo.Dll
                 return entities.Exhibitions.Where(p=>p.Status==1 && p.ExhibitionStatus==2).ToList();
             }
         }
+
+        public Exhibition GetLatestLive()
+        {
+            using (var entities = new ApplicationDbContext())
+            {
+                return entities.Exhibitions.Where(p => p.Status == 1 && p.ExhibitionStatus == 2).First();
+            }
+        }
         public List<Exhibition> GetAllUpcoming()
         {
             using (var entities = new ApplicationDbContext())
