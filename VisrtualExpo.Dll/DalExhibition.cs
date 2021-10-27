@@ -55,7 +55,7 @@ namespace VisrtualExpo.Dll
         {
             using (var entities = new ApplicationDbContext())
             {
-                return entities.Exhibitions.Where(p => p.Status == 1 && p.ExhibitionStatus == 2).First();
+                return entities.Exhibitions.First(p => p.Status == 1 && p.ExhibitionStatus == 2);
             }
         }
         public List<Exhibition> GetAllUpcoming()
