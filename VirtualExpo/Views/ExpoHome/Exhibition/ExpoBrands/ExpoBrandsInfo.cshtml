@@ -13,23 +13,11 @@
 
 }
 <div class="container-fluid">
-    <div class="row  bg-primary text-center">
+    <div class="row  bg-secondary text-center">
         <div class="col p-2"><h5 class="text-white">@brand.Name</h5></div>
     </div>
     <a class="btn btn-warning text-white m-4" asp-action="ExhibitionHome" asp-controller="Attendee" asp-route-id="@id">Back To Pavillion</a>
 
-    <div class="row bg-secondary text-right">
-        <h5 class="text-white pl-3 pt-1">Tag Line Here</h5>
-        <div class="col">
-            <b class="text-white pb-3 IForLinks">Share On:</b>
-            <i class="fa fa-facebook-official p-2 IForLinks" style="font-size: 25px;"></i>
-            <i class="fa fa-instagram p-2 IForLinks" style="font-size: 25px;"></i>
-            <i class="fa fa-snapchat p-2 IForLinks" style="font-size: 25px;"></i>
-            <i class="fa fa-pinterest-p p-2 IForLinks" style="font-size: 25px;"></i>
-            <i class="fa fa-twitter p-2 IForLinks" style="font-size: 25px;"></i>
-            <i class="fa fa-linkedin p-2 IForLinks" style="font-size: 25px;"></i>
-        </div>
-    </div>
 
     <div class="row mt-5 ml-5 text-center">
 
@@ -56,7 +44,7 @@
             <div class="card rounded-circle bg-success cardForBrands" data-toggle="modal" data-target="#VideoPopUp" style="height:100px; width: 100px;">
                 <span class="material-icons text-white pt-2" style="font-size:70px;">videocam </span>
                 <br>
-                <p class="text-muted ">VIDEOS</p>
+                <p class="text-muted ">VIDEO</p>
             </div>
         </div>
 
@@ -65,7 +53,7 @@
             <div class="card rounded-circle bg-danger cardForBrands" data-toggle="modal" data-target="#DownloadPopUp" style="height:100px; width: 100px;">
                 <span class="material-icons text-white pt-2" style="font-size:70px;">cloud_download </span>
                 <br>
-                <p class="text-muted ">DOWNLOAD</p>
+                <p class="text-muted ">File</p>
             </div>
         </div>
 
@@ -74,7 +62,7 @@
             <div class="card rounded-circle bg-warning cardForBrands" data-toggle="modal" data-target="#LinksPopUp" style="height:100px; width: 100px;">
                 <span class="material-icons text-white pt-2" style="font-size:80px;">forward </span>
                 <br>
-                <p class="text-muted ">LINKS</p>
+                <p class="text-muted ">LINK</p>
             </div>
         </div>
 
@@ -112,7 +100,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h1>@brand.Name</h1>
+                <h4>@brand.Name</h4>
                 <p>@brand.Moto</p>
             </div>
             <div class="modal-footer">
@@ -131,7 +119,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h1>@brand.Offer</h1>
+                <h4>@brand.Offer</h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -153,7 +141,7 @@
             <div class="modal-body">
                 @foreach (var medialink in mediaLinks)
                 {
-                    <h2>@medialink.VideoDescription</h2>
+                    <h4>@medialink.VideoDescription</h4>
                     <div class="col-md-12">
                         <video controls class="col-md-12">
                             <source src="/images/MediLinks/@medialink.Id/Video/@medialink.Video" type="video/mp4">
@@ -173,7 +161,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Downloads</h5>
+                <h5 class="modal-title" id="exampleModalLabel">File</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -181,8 +169,8 @@
             <div class="modal-body">
                 @foreach (var medialink in mediaLinks)
                 {
-                    <h2>@medialink.DownloadDescription</h2>
-                    <iframe src="/images/MediLinks/@medialink.Id/Download/@medialink.Download" style="width:100%; " frameborder="0"></iframe>
+                    <h4>@medialink.DownloadDescription</h4>
+                    <iframe src="/images/MediLinks/@medialink.Id/Download/@medialink.Download" style="width:100%; height:500px; " frameborder="0"></iframe>
                 }
             </div>
             <div class="modal-footer">
@@ -204,7 +192,7 @@
             <div class="modal-body">
                 @foreach (var medialink in mediaLinks)
                 {
-                    <h2>@medialink.LinkDescription</h2>
+                    <h4>@medialink.LinkDescription</h4>
                     <span>@medialink.Link</span>
                     //<input class="form-control" id="txtLink" type="text" value="@medialink.Link">
                 }
@@ -228,17 +216,17 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h2>Instagram</h2>
+                    <h6>Instagram</h6>
                     <p>@socialNetworkLinks.Instagram</p>
-                    <h2>Facebook</h2>
+                    <h6>Facebook</h6>
                     <p>@socialNetworkLinks.Facebook</p>
-                    <h2>Linkdin</h2>
+                    <h6>Linkdin</h6>
                     <p>@socialNetworkLinks.Linkdin</p>
-                    <h2>SnapChat</h2>
+                    <h6>SnapChat</h6>
                     <p>@socialNetworkLinks.SnapChat</p>
-                    <h2>Twitter</h2>
+                    <h6>Twitter</h6>
                     <p>@socialNetworkLinks.Twitter</p>
-                    <h2>Website</h2>
+                    <h6>Website</h6>
                     <p>@socialNetworkLinks.Website</p>
                 </div>
                 <div class="modal-footer">
@@ -262,7 +250,7 @@
             <div class="modal-body">
                 @foreach (var medialink in mediaLinks)
                 {
-                    <h2>@medialink.PictureDescription</h2>
+                    <h4>@medialink.PictureDescription</h4>
                     <img class="col-md-12" src="/images/MediLinks/@medialink.Id/Picture/@medialink.Picture" title="@medialink.Picture" />
                 }
             </div>

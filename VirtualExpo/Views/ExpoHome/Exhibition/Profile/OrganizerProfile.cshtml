@@ -128,7 +128,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="~/images/Requests/Users/@user.Id/@user.Picture" alt="@user.Picture" />           
+                    <img src="~/images/User/@user.Id/@user.Picture" alt="@user.Picture" />
                 </div>
             </div>
             <div class="col-md-6">
@@ -154,7 +154,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-work">
-                    <p>WORK LINK</p>
+                    <p>Description</p>
                     <a href="">@user.Description</a><br />
                 </div>
             </div>
@@ -196,32 +196,26 @@
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md">
                                 <p>Exhibition Name</p>
                             </div>
-                            <div class="col-md-3">
-                                <p>From</p>
+                            <div class="col-md">
+                                <p>Duration</p>
                             </div>
-                            <div class="col-md-3">
-                                <p>To</p>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md">
                                 <p>Description</p>
                             </div>
                         </div>
                         @foreach (var exhibition in AllExhibitions)
                         {
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md">
                                     <label>@exhibition.Name</label>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>@exhibition.StartDate.Date.ToString()</label>
+                                <div class="col-md">
+                                    @Html.Raw(exhibition.StartDate.ToShortDateString() + " to " + exhibition.EndDate.ToShortDateString())
                                 </div>
-                                <div class="col-md-3">
-                                    <label>@exhibition.EndDate.Date.ToString()</label>
-                                </div>
-                                <div class="col-md-3">
+                                <div class="col-md">
                                     <label>@exhibition.Description</label>
                                 </div>
                             </div>

@@ -31,12 +31,10 @@
         success: function (data) {
             $("#loader").hide();
             ShowCallbackMessage(true, data.message);
-            LoadUserImage();
         },
         error: function (data) {
             $("#loader").hide();
             ShowCallbackMessage(false, data.message);
-            LoadUserImage();
         }
     });
 }

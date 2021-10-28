@@ -84,11 +84,11 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Name </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" @(ViewBag.IsAdd ? "disabled" : "") required>
+                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" IsUserName @(ViewBag.IsAdd ? "disabled" : "") required>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required>
+                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required IsEmail>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -100,7 +100,9 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required>
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                               maxlength="15" 
+                               IsCNIC>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -122,7 +124,8 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Telephone</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" ">
+                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone"  maxlength="13" 
+                           MinPassLength  onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
                     </div>
                 </div>
                 <div class="row form-group">

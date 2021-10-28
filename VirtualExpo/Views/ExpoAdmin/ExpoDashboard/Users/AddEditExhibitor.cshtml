@@ -48,7 +48,12 @@
     }
     var LoginUserId = data.Id;
     BllExhibition bllExhibition = new BllExhibition();
+
     var AllExhibitions = bllExhibition.GetOrganizersExhibition(Convert.ToInt32(User.Identity.Name));
+    if (IsExhibitor)
+    {
+        AllExhibitions = bllExhibition.GetAllApproveAndUpcoming();
+    }
     var Exhibition = bllExhibition.ByOrganizerId(LoginUserId);
 
     //var Loguser = (User)bllUser.GetByPK(LoginUserId);
@@ -139,11 +144,11 @@
                 <div class="row form-group">
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">User Name </label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" required @(ViewBag.IsAdd ? "disabled" : "")>
+                        <input class="form-control" id="txtUserName" type="text" value="@data.UserName" IsUserName required @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Email</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" required @(ViewBag.IsAdd ? "disabled" : "")>
+                        <input class="form-control" id="txtEmail" type="text" value="@data.Email" IsEmail required @(ViewBag.IsAdd ? "disabled" : "")>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -155,7 +160,9 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required @(ViewBag.IsAdd ? "disabled" : "")>
+                        <input class="form-control" id="txtCNIC" type="text" value="@data.CNIC" required @(ViewBag.IsAdd ? "disabled" : "") onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                               maxlength="15" 
+                               IsCNIC>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -177,7 +184,8 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Telephone</label></div>
                     <div class="col-12  col-md-3">
-                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" @(ViewBag.IsAdd ? "disabled" : "")>
+                        <input class="form-control" id="txtTelephone" type="text" required value="@data.Telephone" @(ViewBag.IsAdd ? "disabled" : "")  maxlength="13" 
+                           MinPassLength  onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
                     </div>
                 </div>
                 <br />
@@ -217,7 +225,6 @@
             <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Exhibition</label></div>
             <div class="col-12  col-md-3">
                 <select class="form-control" id="txtExhibitionId" name="txtAssignTo" @(Ifadded ? "disabled" : "")>
-                    <option value="">Please Select</option>
                     @foreach (var exhib in AllExhibitions)
                     {
                         @if (Exhibitordata.Exibition_id == exhib.Id)
