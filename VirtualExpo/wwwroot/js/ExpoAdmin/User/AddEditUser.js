@@ -61,7 +61,7 @@ function handler_enter(e) {
 }
 
 function SaveUser() {
-    if (!Validate("#BasicInfo")) {
+    if (!Validate("#BasicInfo1")) {
         return;
     }
     $("#loader").show();

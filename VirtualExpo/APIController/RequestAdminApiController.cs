@@ -168,6 +168,7 @@ namespace VirtualExpo.Web.APIController
                 dbUser.Email = user.Email;
                 dbUser.Telephone = user.Telephone;
                 dbUser.ExhibitionId = user.ExhibitionId;
+                dbUser.Status = Convert.ToInt32(ExhibitionStatus.Pending);
                 int UserId = bllRequestOrganizer.Insert(dbUser);
                 result.IsSucceeded = true;
                 result.TotalCount = UserId;
@@ -208,6 +209,7 @@ namespace VirtualExpo.Web.APIController
             dbUser.Location = vm.Location;
             dbUser.moto = vm.moto;
             dbUser.NameOfEvent = vm.NameOfEvent;
+
             int UserId = BllRequestAdmin.Insert(dbUser);
 
             var uploads = Path.Combine(_environment.WebRootPath, "images/Requests/RequestRequestAdmin/" + UserId);

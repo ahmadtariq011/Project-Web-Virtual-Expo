@@ -99,6 +99,7 @@ namespace VirtualExpo.Dal
                 User dbUser = entities.Users.SingleOrDefault(p => p.Id == user.Id);
                 dbUser.FirstName = user.FirstName;
                 dbUser.LastName = user.LastName;
+                dbUser.UserName = user.UserName;
                 dbUser.Email = user.Email;
                 dbUser.Password = user.Password;
                 dbUser.Telephone = user.Telephone;

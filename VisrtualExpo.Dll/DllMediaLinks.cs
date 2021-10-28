@@ -54,6 +54,14 @@ namespace VisrtualExpo.Dll
             {
                 MediaLinks dbExhibition = entities.MediaLinks.SingleOrDefault(p => p.Id == Exhibition.Id);
 
+                dbExhibition.DownloadDescription = Exhibition.DownloadDescription;
+                dbExhibition.PictureDescription = Exhibition.PictureDescription;
+                dbExhibition.VideoDescription = Exhibition.VideoDescription;
+                dbExhibition.Link = Exhibition.Link;
+                dbExhibition.LinkDescription = Exhibition.LinkDescription;
+
+                dbExhibition.Picture = Exhibition.Picture;
+                dbExhibition.Video = Exhibition.Video;
 
                 entities.SaveChanges();
             }

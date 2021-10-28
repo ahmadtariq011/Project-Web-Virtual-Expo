@@ -142,7 +142,9 @@ namespace VirtualExpo.Web.APIController
                         {
                             result.IsSucceeded = false;
                             result.Message = "Please Upload Image type object ";
+                            return result;
                         }
+
                     }
                     if (bllUser.GetByUserName(user.UserName) != null)
                     {
@@ -157,6 +159,7 @@ namespace VirtualExpo.Web.APIController
                     dbUser.Email = user.Email;
                     dbUser.Description = user.Description;
                     dbUser.Password = user.Password;
+                    dbUser.Picture = user.Image.FileName;
                     dbUser.Telephone = user.Telephone;
                     dbUser.CNIC = user.CNIC;
                     dbUser.CreatedDate = DateTime.Now;
@@ -199,6 +202,7 @@ namespace VirtualExpo.Web.APIController
                         {
                             result.IsSucceeded = false;
                             result.Message = "Please Upload Image type object ";
+                            return result;
                         }
                         dbUser.Picture = user.Image.FileName;
                     }
@@ -376,6 +380,7 @@ namespace VirtualExpo.Web.APIController
                         {
                             result.IsSucceeded = false;
                             result.Message = "Please Upload Image type object ";
+                            return result;
                         }
                     }
                     if (bllUser.GetByUserName(user.UserName) != null)
@@ -529,6 +534,7 @@ namespace VirtualExpo.Web.APIController
                         {
                             result.IsSucceeded = false;
                             result.Message = "Please Upload Image type object ";
+                            return result;
                         }
                         
                     }
@@ -545,7 +551,7 @@ namespace VirtualExpo.Web.APIController
                     int UserId = bllMediaLinks.Insert(dbUser);
                     if (user.VideoFile != null)
                     {
-                        var uploadsV = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Video");
+                        var uploadsV = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + UserId + "/Video");
 
                         if (!Directory.Exists(uploadsV))
                         {
@@ -563,7 +569,7 @@ namespace VirtualExpo.Web.APIController
 
                     if (user.PdfFile != null)
                     {
-                        var uploadsD = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Download");
+                        var uploadsD = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + UserId + "/Download");
 
                         if (!Directory.Exists(uploadsD))
                         {
@@ -580,7 +586,7 @@ namespace VirtualExpo.Web.APIController
                     }
                     if (user.PictureFile != null)
                     {
-                        var uploads = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Picture");
+                        var uploads = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + UserId + "/Picture");
 
                         if (!Directory.Exists(uploads))
                         {

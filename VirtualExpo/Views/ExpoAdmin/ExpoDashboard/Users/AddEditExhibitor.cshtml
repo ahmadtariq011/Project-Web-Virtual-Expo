@@ -48,7 +48,12 @@
     }
     var LoginUserId = data.Id;
     BllExhibition bllExhibition = new BllExhibition();
+
     var AllExhibitions = bllExhibition.GetOrganizersExhibition(Convert.ToInt32(User.Identity.Name));
+    if (IsExhibitor)
+    {
+        AllExhibitions = bllExhibition.GetAllApproveAndUpcoming();
+    }
     var Exhibition = bllExhibition.ByOrganizerId(LoginUserId);
 
     //var Loguser = (User)bllUser.GetByPK(LoginUserId);
@@ -217,7 +222,6 @@
             <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Exhibition</label></div>
             <div class="col-12  col-md-3">
                 <select class="form-control" id="txtExhibitionId" name="txtAssignTo" @(Ifadded ? "disabled" : "")>
-                    <option value="">Please Select</option>
                     @foreach (var exhib in AllExhibitions)
                     {
                         @if (Exhibitordata.Exibition_id == exhib.Id)
