@@ -48,15 +48,15 @@ function Validate(pId) {
         }
     });
 
-    $(pId + ' :input[IsUserName]').each(function () {
-        if (IsNotRequired($(this)))
-            $(this).removeClass("error");
-        if (IsUserName($(this).val())) {
-            $(this).addClass("error");
-            ShowCallbackMessage(false, "Enter valid UserName");
-            resultBool = false;
-        }
-    });
+    //$(pId + ' :input[IsUserName]').each(function () {
+    //    if (IsNotRequired($(this)))
+    //        $(this).removeClass("error");
+    //    if (IsUserName($(this).val())) {
+    //        $(this).addClass("error");
+    //        ShowCallbackMessage(false, "Enter valid UserName");
+    //        resultBool = false;
+    //    }
+    //});
 
 
     $(pId + ' :input[Compare]').each(function () {
@@ -67,10 +67,18 @@ function Validate(pId) {
         }
     });
 
+    $(pId + ' :input[IsUserName]').each(function () {
+        if ($(this).val().length < 6) {
+            $(this).addClass("error");
+            ShowCallbackMessage(false, "Enter Valid UserName (min:6)");
+            resultBool = false;
+        }
+    });
+
     $(pId + ' :input[MinPassLength]').each(function () {
         if ($(this).val().length <11) {
             $(this).addClass("error");
-            ShowCallbackMessage(false, "Enter valid Phone Number");
+            ShowCallbackMessage(false, "Enter valid Phone Number (min:11)");
             resultBool = false;
         }
     });
@@ -78,7 +86,7 @@ function Validate(pId) {
     $(pId + ' :input[IsCNIC]').each(function () {
         if ($(this).val().length < 13) {
             $(this).addClass("error");
-            ShowCallbackMessage(false, "Enter valid Phone Number");
+            ShowCallbackMessage(false, "Enter valid Phone Number (min:13)");
             resultBool = false;
         }
     });
@@ -125,9 +133,9 @@ function isEmail(email) {
 }
 
 function IsUserName(str) {
-    var mailformat = /^[a-zA-Z0-9_]{5,}[a-zA-Z]+[0-9]*$/;
+    var mailformat = /^[a-zA-Z0-9_]{5,}[a-zA-Z]+$/;
 
-    if (mailformat.test(email))
+    if (mailformat.test(str))
         return false;
     else
         return true;
