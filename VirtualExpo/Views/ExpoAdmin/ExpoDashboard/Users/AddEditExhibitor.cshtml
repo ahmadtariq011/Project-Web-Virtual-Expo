@@ -127,7 +127,7 @@
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">Image</label></div>
                     <div class="col-12 col-md-3">
-                        <input class="form-control" id="AdminImage" name="AdminImage" type="file" required>
+                        <input class="form-control" id="AdminImage" name="AdminImage" type="file" >
                     </div>
                 </div>
 
@@ -155,7 +155,7 @@
                     <div class="col col-md-2"><label for="hf-email" class=" form-control-label">Password</label></div>
                     <div class="col-12 col-md-3">
                         <input class="form-control" id="txtPassword" type="password" value="@data.Password" required @(ViewBag.IsAdd ? "disabled" : "") />
-                        <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');" @(ViewBag.IsAdd ? "disabled" : "") style="margin-top:15px;" />
+                        <input id="chkShowHidePassword" type="checkbox" onchange="ShowHidePassword(this, 'txtPassword');"  style="margin-top:15px;" />
                         <label for="chkShowHidePassword" style="margin-bottom:0px;"> Show Password</label>
                     </div>
                     <div class="col offset-md-1 col-md-2"><label for="hf-email" class=" form-control-label">CNIC</label></div>

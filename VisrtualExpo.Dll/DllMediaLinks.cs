@@ -62,6 +62,7 @@ namespace VisrtualExpo.Dll
 
                 dbExhibition.Picture = Exhibition.Picture;
                 dbExhibition.Video = Exhibition.Video;
+                dbExhibition.Download = Exhibition.Download;
 
                 entities.SaveChanges();
             }

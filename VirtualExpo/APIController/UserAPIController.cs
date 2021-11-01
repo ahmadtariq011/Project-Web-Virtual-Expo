@@ -383,19 +383,22 @@ namespace VirtualExpo.Web.APIController
                             return result;
                         }
                     }
+
+                    User dbUser = new User();
+
                     if (bllUser.GetByUserName(user.UserName) != null)
                     {
                         result.IsSucceeded = false;
                         result.Message = "UserName is already exists.";
                         return result;
+                        dbUser.Picture = user.Image.FileName;
+
                     }
-                    User dbUser = new User();
                     dbUser.FirstName = user.FirstName;
                     dbUser.LastName = user.LastName;
                     dbUser.UserName = user.UserName;
                     dbUser.Email = user.Email;
                     dbUser.Description = user.Description;
-                    dbUser.Picture = user.Image.FileName;
                     dbUser.Password = user.Password;
                     dbUser.Telephone = user.Telephone;
                     dbUser.CNIC = user.CNIC;
@@ -527,6 +530,36 @@ namespace VirtualExpo.Web.APIController
 
                 if (bllMediaLinks.GetByExhibitor(user.Exhibitor_Id) == null)
                 {
+                    MediaLinks dbUser = new MediaLinks();
+                    if (user.PdfFile != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.PdfFile.FileName).ToLower();
+                        if (fileExtentsion != ".pdf")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Pdf type object ";
+                            return result;
+
+                        }
+                        dbUser.Download = user.PdfFile.FileName;
+
+                    }
+
+
+                    if (user.VideoFile != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.VideoFile.FileName).ToLower();
+                        if (fileExtentsion != ".mp4" && fileExtentsion != ".3gp" && fileExtentsion != ".mkv")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload video type object ";
+                            return result;
+
+                        }
+                        dbUser.Video = user.VideoFile.FileName;
+
+                    }
+
                     if (user.PictureFile != null)
                     {
                         string fileExtentsion = System.IO.Path.GetExtension(user.PictureFile.FileName).ToLower();
@@ -536,12 +569,9 @@ namespace VirtualExpo.Web.APIController
                             result.Message = "Please Upload Image type object ";
                             return result;
                         }
-                        
+                        dbUser.Picture = user.PictureFile.FileName;
+
                     }
-                    MediaLinks dbUser = new MediaLinks();
-                    dbUser.Download = user.PdfFile.FileName;
-                    dbUser.Picture = user.PictureFile.FileName;
-                    dbUser.Video = user.VideoFile.FileName;
                     dbUser.DownloadDescription = user.DownloadDescription;
                     dbUser.PictureDescription = user.PictureDescription;
                     dbUser.VideoDescription = user.VideoDescription;
@@ -551,6 +581,8 @@ namespace VirtualExpo.Web.APIController
                     int UserId = bllMediaLinks.Insert(dbUser);
                     if (user.VideoFile != null)
                     {
+                        dbUser.Video = user.VideoFile.FileName;
+
                         var uploadsV = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + UserId + "/Video");
 
                         if (!Directory.Exists(uploadsV))
@@ -569,6 +601,8 @@ namespace VirtualExpo.Web.APIController
 
                     if (user.PdfFile != null)
                     {
+                        dbUser.Download = user.PdfFile.FileName;
+
                         var uploadsD = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + UserId + "/Download");
 
                         if (!Directory.Exists(uploadsD))
@@ -601,7 +635,7 @@ namespace VirtualExpo.Web.APIController
                             }
                         }
                     }
-
+                    bllMediaLinks.Update(dbUser);
                     result.IsSucceeded = true;
                     result.TotalCount = UserId;
                     result.Message = "Media Link is Successfully Created";
@@ -611,6 +645,32 @@ namespace VirtualExpo.Web.APIController
                 {
 
                     MediaLinks dbUser = bllMediaLinks.GetByExhibitor(user.Exhibitor_Id);
+                    if (user.PdfFile != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.PdfFile.FileName).ToLower();
+                        if (fileExtentsion != ".pdf")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload pdf type object ";
+                            return result;
+
+                        }
+                        dbUser.Download = user.PdfFile.FileName;
+
+                    }
+
+
+                    if (user.VideoFile != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(user.VideoFile.FileName).ToLower();
+                        if (fileExtentsion != ".mp4" && fileExtentsion != ".3gp" && fileExtentsion != ".mkv" )
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload video type object ";
+                            return result;
+
+                        }
+                    }
 
                     if (user.PictureFile != null)
                     {
@@ -619,20 +679,20 @@ namespace VirtualExpo.Web.APIController
                         {
                             result.IsSucceeded = false;
                             result.Message = "Please Upload Image type object ";
+                            return result;
                         }
                         dbUser.Picture = user.PictureFile.FileName;
                     }
-                    dbUser.Download = user.PdfFile.FileName;
-                    dbUser.Video = user.VideoFile.FileName;
+                    
                     dbUser.DownloadDescription = user.DownloadDescription;
                     dbUser.PictureDescription = user.PictureDescription;
                     dbUser.VideoDescription = user.VideoDescription;
                     dbUser.Link = user.Link;
                     dbUser.LinkDescription = user.LinkDescription;
-                    bllMediaLinks.Update(dbUser);
 
                     if (user.VideoFile != null)
                     {
+                        dbUser.Video = user.VideoFile.FileName;
                         var uploadsV = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Video");
 
                         if (!Directory.Exists(uploadsV))
@@ -651,6 +711,7 @@ namespace VirtualExpo.Web.APIController
                 
                     if (user.PdfFile != null)
                     {
+
                         var uploadsD = Path.Combine(_environment.WebRootPath, "images/MediLinks/" + user.Id + "/Download");
 
                         if (!Directory.Exists(uploadsD))
@@ -683,6 +744,8 @@ namespace VirtualExpo.Web.APIController
                             }
                         }
                     }
+                    bllMediaLinks.Update(dbUser);
+
                     result.IsSucceeded = true;
                     result.Message = "Media Link is Successfully Updated";
                 }

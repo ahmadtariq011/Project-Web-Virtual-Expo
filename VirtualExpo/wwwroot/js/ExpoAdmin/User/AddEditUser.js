@@ -11,7 +11,7 @@ $(document).ready(function () {
         var clean_uri = uri.substring(0, uri.indexOf("?"));
         window.history.replaceState({}, document.title, clean_uri);
     }
-    $("#aUsers").addClass("navbar_selected");
+    $("#aOrganizers").addClass("navbar_selected");
     $("#div_AddEdit input").keyup(handler_enter);
     $("#txtExpirationDate").datepicker({ dateFormat: 'mm/dd/yy' });
 

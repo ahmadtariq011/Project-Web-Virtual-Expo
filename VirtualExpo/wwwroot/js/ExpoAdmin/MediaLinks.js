@@ -10,6 +10,16 @@
     var ImageInput = $('#txtPicture')[0].files[0];
     var VideoInput = $('#txtVideo')[0].files[0];
     var DownloadInput = $('#txtDownload')[0].files[0];
+    if (VideoInput != null) {
+        const fileSize = VideoInput.size / 1024 / 1024; // in MiB
+        if (fileSize > 10) {
+            ShowCallbackMessage(false, "File size exceeds 10 MiB");
+            return;
+            // $(file).val(''); //for clearing with Jquery
+        }
+    }
+
+ 
 
     formData.append("Id", $("#hfUserId").val());
     formData.append("PictureDescription", $.trim($("#txtPictureName").val()));

@@ -76,9 +76,9 @@ function Validate(pId) {
     });
 
     $(pId + ' :input[MinPassLength]').each(function () {
-        if ($(this).val().length <11) {
+        if ($(this).val().length <10) {
             $(this).addClass("error");
-            ShowCallbackMessage(false, "Enter valid Phone Number (min:11)");
+            ShowCallbackMessage(false, "Enter valid Phone Number (min:10)");
             resultBool = false;
         }
     });
@@ -86,7 +86,7 @@ function Validate(pId) {
     $(pId + ' :input[IsCNIC]').each(function () {
         if ($(this).val().length < 13) {
             $(this).addClass("error");
-            ShowCallbackMessage(false, "Enter valid Phone Number (min:13)");
+            ShowCallbackMessage(false, "Enter valid CNIC Number (min:13)");
             resultBool = false;
         }
     });

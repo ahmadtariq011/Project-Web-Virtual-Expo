@@ -6,6 +6,9 @@
     BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
     ExhibitorDescription brand = bllExhibitorDescription.GetByPK(brandId);
 
+    BllUser bllUser = new BllUser();
+    var user = bllUser.GetByPK(brand.UserId);
+
     BllMediaLinks bllMediaLinks = new BllMediaLinks();
     var mediaLinks = bllMediaLinks.GetAllMediaLinks(brand.Id);
     BllSocialNetwork bllSocialNetwork = new BllSocialNetwork();
@@ -101,6 +104,8 @@
             </div>
             <div class="modal-body">
                 <h4>@brand.Name</h4>
+                <h4>@user.Email</h4>
+                <h4>@user.Telephone</h4>
                 <p>@brand.Moto</p>
             </div>
             <div class="modal-footer">
@@ -193,7 +198,7 @@
                 @foreach (var medialink in mediaLinks)
                 {
                     <h4>@medialink.LinkDescription</h4>
-                    <span>@medialink.Link</span>
+                    <a href="@medialink.Link" target="_blank">@medialink.Link</a>
                     //<input class="form-control" id="txtLink" type="text" value="@medialink.Link">
                 }
             </div>
@@ -217,17 +222,17 @@
                 </div>
                 <div class="modal-body">
                     <h6>Instagram</h6>
-                    <p>@socialNetworkLinks.Instagram</p>
+                    <a href="@socialNetworkLinks.Instagram" target="_blank">@socialNetworkLinks.Instagram</a>
                     <h6>Facebook</h6>
-                    <p>@socialNetworkLinks.Facebook</p>
+                    <a href="@socialNetworkLinks.Facebook" target="_blank">@socialNetworkLinks.Facebook</a>
                     <h6>Linkdin</h6>
-                    <p>@socialNetworkLinks.Linkdin</p>
+                    <a href="@socialNetworkLinks.Linkdin" target="_blank">@socialNetworkLinks.Linkdin</a>
                     <h6>SnapChat</h6>
-                    <p>@socialNetworkLinks.SnapChat</p>
+                    <a href="@socialNetworkLinks.SnapChat" target="_blank">@socialNetworkLinks.SnapChat</a>
                     <h6>Twitter</h6>
-                    <p>@socialNetworkLinks.Twitter</p>
+                    <a href="@socialNetworkLinks.Twitter" target="_blank">@socialNetworkLinks.Twitter</a>
                     <h6>Website</h6>
-                    <p>@socialNetworkLinks.Website</p>
+                    <a href="@socialNetworkLinks.Website" target="_blank">@socialNetworkLinks.Website</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

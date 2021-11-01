@@ -101,6 +101,18 @@ namespace VirtualExpo.Web.APIController
                         return result;
                     }
                     User dbUser = new User();
+                    if (dbExhibition.BrandImage != null)
+                    {
+                        string fileExtentsion = System.IO.Path.GetExtension(dbExhibition.BrandImage).ToLower();
+                        if (fileExtentsion != ".png" && fileExtentsion != ".jpg" && fileExtentsion != ".jpeg" && fileExtentsion != ".gif")
+                        {
+                            result.IsSucceeded = false;
+                            result.Message = "Please Upload Image type object ";
+                            return result;
+                        }
+                        dbUser.Picture = dbExhibition.BrandImage;
+
+                    }
                     dbUser.FirstName = dbExhibition.Name;
                     dbUser.LastName = dbExhibition.Name;
                     dbUser.UserName = username;
@@ -115,12 +127,14 @@ namespace VirtualExpo.Web.APIController
 
                     ExhibitorDescription exhibitorDescription = new ExhibitorDescription();
                     exhibitorDescription.Name = dbUser.FirstName;
-                    exhibitorDescription.Moto = dbUser.Email;
-                    exhibitorDescription.Offer = dbUser.Email;
+                    exhibitorDescription.Moto = dbExhibition.Description;
+                    exhibitorDescription.Offer = dbExhibition.Description;
                     exhibitorDescription.Exibition_id = dbExhibition.ExhibitionId;
                     exhibitorDescription.UserId = UserId;
                     BllExhibitorDescription bllExhibitorDescription = new BllExhibitorDescription();
                     bllExhibitorDescription.Insert(exhibitorDescription);
+
+
 
                     ExhibitionStatus status = (ExhibitionStatus)Enum.Parse(typeof(ExhibitionStatus), exhibitionModel.ExhibitionStatusStr);
                     dbExhibition.Status = Convert.ToInt32(status);
@@ -252,6 +266,7 @@ namespace VirtualExpo.Web.APIController
             dbUser.Telephone = vm.Telephone;
             dbUser.CreatedDate = DateTime.Now;
             dbUser.ExhibitionId = vm.ExhibitionId;
+            dbUser.Status = Convert.ToInt32(ExhibitionStatus.Pending);
             int UserId = bllRequestOrganizer.Insert(dbUser);
 
             var uploads = Path.Combine(_environment.WebRootPath, "images/Requests/RequestOrganizer/" + UserId);

@@ -43,7 +43,7 @@ $(document).ready(function () {
     //        $(this).addClass("pageloadnavbar");
     //    });
     //});
-    $("#aUsers").addClass("navbar_selected");
+    $("#aExhibition").addClass("navbar_selected");
     $("#txtSearch").keyup(handler_enter_search);
     AddSortingHeaders("#tbl");
 
