@@ -137,7 +137,7 @@
                         @Html.Raw(user.FirstName +" "+user.LastName)
                     </h5>
                     <h6>
-                        @user.UserName
+                        @user.Email
                     </h6>
                     <p class="proile-rating">Exhibitions : <span>@AllExhibitions.Count()</span></p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -161,14 +161,7 @@
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>User Id</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>@user.UserName</p>
-                            </div>
-                        </div>
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Name</label>
@@ -220,12 +213,12 @@
                                 </div>
                             </div>
                         }
-                        <div class="row">
+                        @*<div class="row">
                             <div class="col-md-12">
                                 <label>Organizer Details</label><br />
                                 <p>@user.Description</p>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>
